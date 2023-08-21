@@ -16,12 +16,13 @@ import {
   DialogHeader,
   DialogTitle
 } from '@/components/ui/dialog'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Button } from './ui/button'
 import { Input } from './ui/input'
 import { toast } from 'react-hot-toast'
 
-const IS_PREVIEW = process.env.VERCEL_ENV === 'preview'
+// set IS_PREVIEW to true if the environment is a preview environment
+const IS_PREVIEW = process.env.NEXT_PUBLIC_VERCEL_ENV === 'preview'
 export interface ChatProps extends React.ComponentProps<'div'> {
   initialMessages?: Message[]
   id?: string
@@ -32,8 +33,24 @@ export function Chat({ id, initialMessages, className }: ChatProps) {
     'ai-token',
     null
   )
-  const [previewTokenDialog, setPreviewTokenDialog] = useState(IS_PREVIEW)
+  // initialize previewTokenDialog to false, To be set based on the preview flag later in useEffect to avoid hydration errors
+  
+  const [previewTokenDialog, setPreviewTokenDialog] = useState(false)
   const [previewTokenInput, setPreviewTokenInput] = useState(previewToken ?? '')
+
+  useEffect(() => {
+    // if the environment is a preview environment and the preview token is not set, open the preview token dialog
+    setPreviewTokenDialog(IS_PREVIEW);
+
+    // reset the preview token and dialog when the component unmounts
+    return () => {
+      setPreviewTokenDialog(false)
+      setPreviewToken(null)
+      setPreviewTokenInput('')
+    }
+
+  }, []);
+
   const { messages, append, reload, stop, isLoading, input, setInput } =
     useChat({
       initialMessages,
