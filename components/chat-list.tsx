@@ -16,8 +16,8 @@ export function ChatList({ messages }: ChatList) {
     <div className="relative mx-auto max-w-2xl px-4">
       {messages.map((message, index) => (
         <div key={index}>
-          <ChatMessage message={message} />
-          {index < messages.length - 1 && (
+          <ChatMessage message={message} index={index} />
+          {index < messages.length - 1 && index % 2 != 0 && index >= 1 && (
             <Separator className="my-4 md:my-8" />
           )}
         </div>
