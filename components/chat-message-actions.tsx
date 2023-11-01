@@ -11,6 +11,7 @@ import { useState } from "react";
 import BookmarkIcon from '@mui/icons-material/Bookmark';
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import SentimentSatisfiedAltIcon from '@mui/icons-material/SentimentSatisfiedAlt';
+import axios from 'axios'
 
 interface ChatMessageActionsProps extends React.ComponentProps<'div'> {
   message: Message,
@@ -23,12 +24,31 @@ export function ChatMessageActions({
   className,
   ...props
 }: ChatMessageActionsProps) {
-  // Add useState for IsBookmarked
   const [isBookmarked, setBookmark] = useState(false);
-  // 127.0.0.1:8000
-  const onCopy = async () => {
-    if (isBookmarked == true) setBookmark(false)
-    else if (isBookmarked == false) setBookmark(true)
+  axios.defaults.headers.common['Content-Type'] = "application/json"
+  axios.defaults.headers.common['Authorization'] = `Bearer ${process.env.BizGPT_CLIENT_API_TOKEN_FRONTEND}`  
+  const Bookmark = async () => {
+    if (isBookmarked == true) {
+      setBookmark(false)
+      const url = `${process.env.BizGPT_CLIENT_API_BASE_ADDRESS_SCHEME}://${process.env.BizGPT_CLIENT_API_BASE_ADDRESS}:${process.env.BizGPT_CLIENT_API_PORT}/${process.env.BizGT_CLIENT_API_BOOKMARK_PATH}`
+      const payload = {
+        data: {"index": index, 'bookmark_state': false}
+      };
+
+      axios.post(url, payload).then(({data}) => {
+        console.log(data);
+    });
+    }
+    else if (isBookmarked == false) {
+      setBookmark(true)
+      const url = `${process.env.BizGPT_CLIENT_API_BASE_ADDRESS_SCHEME}://${process.env.BizGPT_CLIENT_API_BASE_ADDRESS}:${process.env.BizGPT_CLIENT_API_PORT}/${process.env.BizGT_CLIENT_API_BOOKMARK_PATH}`
+      const payload = {
+        data: {"index": index, 'bookmark_state': true}
+      };
+      axios.post(url, payload).then(({data}) => {
+        console.log(data);
+    });
+    }
   }
 
 
@@ -41,12 +61,12 @@ export function ChatMessageActions({
         )}
         {...props}
       >
-        <Button variant="ghost" size="icon" onClick={onCopy}>
+        <Button variant="ghost" size="icon" onClick={Bookmark}>
           {isBookmarked ? <BookmarkIcon /> : <BookmarkBorderIcon />}
           <span className="sr-only">Copy message</span>
         </Button>
 
-
+        
       </div>
     )
   }
