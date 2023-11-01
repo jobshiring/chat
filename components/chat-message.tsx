@@ -10,10 +10,11 @@ import { ChatMessageActions } from '@/components/chat-message-actions'
 
 export interface ChatMessageProps {
   message: Message,
-  index: Number
+  index: Number,
+  username: String | undefined
 }
 
-export function ChatMessage({ message, index, ...props }: ChatMessageProps) {
+export function ChatMessage({ message, index, username, ...props }: ChatMessageProps) {
   return (
     <div
       className={cn('group relative mb-4 flex items-start md:-ml-12')}
@@ -71,7 +72,7 @@ export function ChatMessage({ message, index, ...props }: ChatMessageProps) {
         >
           {message.content}
         </MemoizedReactMarkdown>
-        <ChatMessageActions message={message} index={index} />
+        <ChatMessageActions message={message} index={index} username={username} />
       </div>
     </div>
   )
