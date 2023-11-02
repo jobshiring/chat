@@ -10,8 +10,14 @@ import { cn } from '@/lib/utils'
 import { useState } from "react";
 import BookmarkIcon from '@mui/icons-material/Bookmark';
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
-import SentimentSatisfiedAltIcon from '@mui/icons-material/SentimentSatisfiedAlt';
 import axios from 'axios'
+
+import SentimentVeryDissatisfiedIcon from '@mui/icons-material/SentimentVeryDissatisfied';
+import SentimentDissatisfiedIcon from '@mui/icons-material/SentimentDissatisfied';
+import SentimentNeutralIcon from '@mui/icons-material/SentimentNeutral';
+import SentimentSatisfiedIcon from '@mui/icons-material/SentimentSatisfied';
+import SentimentSatisfiedAltIcon from '@mui/icons-material/SentimentSatisfiedAlt';
+
 
 interface ChatMessageActionsProps extends React.ComponentProps<'div'> {
   message: Message,
@@ -42,7 +48,7 @@ let sendAxios = (url: string, payload: Object) => {
   });
 }
 
-export function ChatMessageActions({
+export function ChatMessageActionsBookmark({
   message,
   index,
   username,
@@ -57,7 +63,7 @@ export function ChatMessageActions({
       setBookmark(false)
       const url = `${process.env.BizGPT_CLIENT_API_BASE_ADDRESS_SCHEME}://${process.env.BizGPT_CLIENT_API_BASE_ADDRESS}:${process.env.BizGPT_CLIENT_API_PORT}/${process.env.BizGT_CLIENT_API_BOOKMARK_PATH}`
       const payload = {
-        data: { "index": index, 'bookmark_state': false, 'username': username }
+        data: { "index": Math.round(index/2), 'bookmark_state': false, 'username': username }
       };
 
       sendAxios(url, payload)
@@ -66,7 +72,7 @@ export function ChatMessageActions({
       setBookmark(true)
       const url = `${process.env.BizGPT_CLIENT_API_BASE_ADDRESS_SCHEME}://${process.env.BizGPT_CLIENT_API_BASE_ADDRESS}:${process.env.BizGPT_CLIENT_API_PORT}/${process.env.BizGT_CLIENT_API_BOOKMARK_PATH}`
       const payload = {
-        data: { "index": index, 'bookmark_state': true, 'username': username }
+        data: { "index": Math.round(index/2), 'bookmark_state': true, 'username': username }
       };
       sendAxios(url, payload)
   }
@@ -84,10 +90,10 @@ export function ChatMessageActions({
       >
         <Button variant="ghost" size="icon" onClick={Bookmark}>
           {isBookmarked ? <BookmarkIcon /> : <BookmarkBorderIcon />}
-          <span className="sr-only">Copy message</span>
         </Button>
-
-
+        <Button variant="ghost" size="icon" onClick={Bookmark}>
+        {isBookmarked ? <SentimentVeryDissatisfiedIcon /> : <SentimentVeryDissatisfiedIcon />}
+      </Button>
       </div>
     )
   }
