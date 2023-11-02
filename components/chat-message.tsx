@@ -9,10 +9,12 @@ import { IconOpenAI, IconUser } from '@/components/ui/icons'
 import { ChatMessageActions } from '@/components/chat-message-actions'
 
 export interface ChatMessageProps {
-  message: Message
+  message: Message,
+  index: Number,
+  username: String | undefined
 }
 
-export function ChatMessage({ message, ...props }: ChatMessageProps) {
+export function ChatMessage({ message, index, username, ...props }: ChatMessageProps) {
   return (
     <div
       className={cn('group relative mb-4 flex items-start md:-ml-12')}
@@ -70,7 +72,7 @@ export function ChatMessage({ message, ...props }: ChatMessageProps) {
         >
           {message.content}
         </MemoizedReactMarkdown>
-        <ChatMessageActions message={message} />
+        <ChatMessageActions message={message} index={index} username={username} />
       </div>
     </div>
   )
