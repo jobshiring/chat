@@ -19,6 +19,29 @@ interface ChatMessageActionsProps extends React.ComponentProps<'div'> {
   username: String | undefined
 }
 
+let sendAxios = (url: string, payload: Object) => {
+  axios.post(url, payload).then(({ data }) => {
+    console.log(data);
+  })  .catch(function (error) {
+    if (error.response) {
+      // The request was made and the server responded with a status code
+      // that falls out of the range of 2xx
+      console.log(error.response.data);
+      console.log(error.response.status);
+      console.log(error.response.headers);
+    } else if (error.request) {
+      // The request was made but no response was received
+      // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+      // http.ClientRequest in node.js
+      console.log(error.request);
+    } else {
+      // Something happened in setting up the request that triggered an Error
+      console.log('Error', error.message);
+    }
+    console.log(error.config);
+  });
+}
+
 export function ChatMessageActions({
   message,
   index,
@@ -37,9 +60,7 @@ export function ChatMessageActions({
         data: { "index": index, 'bookmark_state': false, 'username': username }
       };
 
-      axios.post(url, payload).then(({ data }) => {
-        console.log(data);
-      });
+      sendAxios(url, payload)
     }
     else if (isBookmarked == false) {
       setBookmark(true)
@@ -47,10 +68,8 @@ export function ChatMessageActions({
       const payload = {
         data: { "index": index, 'bookmark_state': true, 'username': username }
       };
-      axios.post(url, payload).then(({ data }) => {
-        console.log(data);
-      });
-    }
+      sendAxios(url, payload)
+  }
   }
 
 
@@ -73,4 +92,4 @@ export function ChatMessageActions({
     )
   }
 
-}
+  }
