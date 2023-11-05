@@ -6,7 +6,7 @@ import { cn } from '@/lib/utils'
 import { CodeBlock } from '@/components/ui/codeblock'
 import { MemoizedReactMarkdown } from '@/components/markdown'
 import { IconOpenAI, IconUser } from '@/components/ui/icons'
-import { ChatMessageActionsBookmark } from '@/components/chat-message-actions'
+import { ChatMessageActionsBookmark, ChatMessageActionsFeedback } from '@/components/chat-message-actions'
 
 export interface ChatMessageProps {
   message: Message,
@@ -73,6 +73,7 @@ export function ChatMessage({ message, index, username, ...props }: ChatMessageP
           {message.content}
         </MemoizedReactMarkdown>
         <ChatMessageActionsBookmark message={message} index={index} username={username} />
+        <ChatMessageActionsFeedback message={message} index={index} username={username} />
       </div>
     </div>
   )
