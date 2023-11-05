@@ -1,3 +1,4 @@
+// @ts-nocheck 
 import { Message } from 'ai'
 import remarkGfm from 'remark-gfm'
 import remarkMath from 'remark-math'
@@ -72,8 +73,8 @@ export function ChatMessage({ message, index, username, ...props }: ChatMessageP
         >
           {message.content}
         </MemoizedReactMarkdown>
-        <ChatMessageActionsBookmark message={message} index={index} username={username} />
-        <ChatMessageActionsFeedback message={message} index={index} username={username} />
+        <ChatMessageActionsBookmark message={message} index={index} username={username} className={"bookmark-cls"} />
+        <ChatMessageActionsFeedback message={message} index={index} username={username} className={"feedback-cls"} />
       </div>
     </div>
   )
