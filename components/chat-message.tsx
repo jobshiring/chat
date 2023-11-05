@@ -1,3 +1,4 @@
+// @ts-nocheck 
 import { Message } from 'ai'
 import remarkGfm from 'remark-gfm'
 import remarkMath from 'remark-math'
@@ -6,13 +7,15 @@ import { cn } from '@/lib/utils'
 import { CodeBlock } from '@/components/ui/codeblock'
 import { MemoizedReactMarkdown } from '@/components/markdown'
 import { IconOpenAI, IconUser } from '@/components/ui/icons'
-import { ChatMessageActions } from '@/components/chat-message-actions'
+import { ChatMessageActionsBookmark, ChatMessageActionsFeedback } from '@/components/chat-message-actions'
 
 export interface ChatMessageProps {
-  message: Message
+  message: Message,
+  index: Number,
+  username: String | undefined
 }
 
-export function ChatMessage({ message, ...props }: ChatMessageProps) {
+export function ChatMessage({ message, index, username, ...props }: ChatMessageProps) {
   return (
     <div
       className={cn('group relative mb-4 flex items-start md:-ml-12')}
@@ -70,7 +73,8 @@ export function ChatMessage({ message, ...props }: ChatMessageProps) {
         >
           {message.content}
         </MemoizedReactMarkdown>
-        <ChatMessageActions message={message} />
+        <ChatMessageActionsBookmark message={message} index={index} username={username} className={"bookmark-cls"} />
+        <ChatMessageActionsFeedback message={message} index={index} username={username} className={"feedback-cls"} />
       </div>
     </div>
   )

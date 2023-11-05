@@ -72,7 +72,26 @@
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground;
   }
+}
+
+.feedback-cls {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-pack: right;
+  -ms-flex-pack: right;
+  -webkit-justify-content: right;
+  justify-content: right;
+  -webkit-align-items: right;
+  -webkit-box-align: right;
+  -ms-flex-align: right;
+  align-items: right;
 }
