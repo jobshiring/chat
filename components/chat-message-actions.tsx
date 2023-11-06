@@ -62,7 +62,8 @@ const TextFieldcolors = {
 interface ChatMessageActionsBookmarkProps extends React.ComponentProps<'div'> {
   message: Message,
   index: number,
-  username: String | undefined
+  username: String | undefined,
+  bookmakrs: JSON
 }
 
 interface ChatMessageActionsFeedbackProps extends React.ComponentProps<'div'> {
@@ -94,14 +95,25 @@ let sendAxios = (url: string, payload: Object) => {
   });
 }
 
+
+
+
 export function ChatMessageActionsBookmark({
   message,
   index,
   username,
+  bookmarks,
   className,
   ...props
 }: ChatMessageActionsBookmarkProps) {
   const [isBookmarked, setBookmark] = useState(false);
+
+  useEffect(() => {
+    if (bookmarks.bookmarks[`bookmark_${index}`]) {
+      setBookmark(bookmarks.bookmarks[`bookmark_${index}`]);
+    }
+  }, [bookmarks.bookmarks[`bookmark_${index}`]])
+
   axios.defaults.headers.common['Content-Type'] = "application/json"
   axios.defaults.headers.common['Authorization'] = `Bearer ${process.env.BizGPT_CLIENT_API_TOKEN_FRONTEND}`
   const Bookmark = async () => {
@@ -219,7 +231,7 @@ export function ChatMessageActionsFeedback({
   };
   if (index % 2 != 0) {
     return (
-      <Box class="remove-all" paddingY={0.5} height={140} component="form" sx={{ "& .MuiTextField-root": { m: 1, width: "50ch" } }} noValidate autoComplete="off">
+      <Box className="remove-all" paddingY={0.5} height={140} component="form" sx={{ "& .MuiTextField-root": { m: 1, width: "50ch" } }} noValidate autoComplete="off">
         <Stack className="feedback-cls" direction="row" spacing={0} justifyContent={'right'} alignItems={'right'}>
           <SentimentVeryDissatisfiedIcon
             sx={{
