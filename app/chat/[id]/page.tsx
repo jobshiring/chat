@@ -33,7 +33,7 @@ export async function generateMetadata({
 }
 
 export async function GetBookmarks() : Promise<JSON> {
-  const url = `${process.env.BizGPT_CLIENT_API_BASE_ADDRESS_SCHEME}://${process.env.BizGPT_CLIENT_API_BASE_ADDRESS}:${process.env.BizGPT_CLIENT_API_PORT}/${process.env.BizGT_CLIENT_API_BOOKMARK_PATH}`
+  const url = `${process.env.BizGPT_CLIENT_API_BASE_ADDRESS_SCHEME}://${process.env.BizGPT_CLIENT_API_BASE_ADDRESS}:${process.env.BizGPT_CLIENT_API_PORT}/${process.env.BizGT_CLIENT_API_BOOKMARK_RETRIEVE_PATH}`
   const payload = {
     data: { "index": Math.round(2 / 2), 'bookmark_state': false, 'username': 'user1' }
   };
@@ -52,6 +52,27 @@ export async function GetBookmarks() : Promise<JSON> {
   return output
 }
 
+export async function GetFeedbacks() : Promise<JSON> {
+  const url = `${process.env.BizGPT_CLIENT_API_BASE_ADDRESS_SCHEME}://${process.env.BizGPT_CLIENT_API_BASE_ADDRESS}:${process.env.BizGPT_CLIENT_API_PORT}/${process.env.BizGT_CLIENT_API_FEEDBACK_RETRIEVE_PATH}`
+  const payload = {
+    data: { "index": Math.round(2 / 2), 'bookmark_state': false, 'username': 'user1' }
+  };
+  let output;
+  const res = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Authorization' : `Bearer fcddvb@ou@*t57lw)f(+pra8fjgm#u4^-)b4vo7^dkv&bpyz7r`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(payload)
+  })
+
+  output = await res.json();
+  return output
+}
+
+
 export default async function ChatPage({ params }: ChatPageProps) {
   const cookieStore = cookies()
   const session = await auth({ cookieStore })
@@ -69,5 +90,5 @@ export default async function ChatPage({ params }: ChatPageProps) {
   if (chat?.userId !== session?.user?.id) {
     notFound()
   }
-  return <Chat id={chat.id} initialMessages={chat.messages} username={session?.user?.email} bookmarks={await GetBookmarks()}/>
+  return <Chat id={chat.id} initialMessages={chat.messages} username={session?.user?.email} bookmarks={await GetBookmarks()} feedbacks={await GetFeedbacks()}/>
 }

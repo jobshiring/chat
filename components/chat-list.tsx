@@ -6,10 +6,11 @@ import { ChatMessage } from '@/components/chat-message'
 export interface ChatList {
   messages: Message[],
   username: String | undefined,
-  bookmarks: JSON
+  bookmarks: JSON | undefined,
+  feedbacks: JSON | undefined
 }
 
-export function ChatList({ messages, username, bookmarks}: ChatList) {
+export function ChatList({ messages, username, bookmarks, feedbacks}: ChatList) {
   if (!messages.length) {
     return null
   }
@@ -18,7 +19,7 @@ export function ChatList({ messages, username, bookmarks}: ChatList) {
     <div className="relative mx-auto max-w-2xl px-4">
       {messages.map((message, index) => (
         <div key={index}>
-          <ChatMessage message={message} index={index} username={username} bookmarks={bookmarks}/>
+          <ChatMessage message={message} index={index} username={username} bookmarks={bookmarks} feedbacks={feedbacks}/>
           {index < messages.length - 1 && index % 2 != 0 && index >= 1 && (
             <Separator className="my-4 md:my-8" />
           )}
