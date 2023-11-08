@@ -121,11 +121,11 @@ export function ChatMessageActionsBookmark({
 
   useEffect(() => {
     if (index % 2 != 0) {
-      if (bookmarks.bookmarks[`bookmark_${index_fixer(index)}`]) {
+      if (bookmarks?.bookmarks[`bookmark_${index_fixer(index)}`]) {
         setBookmark(bookmarks.bookmarks[`bookmark_${index_fixer(index)}`]?.bookmark);
       }
     }
-  }, [bookmarks.bookmarks[`bookmark_${index_fixer(index)}`]]?.bookmark)
+  }, [bookmarks?.bookmarks[`bookmark_${index_fixer(index)}`]]?.bookmark)
 
   axios.defaults.headers.common['Content-Type'] = "application/json"
   axios.defaults.headers.common['Authorization'] = `Bearer ${process.env.BizGPT_CLIENT_API_TOKEN_FRONTEND}`
@@ -185,12 +185,12 @@ export function ChatMessageActionsFeedback({
 
   useEffect(() => {
     if (index % 2 != 0) {
-      if (feedbacks.feedbacks[`feedback_${index_fixer(index)}`]) {
+      if (feedbacks?.feedbacks[`feedback_${index_fixer(index)}`]) {
         setSubmitted(true);
         setFaceScore(feedbacks.feedbacks[`feedback_${index_fixer(index)}`]?.score);
       }
     }
-  }, [feedbacks.feedbacks[`feedback_${index_fixer(index)}`]?.score])
+  }, [feedbacks?.feedbacks[`feedback_${index_fixer(index)}`]?.score])
 
   const handleFaceClick = (score: String) => {
     if (score === faceScore) {
