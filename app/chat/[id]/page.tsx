@@ -32,7 +32,7 @@ export async function generateMetadata({
   }
 }
 
-export async function GetBookmarks() : Promise<JSON> {
+async function GetBookmarks() : Promise<JSON> {
   const url = `${process.env.BizGPT_CLIENT_API_BASE_ADDRESS_SCHEME}://${process.env.BizGPT_CLIENT_API_BASE_ADDRESS}:${process.env.BizGPT_CLIENT_API_PORT}/${process.env.BizGT_CLIENT_API_BOOKMARK_RETRIEVE_PATH}`
   const payload = {
     data: { "index": Math.round(2 / 2), 'bookmark_state': false, 'username': 'user1' }
@@ -52,7 +52,7 @@ export async function GetBookmarks() : Promise<JSON> {
   return output
 }
 
-export async function GetFeedbacks() : Promise<JSON> {
+async function GetFeedbacks() : Promise<JSON> {
   const url = `${process.env.BizGPT_CLIENT_API_BASE_ADDRESS_SCHEME}://${process.env.BizGPT_CLIENT_API_BASE_ADDRESS}:${process.env.BizGPT_CLIENT_API_PORT}/${process.env.BizGT_CLIENT_API_FEEDBACK_RETRIEVE_PATH}`
   const payload = {
     data: { "index": Math.round(2 / 2), 'bookmark_state': false, 'username': 'user1' }

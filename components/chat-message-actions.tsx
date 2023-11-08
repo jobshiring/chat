@@ -59,13 +59,13 @@ const TextFieldcolors = {
   "😞": "error"
 }
 
-function index_fixer(number: Number): Number{
-  if (number <= 1){
+function index_fixer(number: Number): Number {
+  if (number <= 1) {
     return 1
   }
-  else{
+  else {
     return Math.round(number / 2)
-  } 
+  }
 }
 
 interface ChatMessageActionsBookmarkProps extends React.ComponentProps<'div'> {
@@ -118,13 +118,15 @@ export function ChatMessageActionsBookmark({
 }: ChatMessageActionsBookmarkProps) {
   const [isBookmarked, setBookmark] = useState(false);
 
-  if (index % 2 != 0){
+
   useEffect(() => {
-    if (bookmarks.bookmarks[`bookmark_${index_fixer(index)}`]) {
-      setBookmark(bookmarks.bookmarks[`bookmark_${index_fixer(index)}`]?.bookmark);
+    if (index % 2 != 0) {
+      if (bookmarks.bookmarks[`bookmark_${index_fixer(index)}`]) {
+        setBookmark(bookmarks.bookmarks[`bookmark_${index_fixer(index)}`]?.bookmark);
+      }
     }
   }, [bookmarks.bookmarks[`bookmark_${index_fixer(index)}`]].bookmark)
-  }
+
   axios.defaults.headers.common['Content-Type'] = "application/json"
   axios.defaults.headers.common['Authorization'] = `Bearer ${process.env.BizGPT_CLIENT_API_TOKEN_FRONTEND}`
   const Bookmark = async () => {
@@ -180,14 +182,16 @@ export function ChatMessageActionsFeedback({
   const [inputText, setInputText] = useState(null);
   const [faceScore, setFaceScore] = useState(null);
 
-  if (index % 2 != 0){
+
   useEffect(() => {
-    if (feedbacks.feedbacks[`feedback_${index_fixer(index)}`]) {
-      setSubmitted(true);
-      setFaceScore(feedbacks.feedbacks[`feedback_${index_fixer(index)}`]?.score);
+    if (index % 2 != 0) {
+      if (feedbacks.feedbacks[`feedback_${index_fixer(index)}`]) {
+        setSubmitted(true);
+        setFaceScore(feedbacks.feedbacks[`feedback_${index_fixer(index)}`]?.score);
+      }
     }
   }, [feedbacks.feedbacks[`feedback_${index_fixer(index)}`]?.score])
-  }
+
   const handleFaceClick = (score: String) => {
     if (score === faceScore) {
       setFaceScore(null);
