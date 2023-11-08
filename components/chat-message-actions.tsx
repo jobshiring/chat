@@ -125,7 +125,7 @@ export function ChatMessageActionsBookmark({
         setBookmark(bookmarks.bookmarks[`bookmark_${index_fixer(index)}`]?.bookmark);
       }
     }
-  }, [bookmarks.bookmarks[`bookmark_${index_fixer(index)}`]].bookmark)
+  }, [bookmarks.bookmarks[`bookmark_${index_fixer(index)}`]]?.bookmark)
 
   axios.defaults.headers.common['Content-Type'] = "application/json"
   axios.defaults.headers.common['Authorization'] = `Bearer ${process.env.BizGPT_CLIENT_API_TOKEN_FRONTEND}`
