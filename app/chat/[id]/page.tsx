@@ -7,8 +7,9 @@ import { getChat } from '@/app/actions'
 import { Chat } from '@/components/chat'
 import { cookies } from 'next/headers'
 
-export const runtime = 'edge'
+export const runtime = 'nodejs'
 export const preferredRegion = 'home'
+export const dynamic = 'force-dynamic';
 
 export interface ChatPageProps {
   params: {
@@ -32,7 +33,7 @@ export async function generateMetadata({
   }
 }
 
-async function GetBookmarks() : Promise<JSON> {
+async function GetBookmarks(): Promise<JSON> {
   const url = `${process.env.BizGPT_CLIENT_API_BASE_ADDRESS_SCHEME}://${process.env.BizGPT_CLIENT_API_BASE_ADDRESS}:${process.env.BizGPT_CLIENT_API_PORT}/${process.env.BizGT_CLIENT_API_BOOKMARK_RETRIEVE_PATH}`
   const payload = {
     data: { "index": Math.round(2 / 2), 'bookmark_state': false, 'username': 'user1' }
@@ -42,17 +43,20 @@ async function GetBookmarks() : Promise<JSON> {
     method: 'POST',
     headers: {
       'Accept': 'application/json',
-      'Authorization' : `Bearer fcddvb@ou@*t57lw)f(+pra8fjgm#u4^-)b4vo7^dkv&bpyz7r`,
+      'Authorization': `Bearer ${process.env.BizGPT_CLIENT_API_TOKEN_FRONTEND}`,
       'Content-Type': 'application/json'
     },
     body: JSON.stringify(payload)
   })
-
+  if (!res.ok) {
+    // This will activate the closest `error.js` Error Boundary
+    throw new Error('Failed to fetch/retrieve bookmark data - The main component')
+  }
   output = await res.json();
   return output
 }
 
-async function GetFeedbacks() : Promise<JSON> {
+async function GetFeedbacks(): Promise<JSON> {
   const url = `${process.env.BizGPT_CLIENT_API_BASE_ADDRESS_SCHEME}://${process.env.BizGPT_CLIENT_API_BASE_ADDRESS}:${process.env.BizGPT_CLIENT_API_PORT}/${process.env.BizGT_CLIENT_API_FEEDBACK_RETRIEVE_PATH}`
   const payload = {
     data: { "index": Math.round(2 / 2), 'bookmark_state': false, 'username': 'user1' }
@@ -62,12 +66,15 @@ async function GetFeedbacks() : Promise<JSON> {
     method: 'POST',
     headers: {
       'Accept': 'application/json',
-      'Authorization' : `Bearer fcddvb@ou@*t57lw)f(+pra8fjgm#u4^-)b4vo7^dkv&bpyz7r`,
+      'Authorization': `Bearer ${process.env.BizGPT_CLIENT_API_TOKEN_FRONTEND}`,
       'Content-Type': 'application/json'
     },
     body: JSON.stringify(payload)
   })
-
+  if (!res.ok) {
+    // This will activate the closest `error.js` Error Boundary
+    throw new Error('Failed to fetch/retrieve feedback data - The main component')
+  }
   output = await res.json();
   return output
 }
@@ -90,5 +97,7 @@ export default async function ChatPage({ params }: ChatPageProps) {
   if (chat?.userId !== session?.user?.id) {
     notFound()
   }
-  return <Chat id={chat.id} initialMessages={chat.messages} username={session?.user?.email} bookmarks={await GetBookmarks()} feedbacks={await GetFeedbacks()}/>
+  const bookmarks = await GetBookmarks()
+  const feedbacks = await GetFeedbacks()
+  return <Chat id={chat.id} initialMessages={chat.messages} username={session?.user?.email} bookmarks={bookmarks} feedbacks={feedbacks} />
 }
