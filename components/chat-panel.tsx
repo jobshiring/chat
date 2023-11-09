@@ -45,16 +45,17 @@ export function ChatPanel({
               Stop generating
             </Button>
           ) : (
-            messages?.length > 0 && (
-              <Button
-                variant="outline"
-                onClick={() => reload()}
-                className="bg-background"
-              >
-                <IconRefresh className="mr-2" />
-                Regenerate response
-              </Button>
-            )
+            messages?.length > 0 
+            // && (
+            //   <Button
+            //     variant="outline"
+            //     onClick={() => reload()}
+            //     className="bg-background"
+            //   >
+            //     <IconRefresh className="mr-2" />
+            //     Regenerate response
+            //   </Button>
+            // )
           )}
         </div>
         <div className="space-y-1 border-t bg-background px-2 py-2 shadow-lg sm:rounded-t-xl sm:border md:py-4">
