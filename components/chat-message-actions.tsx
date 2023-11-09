@@ -118,14 +118,14 @@ export function ChatMessageActionsBookmark({
 }: ChatMessageActionsBookmarkProps) {
   const [isBookmarked, setBookmark] = useState(false);
 
-
+  const bookmark_state = bookmarks?.bookmarks[`bookmark_${index_fixer(index)}`]?.bookmark
   useEffect(() => {
     if (index % 2 != 0) {
-      if (bookmarks.bookmarks[`bookmark_${index_fixer(index)}`]) {
-        setBookmark(bookmarks.bookmarks[`bookmark_${index_fixer(index)}`]?.bookmark);
+      if (bookmark_state) {
+        setBookmark(bookmark_state);
       }
     }
-  }, [bookmarks.bookmarks[`bookmark_${index_fixer(index)}`]].bookmark)
+  }, [bookmark_state, index])
 
   axios.defaults.headers.common['Content-Type'] = "application/json"
   axios.defaults.headers.common['Authorization'] = `Bearer ${process.env.BizGPT_CLIENT_API_TOKEN_FRONTEND}`
@@ -182,15 +182,15 @@ export function ChatMessageActionsFeedback({
   const [inputText, setInputText] = useState(null);
   const [faceScore, setFaceScore] = useState(null);
 
-
+  const feedback_state = feedbacks?.feedbacks[`feedback_${index_fixer(index)}`]?.score
   useEffect(() => {
     if (index % 2 != 0) {
-      if (feedbacks.feedbacks[`feedback_${index_fixer(index)}`]) {
+      if (feedback_state) {
         setSubmitted(true);
-        setFaceScore(feedbacks.feedbacks[`feedback_${index_fixer(index)}`]?.score);
+        setFaceScore(feedback_state);
       }
     }
-  }, [feedbacks.feedbacks[`feedback_${index_fixer(index)}`]?.score])
+  }, [feedback_state, index])
 
   const handleFaceClick = (score: String) => {
     if (score === faceScore) {
