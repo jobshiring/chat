@@ -30,7 +30,7 @@ export interface ChatProps extends React.ComponentProps<'div'> {
   feedbacks?: JSON | undefined,
 }
 
-export function Chat({ id, initialMessages, username, bookmarks, feedbacks, className }: ChatProps) {
+export function Bookmarks({ id, initialMessages, username, bookmarks, feedbacks, className }: ChatProps) {
   const [previewToken, setPreviewToken] = useLocalStorage<string | null>(
     'ai-token',
     null
@@ -63,7 +63,7 @@ export function Chat({ id, initialMessages, username, bookmarks, feedbacks, clas
           <EmptyScreen setInput={setInput} />
         )}
       </div>
-      <ChatPanel
+      {/* <ChatPanel
         id={id}
         isLoading={isLoading}
         stop={stop}
@@ -72,7 +72,7 @@ export function Chat({ id, initialMessages, username, bookmarks, feedbacks, clas
         messages={messages}
         input={input}
         setInput={setInput}
-      />
+      /> */}
 {/* 
       <Dialog open={previewTokenDialog} onOpenChange={setPreviewTokenDialog}>
         <DialogContent>
