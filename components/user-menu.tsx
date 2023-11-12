@@ -58,7 +58,7 @@ export function UserMenu({ user }: UserMenuProps) {
                 {getUserInitials(user?.user_metadata.name ?? user?.email)}
               </div>
             )}
-            <span className="ml-2">{user?.user_metadata.name ?? '👋🏼'}</span>
+            {/* <span className="ml-2">{user?.user_metadata.name ?? '👋🏼'}</span> */}
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent sideOffset={8} align="start" className="w-[180px]">
@@ -71,12 +71,12 @@ export function UserMenu({ user }: UserMenuProps) {
           <DropdownMenuSeparator />
           <DropdownMenuItem asChild>
             <a
-              href="https://vercel.com"
+              href="https://bizgpt.info"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex w-full items-center justify-between text-xs"
             >
-              Vercel Homepage
+              BizGPT Homepage
               <IconExternalLink className="ml-auto h-3 w-3" />
             </a>
           </DropdownMenuItem>

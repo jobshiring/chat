@@ -99,5 +99,5 @@ export default async function ChatPage({ params }: ChatPageProps) {
   }
   const bookmarks = await GetBookmarks()
   const feedbacks = await GetFeedbacks()
-  return <Chat id={chat.id} initialMessages={chat.messages} username={session?.user?.email} bookmarks={bookmarks} feedbacks={feedbacks} />
+  return <Chat id={session?.user?.email} initialMessages={chat.messages} username={session?.user?.email} bookmarks={bookmarks} feedbacks={feedbacks} />
 }
