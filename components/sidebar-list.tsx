@@ -8,31 +8,25 @@ export interface SidebarListProps {
 }
 
 export async function SidebarList({ userId }: SidebarListProps) {
-  const chats = await getChats(userId)
+  // const chats = await getChats(userId)
 
   return (
     <div className="flex-1 overflow-auto">
-      {chats?.length ? (
-        <div className="space-y-2 px-2">
-          {/* {chats.map(
-            chat =>
-              chat && ( */}
-                <SidebarItemChat key={'1'} >
-                  {/* <SidebarActions
-                    chat={chat}
-                    removeChat={removeChat}
-                    shareChat={shareChat}
-                  /> */}
-                </SidebarItemChat>
-                <SidebarItemBookmarks key={'2'} > </SidebarItemBookmarks>
-              {/* )
-          )} */}
-        </div>
-      ) : (
-        <div className="p-8 text-center">
-          <p className="text-sm text-muted-foreground">No chat history</p>
-        </div>
-      )}
+      <div className="space-y-2">
+        {/* {chats.map(
+          chat =>
+            chat && ( */}
+              <SidebarItemChat key={'1'} >
+                {/* <SidebarActions
+                  chat={chat}
+                  removeChat={removeChat}
+                  shareChat={shareChat}
+                /> */}
+              </SidebarItemChat>
+              <SidebarItemBookmarks key={'2'} > </SidebarItemBookmarks>
+            {/* )
+        )} */}
+      </div>
     </div>
   )
 }

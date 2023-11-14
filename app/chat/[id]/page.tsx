@@ -3,7 +3,7 @@ import { type Metadata } from 'next'
 import { notFound, redirect } from 'next/navigation'
 
 import { auth } from '@/auth'
-import { getChat, GetBookmarks, GetFeedbacks } from '@/app/actions'
+import { getChat, getBookmarksLocal, getFeedbacksLocal } from '@/app/actions'
 import { Chat } from '@/components/chat'
 import { cookies } from 'next/headers'
 
@@ -50,7 +50,7 @@ export default async function ChatPage({ params }: ChatPageProps) {
   if (chat?.userId !== session?.user?.id) {
     notFound()
   }
-  const bookmarks = await GetBookmarks()
-  const feedbacks = await GetFeedbacks()
+  const bookmarks = await getBookmarksLocal()
+  const feedbacks = await getFeedbacksLocal()
   return <Chat id={session?.user?.email} initialMessages={chat.messages} username={session?.user?.email} bookmarks={bookmarks} feedbacks={feedbacks} />
 }

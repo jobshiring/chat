@@ -59,6 +59,14 @@ const TextFieldcolors = {
   "😞": "error"
 }
 
+const FaceToScoreMapping = {
+  "😀": 100,
+  "🙂": 80,
+  "😐": 60,
+  "🙁": 40,
+  "😞": 20
+}
+
 function index_fixer(number: Number): Number {
   if (number <= 1) {
     return 1
@@ -127,25 +135,48 @@ export function ChatMessageActionsBookmark({
     }
   }, [bookmark_state, index])
 
-  axios.defaults.headers.common['Content-Type'] = "application/json"
-  axios.defaults.headers.common['Authorization'] = `Bearer ${process.env.BizGPT_CLIENT_API_TOKEN_FRONTEND}`
+  // axios.defaults.headers.common['Content-Type'] = "application/json"
+  // axios.defaults.headers.common['Authorization'] = `Bearer ${process.env.BizGPT_CLIENT_API_TOKEN_FRONTEND}`
   const Bookmark = async () => {
     if (isBookmarked == true) {
       setBookmark(false)
-      const url = `${process.env.BizGPT_CLIENT_API_BASE_ADDRESS_SCHEME}://${process.env.BizGPT_CLIENT_API_BASE_ADDRESS}:${process.env.BizGPT_CLIENT_API_PORT}/${process.env.BizGT_CLIENT_API_BOOKMARK_RETRIEVE_PATH}`
-      const payload = {
-        data: { "index": index_fixer(index), 'bookmark_state': false, 'username': username }
-      };
+      // const url = `${process.env.BizGPT_CLIENT_API_BASE_ADDRESS_SCHEME}://${process.env.BizGPT_CLIENT_API_BASE_ADDRESS}:${process.env.BizGPT_CLIENT_API_PORT}/${process.env.BizGT_CLIENT_API_BOOKMARK_RETRIEVE_PATH}`
+      // const payload = {
+      //   data: { "index": index_fixer(index), 'bookmark_state': false, 'username': username }
+      // };
 
-      sendAxios(url, payload)
+      // sendAxios(url, payload)
+      const bookmark_key = `bookmark_${index_fixer(index)}`
+      let payload = {data: {...bookmarks.bookmarks}, mode: process.env.PERSISTENCE_MODE, state_diff: {}}
+      payload['data'][bookmark_key] = {"bookmark" : false}
+      payload['state_diff']['bookmark_state'] = false
+      payload['state_diff']['index'] = index_fixer(index)
+      fetch('/api/bookmarks',{
+        method: 'POST',
+        headers: {},
+        body: JSON.stringify(payload)
+      }
+      )
     }
     else if (isBookmarked == false) {
       setBookmark(true)
-      const url = `${process.env.BizGPT_CLIENT_API_BASE_ADDRESS_SCHEME}://${process.env.BizGPT_CLIENT_API_BASE_ADDRESS}:${process.env.BizGPT_CLIENT_API_PORT}/${process.env.BizGT_CLIENT_API_BOOKMARK_RETRIEVE_PATH}`
-      const payload = {
-        data: { "index": index_fixer(index), 'bookmark_state': true, 'username': username }
-      };
-      sendAxios(url, payload)
+      // const url = `${process.env.BizGPT_CLIENT_API_BASE_ADDRESS_SCHEME}://${process.env.BizGPT_CLIENT_API_BASE_ADDRESS}:${process.env.BizGPT_CLIENT_API_PORT}/${process.env.BizGT_CLIENT_API_BOOKMARK_RETRIEVE_PATH}`
+      // const payload = {
+      //   data: { "index": index_fixer(index), 'bookmark_state': true, 'username': username }
+      // };
+      // sendAxios(url, payload)
+      const bookmark_key = `bookmark_${index_fixer(index)}`
+      let payload = {data: {...bookmarks.bookmarks}, mode: process.env.PERSISTENCE_MODE, state_diff: {}}
+      payload['data'][bookmark_key] = {"bookmark" : true}
+      payload['state_diff']['bookmark_state'] = true
+      payload['state_diff']['index'] = index_fixer(index)
+
+      fetch('/api/bookmarks',{
+        method: 'POST',
+        headers: {},
+        body: JSON.stringify(payload)
+      }
+      )
     }
   }
 
@@ -238,12 +269,32 @@ export function ChatMessageActionsFeedback({
 
   const handleSubmission = () => {
     setSubmitted(true);
-    const url = `${process.env.BizGPT_CLIENT_API_BASE_ADDRESS_SCHEME}://${process.env.BizGPT_CLIENT_API_BASE_ADDRESS}:${process.env.BizGPT_CLIENT_API_PORT}/${process.env.BizGT_CLIENT_API_BOOKMARK_RETRIEVE_PATH}`
-    const payload = {
-      data: { "index": index_fixer(index), 'face_score': faceScore, 'input_text': inputText, 'username': username }
-    };
 
-    sendAxios(url, payload)
+
+    // // IF LOCAL DB
+    // const url = `${process.env.BizGPT_CLIENT_API_BASE_ADDRESS_SCHEME}://${process.env.BizGPT_CLIENT_API_BASE_ADDRESS}:${process.env.BizGPT_CLIENT_API_PORT}/${process.env.BizGT_CLIENT_API_BOOKMARK_RETRIEVE_PATH}`
+    // const payload = {
+    //   data: { "index": index_fixer(index), 'face_score': faceScore, 'input_text': inputText, 'username': username }
+    // };
+
+    // sendAxios(url, payload)
+
+    // // IF SUPABASE
+    const feedback_key = `feedback_${index_fixer(index)}`
+    let payload = {...feedbacks.feedbacks, mode: process.env.PERSISTENCE_MODE, state_diff: {}}
+    payload[feedback_key] = {"type" : "faces", "score": FaceToScoreMapping[faceScore], "text": inputText}
+    payload['data'][feedback_key] = {"type" : "faces", "score": FaceToScoreMapping[faceScore], "text": inputText}
+    payload['state_diff']['score'] = FaceToScoreMapping[faceScore]
+    payload['state_diff']['text'] = inputText
+    payload['state_diff']['index'] = index_fixer(index)
+
+    fetch('/api/feedbacks',{
+      method: 'POST',
+      headers: {},
+      body: JSON.stringify(payload)
+    }
+    )
+
   };
   if (index % 2 != 0) {
     return (

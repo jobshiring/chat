@@ -8,8 +8,49 @@ import { redirect } from 'next/navigation'
 
 import { type Chat } from '@/lib/types'
 
+export async function getBookmarkedMessagesSupabase(id: string) {
+  const cookieStore = cookies()
+  const supabase = createServerActionClient<Database>({
+    cookies: () => cookieStore
+  })
+  const { data } = await supabase
+    .from('bookmarked_messages')
+    .select('payload')
+    .eq('id', id)
+    .maybeSingle()
 
-export async function GetBookmarks(): Promise<JSON> {
+  return (data?.payload) ?? null
+}
+
+export async function getBookmarksSupabase(id: string) {
+  const cookieStore = cookies()
+  const supabase = createServerActionClient<Database>({
+    cookies: () => cookieStore
+  })
+  const { data } = await supabase
+    .from('bookmarks')
+    .select('payload')
+    .eq('id', id)
+    .maybeSingle()
+
+  return (data?.payload) ?? null
+}
+
+export async function getFeedbacksSupabase(id: string) {
+  const cookieStore = cookies()
+  const supabase = createServerActionClient<Database>({
+    cookies: () => cookieStore
+  })
+  const { data } = await supabase
+    .from('feedbacks')
+    .select('payload')
+    .eq('id', id)
+    .maybeSingle()
+
+  return (data?.payload) ?? null
+}
+
+export async function getBookmarksLocal(): Promise<JSON> {
   const url = `${process.env.BizGPT_CLIENT_API_BASE_ADDRESS_SCHEME}://${process.env.BizGPT_CLIENT_API_BASE_ADDRESS}:${process.env.BizGPT_CLIENT_API_PORT}/${process.env.BizGT_CLIENT_API_BOOKMARK_RETRIEVE_PATH}`
   const payload = {
     data: { "index": Math.round(2 / 2), 'bookmark_state': false, 'username': 'user1' }
@@ -32,7 +73,7 @@ export async function GetBookmarks(): Promise<JSON> {
   return output
 }
 
-export async function GetFeedbacks(): Promise<JSON> {
+export async function getFeedbacksLocal(): Promise<JSON> {
   const url = `${process.env.BizGPT_CLIENT_API_BASE_ADDRESS_SCHEME}://${process.env.BizGPT_CLIENT_API_BASE_ADDRESS}:${process.env.BizGPT_CLIENT_API_PORT}/${process.env.BizGT_CLIENT_API_FEEDBACK_RETRIEVE_PATH}`
   const payload = {
     data: { "index": Math.round(2 / 2), 'bookmark_state': false, 'username': 'user1' }
@@ -91,19 +132,6 @@ export async function getChat(id: string) {
   return (data?.payload as Chat) ?? null
 }
 
-export async function getBookmarks(id: string) {
-  const cookieStore = cookies()
-  const supabase = createServerActionClient<Database>({
-    cookies: () => cookieStore
-  })
-  const { data } = await supabase
-    .from('bookmarks')
-    .select('payload')
-    .eq('id', id)
-    .maybeSingle()
-
-  return (data?.payload as Chat) ?? null
-}
 
 export async function removeChat({ id, path }: { id: string; path: string }) {
   try {

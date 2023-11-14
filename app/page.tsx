@@ -2,7 +2,7 @@ import { nanoid } from '@/lib/utils'
 import { Chat } from '@/components/chat'
 import { auth } from '@/auth'
 import { cookies } from 'next/headers'
-import { getChat, GetBookmarks, GetFeedbacks } from '@/app/actions'
+import { getChat, getBookmarksLocal, getFeedbacksLocal } from '@/app/actions'
 
 export const runtime = 'nodejs'
 export const preferredRegion = 'home'
@@ -12,8 +12,8 @@ export default async function IndexPage() {
   const id = nanoid()
   const cookieStore = cookies()
   const session = await auth({ cookieStore })
-  const bookmarks = await GetBookmarks()
-  const feedbacks = await GetFeedbacks()
+  const bookmarks = await getBookmarksLocal()
+  const feedbacks = await getFeedbacksLocal()
 
   if (session?.user?.id) {
     const chat = await getChat(session?.user?.id)

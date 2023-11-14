@@ -12,15 +12,17 @@ import {
   TooltipContent,
   TooltipTrigger
 } from '@/components/ui/tooltip'
+import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
 
 interface SidebarItemBookmarksProps {
   children: React.ReactNode
 }
 
 export function SidebarItemBookmarks({ children }: SidebarItemBookmarksProps) {
-
+  const pathname = usePathname()
+  const isPathBookmarks =  (pathname == '/bookmarks') ? true : false
   return (
-    <div className="relative">
+    <div className={`relative ${isPathBookmarks ? "bg-gray-200 text-gray-700" : ""}`}>
       {/* <div className="absolute left-2 top-1 flex h-6 w-6 items-center justify-center">
         {chat.sharePath ? (
           <Tooltip delayDuration={1000}>
@@ -45,10 +47,11 @@ export function SidebarItemBookmarks({ children }: SidebarItemBookmarksProps) {
       >
         <div
           className="relative max-h-5 flex-1 select-none overflow-hidden text-ellipsis break-all"
-          title='Home'
+          title='Bookmarks'
         >
           <span className="whitespace-nowrap">Bookmarks</span>
         </div>
+        {/* {isPathBookmarks ? <KeyboardDoubleArrowLeftIcon sx={{pl: 0}} /> : <></>} */}
       </Link>
       {<div className="absolute right-2 top-1">{children}</div>}
     </div>
