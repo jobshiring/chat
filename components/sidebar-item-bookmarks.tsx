@@ -40,6 +40,7 @@ export function SidebarItemBookmarks({ children }: SidebarItemBookmarksProps) {
       </div> */}
       <Link
         href={'/bookmarks'}
+        prefetch={false}
         className={cn(
           buttonVariants({ variant: 'ghost' }),
           'group w-full pl-8 pr-16'

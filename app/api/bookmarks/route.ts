@@ -9,13 +9,12 @@ export const runtime = 'edge'
 
 export async function POST(req: Request) {
   const json = await req.json()
-  const mode = json.mode
+  let mode = json.mode
   const cookieStore = cookies()
   const userId = (await auth({ cookieStore }))?.user.id
   const userName = (await auth({ cookieStore }))?.user.email
 
-  if (mode == "supabase") {
-    console.log("supabase")
+  if (mode?.replace('"','') == "supabase") {
     const supabase = createRouteHandlerClient<Database>({
       cookies: () => cookieStore
     })
@@ -29,17 +28,18 @@ export async function POST(req: Request) {
     }
     await supabase.from('bookmarks').upsert({ id, user_id, payload }).throwOnError()
   }
-  else if (mode == "local") {
+  else if (mode?.replace('"','') == "local") {
     const url = `${process.env.BizGPT_CLIENT_API_BASE_ADDRESS_SCHEME}://${process.env.BizGPT_CLIENT_API_BASE_ADDRESS}:${process.env.BizGPT_CLIENT_API_PORT}/${process.env.BizGT_CLIENT_API_BOOKMARK_PERSIST_PATH}`
-    const payload = {
-      data: { "index": json?.state_diff?.index, 'bookmark_state': json?.bookmark_state?.index, 'username': userName }
-    };
-    fetch(url, {
+    const payload = { "streamlit_element_key_id": json?.state_diff?.index, 'is_bookmarked': json?.state_diff?.bookmark_state, 'username': userName };
+    console.log(url)
+    console.log(payload)
+    const res = await fetch(url, {
       method: 'POST',
       headers: { 'Content-Type': "application/json", 'Authorization': `Bearer ${process.env.BizGPT_CLIENT_API_TOKEN_FRONTEND}` },
       body: JSON.stringify(payload)
     }
     )
+    if(process.env.DEBUG_MODE) console.log(await res.json())
   }
   // to thelp resolve the error: Cannot read properties of undefined (reading 'headers')
   return NextResponse.json({ message: 'good', success: true });

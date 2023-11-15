@@ -27,6 +27,7 @@ import TextField from "@mui/material/TextField";
 import SendIcon from '@mui/icons-material/Send';
 
 import { StyledEngineProvider } from '@mui/material/styles';
+import { submitFeedback, submitBookmark} from '@/app/actions'
 
 const StyledTextField = styled(TextField)(
   ({ color }) => `
@@ -151,12 +152,13 @@ export function ChatMessageActionsBookmark({
       payload['data'][bookmark_key] = {"bookmark" : false}
       payload['state_diff']['bookmark_state'] = false
       payload['state_diff']['index'] = index_fixer(index)
-      fetch('/api/bookmarks',{
+      await fetch('/api/bookmarks', {
         method: 'POST',
         headers: {},
         body: JSON.stringify(payload)
       }
       )
+      submitBookmark(payload)
     }
     else if (isBookmarked == false) {
       setBookmark(true)
@@ -170,13 +172,13 @@ export function ChatMessageActionsBookmark({
       payload['data'][bookmark_key] = {"bookmark" : true}
       payload['state_diff']['bookmark_state'] = true
       payload['state_diff']['index'] = index_fixer(index)
-
-      fetch('/api/bookmarks',{
+      await fetch('/api/bookmarks', {
         method: 'POST',
         headers: {},
         body: JSON.stringify(payload)
       }
       )
+      await submitBookmark(payload)
     }
   }
 
@@ -281,20 +283,19 @@ export function ChatMessageActionsFeedback({
 
     // // IF SUPABASE
     const feedback_key = `feedback_${index_fixer(index)}`
-    let payload = {...feedbacks.feedbacks, mode: process.env.PERSISTENCE_MODE, state_diff: {}}
+    let payload = {data: {...feedbacks.feedbacks}, mode: process.env.PERSISTENCE_MODE, state_diff: {}}
     payload[feedback_key] = {"type" : "faces", "score": FaceToScoreMapping[faceScore], "text": inputText}
     payload['data'][feedback_key] = {"type" : "faces", "score": FaceToScoreMapping[faceScore], "text": inputText}
     payload['state_diff']['score'] = FaceToScoreMapping[faceScore]
     payload['state_diff']['text'] = inputText
     payload['state_diff']['index'] = index_fixer(index)
-
-    fetch('/api/feedbacks',{
+    fetch('/api/feedbacks', {
       method: 'POST',
       headers: {},
       body: JSON.stringify(payload)
     }
     )
-
+    submitFeedback(payload)
   };
   if (index % 2 != 0) {
     return (

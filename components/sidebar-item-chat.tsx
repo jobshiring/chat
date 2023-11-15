@@ -40,6 +40,7 @@ export function SidebarItemChat({ children }: SidebarItemChatProps) {
       </div> */}
       <Link
         href={'/'}
+        prefetch={false}
         className={cn(
           buttonVariants({ variant: 'ghost' }),
           'group w-full pl-8 pr-16'
