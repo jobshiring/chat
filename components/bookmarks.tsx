@@ -5,7 +5,7 @@ import { useChat, type Message } from 'ai/react'
 import { cn } from '@/lib/utils'
 import { ChatList } from '@/components/chat-list'
 import { ChatPanel } from '@/components/chat-panel'
-import { EmptyScreen } from '@/components/empty-screen'
+import { EmptyScreenBookmarks } from '@/components/empty-screen-bookmarks'
 import { ChatScrollAnchor } from '@/components/chat-scroll-anchor'
 import { useLocalStorage } from '@/lib/hooks/use-local-storage'
 import {
@@ -61,7 +61,7 @@ export function Bookmarks({ id, initialMessages, username, bookmarks, feedbacks,
             <ChatScrollAnchor trackVisibility={isLoading} />
           </>
         ) : (
-          <EmptyScreen setInput={setInput} />
+          <EmptyScreenBookmarks setInput={setInput} />
         )}
       </div>
       {/* <ChatPanel
