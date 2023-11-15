@@ -30,7 +30,7 @@ export async function POST(req: Request) {
   }
   else if (mode?.replace('"','') == "local") {
     const url = `${process.env.BizGPT_CLIENT_API_BASE_ADDRESS_SCHEME}://${process.env.BizGPT_CLIENT_API_BASE_ADDRESS}:${process.env.BizGPT_CLIENT_API_PORT}/${process.env.BizGT_CLIENT_API_BOOKMARK_PERSIST_PATH}`
-    const payload = { "streamlit_element_key_id": json?.state_diff?.index, 'is_bookmarked': json?.state_diff?.bookmark_state, 'username': userName };
+    const payload = { "streamlit_element_key_id": json?.state_diff?.index + 1, 'is_bookmarked': json?.state_diff?.bookmark_state, 'username': userName };
     console.log(url)
     console.log(payload)
     const res = await fetch(url, {
