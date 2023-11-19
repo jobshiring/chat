@@ -117,7 +117,7 @@ export async function getChatLocal(username: string) {
   })
   if (!res.ok) {
     // This will activate the closest `error.js` Error Boundary
-    throw new Error('Failed to fetch/retrieve feedback data - The main component')
+    throw new Error('Failed to fetch/retrieve chat data - The main component')
   }
   const data = await res.json();
 
