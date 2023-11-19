@@ -27,6 +27,7 @@ import TextField from "@mui/material/TextField";
 import SendIcon from '@mui/icons-material/Send';
 
 import { StyledEngineProvider } from '@mui/material/styles';
+import { submitFeedback, submitBookmark } from '@/app/actions'
 
 const StyledTextField = styled(TextField)(
   ({ color }) => `
@@ -59,6 +60,22 @@ const TextFieldcolors = {
   "😞": "error"
 }
 
+const FaceToScoreMapping = {
+  "😀": 100,
+  "🙂": 80,
+  "😐": 60,
+  "🙁": 40,
+  "😞": 20
+}
+
+const FaceToScoreMappingReverse = {
+  100: "😀",
+  80: "🙂",
+  60: "😐",
+  40: "🙁",
+  20: "😞"
+}
+
 function index_fixer(number: Number): Number {
   if (number <= 1) {
     return 1
@@ -82,31 +99,6 @@ interface ChatMessageActionsFeedbackProps extends React.ComponentProps<'div'> {
   feedbacks: JSON | undefined
 }
 
-let sendAxios = (url: string, payload: Object) => {
-  axios.post(url, payload).then(({ data }) => {
-    console.log(data);
-  }).catch(function (error) {
-    if (error.response) {
-      // The request was made and the server responded with a status code
-      // that falls out of the range of 2xx
-      console.log(error.response.data);
-      console.log(error.response.status);
-      console.log(error.response.headers);
-    } else if (error.request) {
-      // The request was made but no response was received
-      // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-      // http.ClientRequest in node.js
-      console.log(error.request);
-    } else {
-      // Something happened in setting up the request that triggered an Error
-      console.log('Error', error.message);
-    }
-    console.log(error.config);
-  });
-}
-
-
-
 
 export function ChatMessageActionsBookmark({
   message,
@@ -127,25 +119,49 @@ export function ChatMessageActionsBookmark({
     }
   }, [bookmark_state, index])
 
-  axios.defaults.headers.common['Content-Type'] = "application/json"
-  axios.defaults.headers.common['Authorization'] = `Bearer ${process.env.BizGPT_CLIENT_API_TOKEN_FRONTEND}`
+  // axios.defaults.headers.common['Content-Type'] = "application/json"
+  // axios.defaults.headers.common['Authorization'] = `Bearer ${process.env.BizGPT_CLIENT_API_TOKEN_FRONTEND}`
   const Bookmark = async () => {
     if (isBookmarked == true) {
       setBookmark(false)
-      const url = `${process.env.BizGPT_CLIENT_API_BASE_ADDRESS_SCHEME}://${process.env.BizGPT_CLIENT_API_BASE_ADDRESS}:${process.env.BizGPT_CLIENT_API_PORT}/${process.env.BizGT_CLIENT_API_BOOKMARK_RETRIEVE_PATH}`
-      const payload = {
-        data: { "index": index_fixer(index), 'bookmark_state': false, 'username': username }
-      };
+      // const url = `${process.env.BizGPT_CLIENT_API_BASE_ADDRESS_SCHEME}://${process.env.BizGPT_CLIENT_API_BASE_ADDRESS}:${process.env.BizGPT_CLIENT_API_PORT}/${process.env.BizGT_CLIENT_API_BOOKMARK_RETRIEVE_PATH}`
+      // const payload = {
+      //   data: { "index": index_fixer(index), 'bookmark_state': false, 'username': username }
+      // };
 
-      sendAxios(url, payload)
+      // sendAxios(url, payload)
+      const bookmark_key = `bookmark_${index_fixer(index)}`
+      let payload = { data: { ...bookmarks?.bookmarks }, mode: process.env.PERSISTENCE_MODE, state_diff: {} }
+      payload['data'][bookmark_key] = { "bookmark": false }
+      payload['state_diff']['bookmark_state'] = false
+      payload['state_diff']['index'] = index_fixer(index)
+      await fetch('/api/bookmarks', {
+        method: 'POST',
+        headers: {},
+        body: JSON.stringify(payload)
+      }
+      )
+      submitBookmark(payload)
     }
     else if (isBookmarked == false) {
       setBookmark(true)
-      const url = `${process.env.BizGPT_CLIENT_API_BASE_ADDRESS_SCHEME}://${process.env.BizGPT_CLIENT_API_BASE_ADDRESS}:${process.env.BizGPT_CLIENT_API_PORT}/${process.env.BizGT_CLIENT_API_BOOKMARK_RETRIEVE_PATH}`
-      const payload = {
-        data: { "index": index_fixer(index), 'bookmark_state': true, 'username': username }
-      };
-      sendAxios(url, payload)
+      // const url = `${process.env.BizGPT_CLIENT_API_BASE_ADDRESS_SCHEME}://${process.env.BizGPT_CLIENT_API_BASE_ADDRESS}:${process.env.BizGPT_CLIENT_API_PORT}/${process.env.BizGT_CLIENT_API_BOOKMARK_RETRIEVE_PATH}`
+      // const payload = {
+      //   data: { "index": index_fixer(index), 'bookmark_state': true, 'username': username }
+      // };
+      // sendAxios(url, payload)
+      const bookmark_key = `bookmark_${index_fixer(index)}`
+      let payload = { data: { ...bookmarks?.bookmarks }, mode: process.env.PERSISTENCE_MODE, state_diff: {} }
+      payload['data'][bookmark_key] = { "bookmark": true }
+      payload['state_diff']['bookmark_state'] = true
+      payload['state_diff']['index'] = index_fixer(index)
+      await fetch('/api/bookmarks', {
+        method: 'POST',
+        headers: {},
+        body: JSON.stringify(payload)
+      }
+      )
+      await submitBookmark(payload)
     }
   }
 
@@ -187,7 +203,7 @@ export function ChatMessageActionsFeedback({
     if (index % 2 != 0) {
       if (feedback_state) {
         setSubmitted(true);
-        setFaceScore(feedback_state);
+        setFaceScore(FaceToScoreMappingReverse[feedback_state]);
       }
     }
   }, [feedback_state, index])
@@ -238,12 +254,31 @@ export function ChatMessageActionsFeedback({
 
   const handleSubmission = () => {
     setSubmitted(true);
-    const url = `${process.env.BizGPT_CLIENT_API_BASE_ADDRESS_SCHEME}://${process.env.BizGPT_CLIENT_API_BASE_ADDRESS}:${process.env.BizGPT_CLIENT_API_PORT}/${process.env.BizGT_CLIENT_API_BOOKMARK_RETRIEVE_PATH}`
-    const payload = {
-      data: { "index": index_fixer(index), 'face_score': faceScore, 'input_text': inputText, 'username': username }
-    };
 
-    sendAxios(url, payload)
+
+    // // IF LOCAL DB
+    // const url = `${process.env.BizGPT_CLIENT_API_BASE_ADDRESS_SCHEME}://${process.env.BizGPT_CLIENT_API_BASE_ADDRESS}:${process.env.BizGPT_CLIENT_API_PORT}/${process.env.BizGT_CLIENT_API_BOOKMARK_RETRIEVE_PATH}`
+    // const payload = {
+    //   data: { "index": index_fixer(index), 'face_score': faceScore, 'input_text': inputText, 'username': username }
+    // };
+
+    // sendAxios(url, payload)
+
+    // // IF SUPABASE
+    const feedback_key = `feedback_${index_fixer(index)}`
+    let payload = { data: { ...feedbacks?.feedbacks }, mode: process.env.PERSISTENCE_MODE, state_diff: {} }
+    payload[feedback_key] = { "type": "faces", "score": FaceToScoreMapping[faceScore], "text": inputText }
+    payload['data'][feedback_key] = { "type": "faces", "score": FaceToScoreMapping[faceScore], "text": inputText }
+    payload['state_diff']['score'] = FaceToScoreMapping[faceScore]
+    payload['state_diff']['text'] = inputText
+    payload['state_diff']['index'] = index_fixer(index)
+    fetch('/api/feedbacks', {
+      method: 'POST',
+      headers: {},
+      body: JSON.stringify(payload)
+    }
+    )
+    submitFeedback(payload)
   };
   if (index % 2 != 0) {
     return (
@@ -304,7 +339,7 @@ export function ChatMessageActionsFeedback({
             }}
             onClick={() => submitted ? {} : handleFaceClick("😀")}
           />
-          {submitted === false && faceScore !== null ? <StyledTextField id="outlined-multiline-static" inputProps={{ maxLength: "1000" }} fullWidth={"false"} onChange={handleTextInput} multiline rows={4} placeholder={"Please describe..."} aria-label="Demo input" color={TextFieldcolors[faceScore]} /> : null}
+          {submitted === false && faceScore !== null ? <StyledTextField id="outlined-multiline-static" inputProps={{ maxLength: "1000" }} onChange={handleTextInput} multiline rows={4} placeholder={"Please describe..."} aria-label="Demo input" color={TextFieldcolors[faceScore]} /> : null}
           {submitted === false && faceScore !== null ? <ButtonMaterial sx={{ color: colors[faceScore] }} endIcon={<SendIcon />} variant="text" size="small" onClick={handleSubmission}>Submit</ButtonMaterial> : null}
         </Stack>
       </Box>

@@ -15,10 +15,11 @@ export interface ChatMessageProps {
   index: Number,
   username: String | undefined,
   bookmarks: JSON | undefined,
-  feedbacks: JSON | undefined
+  feedbacks: JSON | undefined,
+  bookmark_page: Boolean
 }
 
-export function ChatMessage({ message, index, username, bookmarks, feedbacks, ...props }: ChatMessageProps) {
+export function ChatMessage({ message, index, username, bookmarks, feedbacks, bookmark_page, ...props }: ChatMessageProps) {
   return (
     <div
       className={cn('group relative mb-4 flex items-start md:-ml-12')}
@@ -76,8 +77,8 @@ export function ChatMessage({ message, index, username, bookmarks, feedbacks, ..
         >
           {message.content}
         </MemoizedReactMarkdown>
-        <ChatMessageActionsBookmark message={message} index={index} username={username} className={"bookmark-cls"} bookmarks={bookmarks}/>
-        <ChatMessageActionsFeedback message={message} index={index} username={username} className={"feedback-cls"} feedbacks={feedbacks} />
+        {bookmark_page ? undefined : <ChatMessageActionsBookmark message={message} index={index} username={username} className={"bookmark-cls"} bookmarks={bookmarks}/>}
+        {bookmark_page ? undefined : <ChatMessageActionsFeedback message={message} index={index} username={username} className={"feedback-cls"} feedbacks={feedbacks} />}
       </div>
     </div>
   )
