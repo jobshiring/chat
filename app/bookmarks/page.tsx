@@ -3,7 +3,7 @@ import { nanoid } from '@/lib/utils'
 import { Bookmarks } from '@/components/bookmarks'
 import { auth } from '@/auth'
 import { cookies } from 'next/headers'
-import { getBookmarkedMessagesSupabase, getChatSupabase, getChatLocal, getBookmarksLocal, getBookmarksSupabase, getFeedbacksLocal, getFeedbacksSupabase } from '@/app/actions'
+import { getChatSupabase, getChatLocal, getBookmarksLocal, getBookmarksSupabase, getFeedbacksLocal, getFeedbacksSupabase } from '@/app/actions'
 import { type Chat } from '@/lib/types'
 
 export const runtime = 'nodejs'
@@ -12,7 +12,7 @@ export const dynamic = 'force-dynamic';
 
 async function getBookmarkedMessages(chat: Chat, bookmarks: JSON){
   let bookmarked_messages = { messages : []};
-  
+  if (bookmarks)
   for (var key of Object.keys(bookmarks?.bookmarks)){
     if (bookmarks?.bookmarks[key]?.bookmark){
         let index = Number(key.replace('bookmark_',''))

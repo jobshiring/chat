@@ -27,7 +27,7 @@ import TextField from "@mui/material/TextField";
 import SendIcon from '@mui/icons-material/Send';
 
 import { StyledEngineProvider } from '@mui/material/styles';
-import { submitFeedback, submitBookmark} from '@/app/actions'
+import { submitFeedback, submitBookmark } from '@/app/actions'
 
 const StyledTextField = styled(TextField)(
   ({ color }) => `
@@ -68,6 +68,14 @@ const FaceToScoreMapping = {
   "😞": 20
 }
 
+const FaceToScoreMappingReverse = {
+  100: "😀",
+  80: "🙂",
+  60: "😐",
+  40: "🙁",
+  20: "😞"
+}
+
 function index_fixer(number: Number): Number {
   if (number <= 1) {
     return 1
@@ -90,31 +98,6 @@ interface ChatMessageActionsFeedbackProps extends React.ComponentProps<'div'> {
   username: String | undefined,
   feedbacks: JSON | undefined
 }
-
-let sendAxios = (url: string, payload: Object) => {
-  axios.post(url, payload).then(({ data }) => {
-    console.log(data);
-  }).catch(function (error) {
-    if (error.response) {
-      // The request was made and the server responded with a status code
-      // that falls out of the range of 2xx
-      console.log(error.response.data);
-      console.log(error.response.status);
-      console.log(error.response.headers);
-    } else if (error.request) {
-      // The request was made but no response was received
-      // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-      // http.ClientRequest in node.js
-      console.log(error.request);
-    } else {
-      // Something happened in setting up the request that triggered an Error
-      console.log('Error', error.message);
-    }
-    console.log(error.config);
-  });
-}
-
-
 
 
 export function ChatMessageActionsBookmark({
@@ -148,8 +131,8 @@ export function ChatMessageActionsBookmark({
 
       // sendAxios(url, payload)
       const bookmark_key = `bookmark_${index_fixer(index)}`
-      let payload = {data: {...bookmarks.bookmarks}, mode: process.env.PERSISTENCE_MODE, state_diff: {}}
-      payload['data'][bookmark_key] = {"bookmark" : false}
+      let payload = { data: { ...bookmarks?.bookmarks }, mode: process.env.PERSISTENCE_MODE, state_diff: {} }
+      payload['data'][bookmark_key] = { "bookmark": false }
       payload['state_diff']['bookmark_state'] = false
       payload['state_diff']['index'] = index_fixer(index)
       await fetch('/api/bookmarks', {
@@ -168,8 +151,8 @@ export function ChatMessageActionsBookmark({
       // };
       // sendAxios(url, payload)
       const bookmark_key = `bookmark_${index_fixer(index)}`
-      let payload = {data: {...bookmarks.bookmarks}, mode: process.env.PERSISTENCE_MODE, state_diff: {}}
-      payload['data'][bookmark_key] = {"bookmark" : true}
+      let payload = { data: { ...bookmarks?.bookmarks }, mode: process.env.PERSISTENCE_MODE, state_diff: {} }
+      payload['data'][bookmark_key] = { "bookmark": true }
       payload['state_diff']['bookmark_state'] = true
       payload['state_diff']['index'] = index_fixer(index)
       await fetch('/api/bookmarks', {
@@ -220,7 +203,7 @@ export function ChatMessageActionsFeedback({
     if (index % 2 != 0) {
       if (feedback_state) {
         setSubmitted(true);
-        setFaceScore(feedback_state);
+        setFaceScore(FaceToScoreMappingReverse[feedback_state]);
       }
     }
   }, [feedback_state, index])
@@ -283,9 +266,9 @@ export function ChatMessageActionsFeedback({
 
     // // IF SUPABASE
     const feedback_key = `feedback_${index_fixer(index)}`
-    let payload = {data: {...feedbacks.feedbacks}, mode: process.env.PERSISTENCE_MODE, state_diff: {}}
-    payload[feedback_key] = {"type" : "faces", "score": FaceToScoreMapping[faceScore], "text": inputText}
-    payload['data'][feedback_key] = {"type" : "faces", "score": FaceToScoreMapping[faceScore], "text": inputText}
+    let payload = { data: { ...feedbacks?.feedbacks }, mode: process.env.PERSISTENCE_MODE, state_diff: {} }
+    payload[feedback_key] = { "type": "faces", "score": FaceToScoreMapping[faceScore], "text": inputText }
+    payload['data'][feedback_key] = { "type": "faces", "score": FaceToScoreMapping[faceScore], "text": inputText }
     payload['state_diff']['score'] = FaceToScoreMapping[faceScore]
     payload['state_diff']['text'] = inputText
     payload['state_diff']['index'] = index_fixer(index)
@@ -356,7 +339,7 @@ export function ChatMessageActionsFeedback({
             }}
             onClick={() => submitted ? {} : handleFaceClick("😀")}
           />
-          {submitted === false && faceScore !== null ? <StyledTextField id="outlined-multiline-static" inputProps={{ maxLength: "1000" }} fullWidth={"false"} onChange={handleTextInput} multiline rows={4} placeholder={"Please describe..."} aria-label="Demo input" color={TextFieldcolors[faceScore]} /> : null}
+          {submitted === false && faceScore !== null ? <StyledTextField id="outlined-multiline-static" inputProps={{ maxLength: "1000" }} onChange={handleTextInput} multiline rows={4} placeholder={"Please describe..."} aria-label="Demo input" color={TextFieldcolors[faceScore]} /> : null}
           {submitted === false && faceScore !== null ? <ButtonMaterial sx={{ color: colors[faceScore] }} endIcon={<SendIcon />} variant="text" size="small" onClick={handleSubmission}>Submit</ButtonMaterial> : null}
         </Stack>
       </Box>

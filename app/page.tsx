@@ -3,7 +3,7 @@ import { nanoid } from '@/lib/utils'
 import { Chat } from '@/components/chat'
 import { auth } from '@/auth'
 import { cookies } from 'next/headers'
-import { getChatSupabase, getChatLocal, getBookmarksLocal, getFeedbacksLocal } from '@/app/actions'
+import { getChatSupabase, getChatLocal, getBookmarksLocal, getBookmarksSupabase, getFeedbacksLocal, getFeedbacksSupabase } from '@/app/actions'
 
 export const runtime = 'nodejs'
 export const preferredRegion = 'home'
@@ -40,7 +40,7 @@ export default async function IndexPage() {
   
   if (session?.user?.id && mode?.replace('"','') == 'supabase') {
     chat = await getChatSupabase(session?.user?.id)
-    return <Chat id={session?.user?.id} username={session?.user?.email} initialMessages={chat.messages} bookmarks={bookmarks} feedbacks={feedbacks} />
+    return <Chat id={session?.user?.id} username={session?.user?.email} initialMessages={chat?.messages} bookmarks={bookmarks} feedbacks={feedbacks} />
   }
   else if (session?.user?.id && mode?.replace('"','') == 'local'){
     let temp_response_chat = await getChatLocal(session?.user?.email)
