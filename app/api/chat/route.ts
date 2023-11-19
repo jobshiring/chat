@@ -1,6 +1,7 @@
+// @ts-nocheck 
+
 import 'server-only'
 import { OpenAIStream, StreamingTextResponse } from 'ai'
-import { Configuration, OpenAIApi } from 'openai-edge'
 import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs'
 import { cookies } from 'next/headers'
 import { Database } from '@/lib/db_types'
@@ -10,11 +11,6 @@ import { nanoid } from '@/lib/utils'
 
 export const runtime = 'edge'
 
-const configuration = new Configuration({
-  apiKey: process.env.OPENAI_API_KEY
-})
-
-const openai = new OpenAIApi(configuration)
 
 export async function POST(req: Request) {
   const cookieStore = cookies()
@@ -35,11 +31,15 @@ export async function POST(req: Request) {
     configuration.apiKey = previewToken
   }
 
-  const res = await openai.createChatCompletion({
-    model: 'gpt-3.5-turbo',
-    messages,
-    temperature: 0.7,
-    stream: true
+  const mode = process.env.PERSISTENCE_MODE;
+  const userName = (await auth({ cookieStore }))?.user.email
+  const url = `${process.env.BizGPT_CLIENT_API_BASE_ADDRESS_SCHEME}://${process.env.BizGPT_CLIENT_API_BASE_ADDRESS}:${process.env.BizGPT_CLIENT_API_PORT}/${process.env.BizGT_CLIENT_API_MESSAGES_SUBMIT_PATH}`
+  const index = Math.round(json.messages.length/ 2)
+  const payload = { "username": userName, "streamlit_element_key_id": String(index), "question_text": json.messages.at(-1).content };
+  const res = await fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': "application/json", 'Authorization': `Bearer ${process.env.BizGPT_CLIENT_API_TOKEN_FRONTEND}` },
+    body: JSON.stringify(payload)
   })
 
   const stream = OpenAIStream(res, {
@@ -62,8 +62,9 @@ export async function POST(req: Request) {
           }
         ]
       }
-      // Insert chat into database.
-      await supabase.from('chats').upsert({ id, payload }).throwOnError()
+      if (mode == 'supabase')
+        // Insert chat into database.
+        await supabase.from('chats').upsert({ id, payload }).throwOnError()
     }
   })
 
