@@ -119,17 +119,10 @@ export function ChatMessageActionsBookmark({
     }
   }, [bookmark_state, index])
 
-  // axios.defaults.headers.common['Content-Type'] = "application/json"
-  // axios.defaults.headers.common['Authorization'] = `Bearer ${process.env.BizGPT_CLIENT_API_TOKEN_FRONTEND}`
   const Bookmark = async () => {
     if (isBookmarked == true) {
       setBookmark(false)
-      // const url = `${process.env.BizGPT_CLIENT_API_BASE_ADDRESS_SCHEME}://${process.env.BizGPT_CLIENT_API_BASE_ADDRESS}:${process.env.BizGPT_CLIENT_API_PORT}/${process.env.BizGT_CLIENT_API_BOOKMARK_RETRIEVE_PATH}`
-      // const payload = {
-      //   data: { "index": index_fixer(index), 'bookmark_state': false, 'username': username }
-      // };
 
-      // sendAxios(url, payload)
       const bookmark_key = `bookmark_${index_fixer(index)}`
       let payload = { data: { ...bookmarks?.bookmarks }, mode: process.env.PERSISTENCE_MODE, state_diff: {} }
       payload['data'][bookmark_key] = { "bookmark": false }
@@ -145,11 +138,6 @@ export function ChatMessageActionsBookmark({
     }
     else if (isBookmarked == false) {
       setBookmark(true)
-      // const url = `${process.env.BizGPT_CLIENT_API_BASE_ADDRESS_SCHEME}://${process.env.BizGPT_CLIENT_API_BASE_ADDRESS}:${process.env.BizGPT_CLIENT_API_PORT}/${process.env.BizGT_CLIENT_API_BOOKMARK_RETRIEVE_PATH}`
-      // const payload = {
-      //   data: { "index": index_fixer(index), 'bookmark_state': true, 'username': username }
-      // };
-      // sendAxios(url, payload)
       const bookmark_key = `bookmark_${index_fixer(index)}`
       let payload = { data: { ...bookmarks?.bookmarks }, mode: process.env.PERSISTENCE_MODE, state_diff: {} }
       payload['data'][bookmark_key] = { "bookmark": true }
@@ -203,7 +191,7 @@ export function ChatMessageActionsFeedback({
     if (index % 2 != 0) {
       if (feedback_state) {
         setSubmitted(true);
-        setFaceScore(FaceToScoreMappingReverse[feedback_state]);
+        setFaceScore(feedback_state);
       }
     }
   }, [feedback_state, index])
@@ -255,16 +243,6 @@ export function ChatMessageActionsFeedback({
   const handleSubmission = () => {
     setSubmitted(true);
 
-
-    // // IF LOCAL DB
-    // const url = `${process.env.BizGPT_CLIENT_API_BASE_ADDRESS_SCHEME}://${process.env.BizGPT_CLIENT_API_BASE_ADDRESS}:${process.env.BizGPT_CLIENT_API_PORT}/${process.env.BizGT_CLIENT_API_BOOKMARK_RETRIEVE_PATH}`
-    // const payload = {
-    //   data: { "index": index_fixer(index), 'face_score': faceScore, 'input_text': inputText, 'username': username }
-    // };
-
-    // sendAxios(url, payload)
-
-    // // IF SUPABASE
     const feedback_key = `feedback_${index_fixer(index)}`
     let payload = { data: { ...feedbacks?.feedbacks }, mode: process.env.PERSISTENCE_MODE, state_diff: {} }
     payload[feedback_key] = { "type": "faces", "score": FaceToScoreMapping[faceScore], "text": inputText }
