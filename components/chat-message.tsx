@@ -20,6 +20,9 @@ export interface ChatMessageProps {
 }
 
 export function ChatMessage({ message, index, username, bookmarks, feedbacks, bookmark_page, ...props }: ChatMessageProps) {
+
+  const text_direction = process.env.TEXT_DIRECTION
+  
   return (
     <div
       className={cn('group relative mb-4 flex items-start md:-ml-12')}
@@ -41,7 +44,7 @@ export function ChatMessage({ message, index, username, bookmarks, feedbacks, bo
           remarkPlugins={[remarkGfm, remarkMath]}
           components={{
             p({ children }) {
-              return <p className="mb-2 last:mb-0 whitespace-pre-wrap" dir="rtl" >{children}</p>
+              return <p className="mb-2 last:mb-0" dir={text_direction == 'RTL' ? "rtl" : "ltr" } >{children}</p>
             },
             code({ node, inline, className, children, ...props }) {
               if (children.length) {

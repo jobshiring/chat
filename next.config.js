@@ -24,7 +24,8 @@ module.exports = {
     BizGT_CLIENT_API_MESSAGES_SUBMIT_PATH: process.env.BizGT_CLIENT_API_MESSAGES_SUBMIT_PATH,
     BizGPT_CLIENT_API_TOKEN_FRONTEND: process.env.BizGPT_CLIENT_API_TOKEN_FRONTEND,
     PERSISTENCE_MODE: process.env.PERSISTENCE_MODE,
-    DEBUG_MODE: process.env.DEBUG_MODE
+    DEBUG_MODE: process.env.DEBUG_MODE,
+    TEXT_DIRECTION: process.env.TEXT_DIRECTION
   },
   compiler: {
     // Enables the styled-components SWC transform
