@@ -1,16 +1,17 @@
-// @ts-nocheck 
+import { Separator } from "@/components/ui/separator"
+import { KnowledgeBase } from "@/app/admin/knowledgebase"
 
-import { Admin } from '@/components/admin'
-import { auth } from '@/auth'
-import { cookies } from 'next/headers'
-
-export const runtime = 'nodejs'
-export const preferredRegion = 'home'
-export const dynamic = 'force-dynamic';
-
-export default async function AdminPage() {
-  const cookieStore = cookies()
-  const session = await auth({ cookieStore })
-
-  return <Admin id={session?.user?.id} username={session?.user?.email} />
+export default function AdminPage() {
+  return (
+    <div className="space-y-6 w-full">
+      <div>
+        <h3 className="text-lg font-medium">Knowledge-base</h3>
+        <p className="text-sm text-muted-foreground">
+          Add data to your knowledge-base.
+        </p>
+      </div>
+      <> </>
+      <KnowledgeBase />
+    </div>
+  )
 }
