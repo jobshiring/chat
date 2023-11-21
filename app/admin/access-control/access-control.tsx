@@ -99,36 +99,27 @@ export const columns: ColumnDef<Payment>[] = [
     enableHiding: false,
   },
   {
+    accessorKey: "email",
+    header: "Email",
+    cell: ({ row }) => <div className="lowercase">{row.getValue("email")}</div>,
+  },
+  {
     accessorKey: "role",
     header: "Role",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
+          className="p-0"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
           Role
-          <CaretSortIcon className="ml-2 h-4 w-4" />
+          <CaretSortIcon className="ml-0 h-4 w-4" />
         </Button>
       )
     },
     cell: ({ row }) => (
       <div className="capitalize">{row.getValue("role")}</div>
     ),
-  },
-  {
-    accessorKey: "email",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Email
-          <CaretSortIcon className="ml-2 h-4 w-4" />
-        </Button>
-      )
-    },
-    cell: ({ row }) => <div className="lowercase">{row.getValue("email")}</div>,
   },
   {
     id: "actions",
