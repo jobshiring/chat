@@ -110,7 +110,7 @@ export function LoginForm({
             {isLoading && <IconSpinner className="mr-2 animate-spin" />}
             {action === 'sign-in' ? 'Sign In' : 'Sign Up'}
           </Button>
-          <p className="ml-4">
+          {/* <p className="ml-4">
             {action === 'sign-in' ? (
               <>
                 Don&apos;t have an account?{' '}
@@ -126,7 +126,7 @@ export function LoginForm({
                 </Link>
               </>
             )}
-          </p>
+          </p> */}
         </div>
       </form>
     </div>

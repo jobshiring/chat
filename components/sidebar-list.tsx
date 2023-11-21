@@ -13,19 +13,8 @@ export async function SidebarList({ userId }: SidebarListProps) {
   return (
     <div className="flex-1 overflow-auto">
       <div className="space-y-2">
-        {/* {chats.map(
-          chat =>
-            chat && ( */}
-              <SidebarItemChat key={'1'} >
-                {/* <SidebarActions
-                  chat={chat}
-                  removeChat={removeChat}
-                  shareChat={shareChat}
-                /> */}
-              </SidebarItemChat>
-              <SidebarItemBookmarks key={'2'} > </SidebarItemBookmarks>
-            {/* )
-        )} */}
+        <SidebarItemChat key={'1'} > </SidebarItemChat>
+        <SidebarItemBookmarks key={'2'} > </SidebarItemBookmarks>
       </div>
     </div>
   )
