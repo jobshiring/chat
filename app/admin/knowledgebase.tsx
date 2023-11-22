@@ -77,10 +77,9 @@ export function KnowledgeBase() {
       <div className="flex h-[calc(100vh-theme(spacing.16))] flex-col items-center">
         <div className="w-[600px] flex-col">
           <Tabs defaultValue="upload_file" className="w-full">
-            <TabsList className="grid w-full grid-cols-3">
+            <TabsList className="grid w-full grid-cols-2">
               <TabsTrigger value="upload_file">Upload File</TabsTrigger>
               <TabsTrigger value="enter_text">Enter Text</TabsTrigger>
-              <TabsTrigger value="enter_text3">Enter Text</TabsTrigger>
             </TabsList>
             <TabsContent value="upload_file">
               <Card>

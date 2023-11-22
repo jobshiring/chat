@@ -41,6 +41,17 @@ import {
   TableRow,
 } from "@/components/ui/table"
 
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+
+
 const data: Payment[] = [
   {
     id: "m5gr84i9",
@@ -73,6 +84,25 @@ export type Payment = {
   id: string
   role: "admin" | "viewer" | "editor"
   email: string
+}
+
+
+const DropDownSelector = () => {
+  return (
+    <Select>
+    <SelectTrigger className="w-[180px]">
+      <SelectValue placeholder="Select Role" />
+    </SelectTrigger>
+    <SelectContent>
+      <SelectGroup>
+        <SelectLabel>Roles</SelectLabel>
+        <SelectItem value="admin">Admin</SelectItem>
+        <SelectItem value="editor">Editor</SelectItem>
+        <SelectItem value="viewer">Viewer</SelectItem>
+      </SelectGroup>
+    </SelectContent>
+  </Select>
+  )
 }
 
 export const columns: ColumnDef<Payment>[] = [
@@ -125,29 +155,7 @@ export const columns: ColumnDef<Payment>[] = [
     id: "actions",
     enableHiding: false,
     cell: ({ row }) => {
-      const payment = row.original
-
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <DotsHorizontalIcon className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(payment.id)}
-            >
-              Copy payment ID
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>View customer</DropdownMenuItem>
-            <DropdownMenuItem>View payment details</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      )
+      return (row.original.role != 'admin' ? <DropDownSelector /> : undefined)
     },
   },
 ]

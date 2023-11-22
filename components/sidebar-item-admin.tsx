@@ -11,7 +11,7 @@ interface SidebarItemAdminProps {
 
 export function SidebarItemAdmin({ children }: SidebarItemAdminProps) {
   const pathname = usePathname()
-  const isPathAdmin = (pathname == '/admin') ? true : false
+  const isPathAdmin = pathname.includes('/admin') ? true : false
   return (
     <div className={`relative ${isPathAdmin ? "bg-gray-200 text-gray-700" : ""}`}>
       <Link
