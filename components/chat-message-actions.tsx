@@ -149,7 +149,7 @@ export function ChatMessageActionsBookmark({
         body: JSON.stringify(payload)
       }
       )
-      await submitBookmark(payload)
+      submitBookmark(payload)
     }
   }
 

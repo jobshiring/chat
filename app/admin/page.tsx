@@ -1,7 +1,10 @@
-import { Separator } from "@/components/ui/separator"
+// @ts-nocheck
 import { KnowledgeBase } from "@/app/admin/knowledgebase"
 
-export default function AdminPage() {
+import { getVectorDataLogLocal } from "@/app/admin/actions"
+
+export default async function AdminPage() {
+  const vector_data_log = await getVectorDataLogLocal()
   return (
     <div className="space-y-6 w-full">
       <div>
@@ -11,7 +14,7 @@ export default function AdminPage() {
         </p>
       </div>
       <> </>
-      <KnowledgeBase />
+      <KnowledgeBase vector_data_log={vector_data_log?.vector_data}/>
     </div>
   )
 }

@@ -19,12 +19,14 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table"
 import { Textarea } from "@/components/ui/textarea"
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
@@ -42,16 +44,20 @@ import { useState } from "react";
 import { ToastAction } from "@/components/ui/toast"
 import { useToast } from "@/components/ui/use-toast"
 
-export function KnowledgeBase() {
+import { Separator } from "@/components/ui/separator"
+import { KnowledgeBaseTable } from "@/app/admin/knowledgebase-table"
+
+export function KnowledgeBase(vector_data_log: JSON) {
+  const [state, setState] = useState(0);
   const { toast } = useToast()
-  const [submitted, setSubmitted] = useState(false);
+  const [ready, setReady] = useState(true);
   const [inputText, setInputText] = useState(null);
   const handleTextInput = (text) => {
     setInputText(text.currentTarget.value);
   };
 
   async function onSubmit_text() {
-    setSubmitted(true);
+    setReady(false);
 
     let payload = { "text": inputText }
     const response = await fetch('/api/admin/embedding-text-insert', {
@@ -61,14 +67,15 @@ export function KnowledgeBase() {
     }
     )
     const json = await response.json()
-    if ( json.status != 200) toast({title: "Text insertion failed!"})
-    else toast({title: "Successfully Inserted The text."})
+    if (json.status != 201) toast({ title: "Text insertion failed!" })
+    else toast({ title: "Successfully Inserted The text." })
+    setReady(true);
   };
 
-  
+
   return (
     <>
-      <div className="flex h-[calc(100vh-theme(spacing.16))] flex-col items-center">
+      <div className="flex h-[500px] flex-col items-center">
         <div className="w-[600px] flex-col">
           <Tabs defaultValue="upload_file" className="w-full">
             <TabsList className="grid w-full grid-cols-2">
@@ -84,7 +91,7 @@ export function KnowledgeBase() {
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-2">
-                <Input type="file" placeholder="Upload a Markdown file" accept=".md" />
+                  <Input type="file" placeholder="Upload a Markdown file" accept=".md" />
                 </CardContent>
                 <CardFooter>
                   <Button >Upload</Button>
@@ -100,16 +107,18 @@ export function KnowledgeBase() {
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-2">
-                <Textarea rows={5} cols={50} onChange={handleTextInput} />
+                  <Textarea rows={5} cols={50} onChange={handleTextInput} overflow="scroll" />
                 </CardContent>
                 <CardFooter>
-                  <Button onClick={onSubmit_text}>Save Text</Button>
+                  {ready ? <Button onClick={onSubmit_text} disabled={false}>Save Text</Button> : <Button onClick={onSubmit_text} disabled={true}>Save Text</Button>}
                 </CardFooter>
               </Card>
             </TabsContent>
           </Tabs>
         </div>
       </div>
+      <Separator />
+      <KnowledgeBaseTable vector_data_log={vector_data_log?.vector_data_log} state={state}/>
     </>
   )
-  }
+}

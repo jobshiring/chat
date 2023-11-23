@@ -32,13 +32,12 @@ export interface ChatProps extends React.ComponentProps<'div'> {
 }
 
 export function Bookmarks({ id, initialMessages, username, bookmarks, feedbacks, bookmark_page, className }: ChatProps) {
-  console.log(initialMessages)
   return (
     <>
       <div className={cn('pb-[200px] pt-4 md:pt-10', className)}>
         {initialMessages?.length ? (
           <>
-            <ChatList messages={initialMessages} username={username} bookmarks={bookmarks} feedbacks={feedbacks} bookmark_page={bookmark_page}/>
+            <ChatList messages={initialMessages} username={username} bookmarks={bookmarks} feedbacks={feedbacks} bookmark_page={bookmark_page} />
             <ChatScrollAnchor />
           </>
         ) : (
