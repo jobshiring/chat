@@ -38,40 +38,34 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-
-
-
-const profileFormSchema = z.object({
-  username: z
-    .string()
-    .min(2, {
-      message: "Username must be at least 2 characters.",
-    })
-    .max(30, {
-      message: "Username must not be longer than 30 characters.",
-    }),
-  email: z
-    .string({
-      required_error: "Please select an email to display.",
-    })
-    .email(),
-  bio: z.string().max(160).min(4),
-  urls: z
-    .array(
-      z.object({
-        value: z.string().url({ message: "Please enter a valid URL." }),
-      })
-    )
-    .optional(),
-})
-
-type ProfileFormValues = z.infer<typeof profileFormSchema>
+import { useState } from "react";
+import { ToastAction } from "@/components/ui/toast"
+import { useToast } from "@/components/ui/use-toast"
 
 export function KnowledgeBase() {
-  function onSubmit(data: ProfileFormValues) {
-    // do something
-  }
+  const { toast } = useToast()
+  const [submitted, setSubmitted] = useState(false);
+  const [inputText, setInputText] = useState(null);
+  const handleTextInput = (text) => {
+    setInputText(text.currentTarget.value);
+  };
 
+  async function onSubmit_text() {
+    setSubmitted(true);
+
+    let payload = { "text": inputText }
+    const response = await fetch('/api/admin/embedding-text-insert', {
+      method: 'POST',
+      headers: {},
+      body: JSON.stringify(payload)
+    }
+    )
+    const json = await response.json()
+    if ( json.status != 200) toast({title: "Text insertion failed!"})
+    else toast({title: "Successfully Inserted The text."})
+  };
+
+  
   return (
     <>
       <div className="flex h-[calc(100vh-theme(spacing.16))] flex-col items-center">
@@ -93,7 +87,7 @@ export function KnowledgeBase() {
                 <Input type="file" placeholder="Upload a Markdown file" accept=".md" />
                 </CardContent>
                 <CardFooter>
-                  <Button>Upload</Button>
+                  <Button >Upload</Button>
                 </CardFooter>
               </Card>
             </TabsContent>
@@ -106,10 +100,10 @@ export function KnowledgeBase() {
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-2">
-                <Textarea />
+                <Textarea rows={5} cols={50} onChange={handleTextInput} />
                 </CardContent>
                 <CardFooter>
-                  <Button>Save Text</Button>
+                  <Button onClick={onSubmit_text}>Save Text</Button>
                 </CardFooter>
               </Card>
             </TabsContent>
@@ -118,4 +112,4 @@ export function KnowledgeBase() {
       </div>
     </>
   )
-}
+  }
