@@ -21,6 +21,6 @@ export async function GET() {
     throw new Error('Failed to fetch/retrieve vector-log data - The main component')
   }
   const output = await res.json();
-  if (process.env.DEBUG_MODE) console.log(output, await res.status)
+  // if (process.env.DEBUG_MODE) console.log(output, await res.status)
   return NextResponse.json(output)
 }

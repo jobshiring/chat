@@ -71,6 +71,36 @@ export function KnowledgeBase(vector_data_log: JSON) {
     setReady(true);
   };
 
+  const [FileState, setFileState] = useState({ selectedFile: null, })
+
+  // On file select (from the pop up)
+  async function onFileChange(event) {
+    // Update the state
+    setFileState({
+      selectedFile: event.target.files[0],
+    });
+  };
+
+  // On file upload (click the upload button)
+  async function onFileUpload() {
+    setReady(false);
+    setReady(false);
+    // Create an object of formData
+    const formData = new FormData();
+    formData.append('file_name', FileState.selectedFile.name);
+    formData.append('file', FileState.selectedFile);
+
+    const response = await fetch('/api/admin/markdown-file-upload', {
+      method: 'POST',
+      body: formData
+    }
+    )
+    const json = await response.json()
+    if (json.status != 200) toast({ title: "Markdown upload failed!" })
+    else toast({ title: "Successfully uploaded the Markdown file." })
+    setReady(true);
+  };
+
   return (
     <>
       <div className="flex h-[500px] flex-col items-center">
@@ -89,10 +119,10 @@ export function KnowledgeBase(vector_data_log: JSON) {
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-2">
-                  <Input type="file" placeholder="Upload a Markdown file" accept=".md" />
+                  <Input onChange={onFileChange} type="file" placeholder="Upload a Markdown file" accept=".md" />
                 </CardContent>
                 <CardFooter>
-                  <Button >Upload</Button>
+                  <Button onClick={onFileUpload}>Upload</Button>
                 </CardFooter>
               </Card>
             </TabsContent>

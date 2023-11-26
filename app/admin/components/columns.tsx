@@ -28,7 +28,7 @@ export const columns: ColumnDef<Task>[] = [
     cell: ({ row }) => {
       return (
         <div className="flex space-x-2">
-          <span className="max-w-[500px] truncate font-medium">
+          <span className="max-w-[500px] font-medium">
             {row.getValue("document")}
           </span>
         </div>
@@ -45,7 +45,7 @@ export const columns: ColumnDef<Task>[] = [
     cell: ({ row }) => {
       return (
         <div className="flex space-x-2">
-          <span className="max-w-[500px] truncate font-medium">
+          <span className="max-w-[500px] font-medium">
             {row.getValue("metadata")}
           </span>
         </div>
@@ -63,7 +63,7 @@ export const columns: ColumnDef<Task>[] = [
 
       return (
         <div className="flex space-x-2">
-          <span className="max-w-[500px] truncate font-medium">
+          <span className="max-w-[500px] font-medium">
             {row.getValue("datetime_added")}
           </span>
         </div>
