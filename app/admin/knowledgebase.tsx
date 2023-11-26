@@ -44,8 +44,7 @@ import { useState } from "react";
 import { ToastAction } from "@/components/ui/toast"
 import { useToast } from "@/components/ui/use-toast"
 
-import { Separator } from "@/components/ui/separator"
-import { KnowledgeBaseTable } from "@/app/admin/knowledgebase-table"
+
 
 export function KnowledgeBase(vector_data_log: JSON) {
   const [state, setState] = useState(0);
@@ -71,7 +70,6 @@ export function KnowledgeBase(vector_data_log: JSON) {
     else toast({ title: "Successfully Inserted The text." })
     setReady(true);
   };
-
 
   return (
     <>
@@ -117,8 +115,7 @@ export function KnowledgeBase(vector_data_log: JSON) {
           </Tabs>
         </div>
       </div>
-      <Separator />
-      <KnowledgeBaseTable vector_data_log={vector_data_log?.vector_data_log} state={state}/>
+
     </>
   )
 }

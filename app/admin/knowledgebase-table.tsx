@@ -1,48 +1,64 @@
-// @ts-nocheck 
+//@ts-nocheck
 "use client"
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table"
-import { v4 as uuidv4 } from 'uuid';
+import { Metadata } from "next"
+import Image from "next/image"
+import { z } from "zod"
 
-function TableRowFiller(log) {
-  const text_direction = process.env.TEXT_DIRECTION
+import { columns } from "@/app/admin/components/columns"
+import { DataTable } from "@/app/admin/components/data-table"
+import { UserNav } from "@/app/admin/components/user-nav"
+import { taskSchema } from "@/app/admin/data/schema"
+import moment from 'moment'
+
+import useSWR from "swr";
+
+
+function getTasks(json: JSON) {
+  const better_data_list = []
+  for (const entry of json.vector_data) {
+    const date_time = moment(entry.datetime_added)
+    better_data_list.push(
+      {
+        id: entry.id,
+        id_inserted: entry.id_inserted,
+        document: entry.document,
+        metadata: JSON.parse(entry.metadata).title,
+        datetime_added: date_time.utc().format('YYYY-MM-DD HH:mm:ss:SS')
+      }
+    )
+  }
+  return z.array(taskSchema).parse(better_data_list)
+}
+
+function KnowledgeBaseTable() {
+  const fetcher = (url) => fetch(url, {cache: "no-store"}).then((res) => res.json());
+  const { data, error, isLoading, mutate } = useSWR(
+    'api/admin/get-vector-log-data',
+    fetcher,
+    { refreshInterval: 1000 }
+  );
+  if (isLoading) return <p>Loading...</p>
+  if (!data) return <p>No vector log data</p>
+
+
+
   return (
-    <TableRow key={log.id}>
-      <TableCell key={`${log.id}-1`} className="font-medium">{log.id}</TableCell>
-      <TableCell key={`${log.id}-2`} dir={text_direction == 'RTL' ? "rtl" : "ltr"} align="justify">{log.document}</TableCell>
-      <TableCell key={`${log.id}-3`} align="justify">{log.metadata}</TableCell>
-      <TableCell key={`${log.id}-4`} className="text-right">{log.datetime_added}</TableCell>
-    </TableRow>
+    <>
+      <div className="md:hidden">
+      </div>
+      <div className="hidden h-full flex-1 flex-col space-y-8 p-8 md:flex">
+        <div className="flex items-center justify-between space-y-2">
+          <div>
+            <h2 className="text-2xl font-bold tracking-tight">Knowledge-base overview</h2>
+            <p className="text-muted-foreground">
+              Here&apos;s the table containing all the data added to the knowledge-base so far.
+            </p>
+          </div>
+        </div>
+        <DataTable data={data.vector_data} columns={columns} />
+      </div>
+    </>
   )
 }
 
-export function KnowledgeBaseTable(vector_data_log: JSON) {
-  const VectorDataLog: array = vector_data_log.vector_data_log
-  if (!VectorDataLog) return (<p align="center"> No vector-data insertion log! Add some to see data here.</p>)
-  return (
-    <div>
-      <Table>
-        <TableCaption>A table of all the text-data you have uploaded so far.</TableCaption>
-        <TableHeader>
-          <TableRow>
-            <TableHead className="w-[100px]">id</TableHead>
-            <TableHead>document</TableHead>
-            <TableHead>source</TableHead>
-            <TableHead className="text-right">datetime_inserted</TableHead>
-          </TableRow>
-        </TableHeader>
-
-        <TableBody key={1}>
-          {VectorDataLog.map(log => <TableRowFiller key={uuidv4()} id={log.id} document={log.document} metadata={JSON.parse(log.metadata).title} datetime_added={log.datetime_added} />)}
-        </TableBody>
-      </Table>
-    </div>
-  )
-}
+export { KnowledgeBaseTable }
