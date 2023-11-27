@@ -1,7 +1,18 @@
 import { Separator } from "@/components/ui/separator"
-import { DataTableDemo } from "@/app/admin/access-control/access-control"
+import { DataTableDemo, DialogDemo } from "@/app/admin/access-control/access-control"
+import { getUserRoleTable } from "@/app/admin/actions"
+import { auth } from '@/auth'
+import { cookies } from 'next/headers'
 
-export default function SettingsAccountPage() {
+export default async function SettingsAccountPage() {
+  const userRoleTable = await getUserRoleTable()
+  const cookieStore = cookies()
+  const session = await auth({ cookieStore })
+
+
+  for (const user of userRoleTable)
+    if( user.email == session?.user?.email )
+      user.isUser= true
   return (
     <div className="space-y-6">
       <div>
@@ -11,7 +22,9 @@ export default function SettingsAccountPage() {
         </p>
       </div>
       <Separator />
-      <DataTableDemo />
+      <DialogDemo />
+      <DataTableDemo userRoleTable={userRoleTable} />
     </div>
   )
 }
+

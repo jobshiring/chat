@@ -52,56 +52,141 @@ import {
 } from "@/components/ui/select"
 
 
-const data: Payment[] = [
-  {
-    id: "m5gr84i9",
-    role: "admin",
-    email: "ken99@yahoo.com",
-  },
-  {
-    id: "3u1reuv4",
-    role: "viewer",
-    email: "Abe45@gmail.com",
-  },
-  {
-    id: "derv1ws0",
-    role: "editor",
-    email: "Monserrat44@gmail.com",
-  },
-  {
-    id: "5kma53ae",
-    role: "viewer",
-    email: "Silas22@gmail.com",
-  },
-  {
-    id: "bhqecj4p",
-    role: "viewer",
-    email: "carmella@hotmail.com",
-  },
-]
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
+import { Label } from "@/components/ui/label"
+import { useState } from 'react'
+import validator from "validator";
+import {
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+} from "@/components/ui/dropdown-menu"
+import { useToast } from "@/components/ui/use-toast"
+import useSWR from "swr";
+
+
+const validateEmail = (e) => {
+  const email = e.target.value;
+
+  if (validator.isEmail(email)) {
+    return true
+  } else {
+    false
+  }
+};
+
+
+export function DialogDemo() {
+  const { toast } = useToast()
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [isValidEmail, setIsValidEmail] = useState(false)
+  const [isReadyPassword, setIsReadyPassword] = useState(false)
+  const [isEqualPassword, setIsEqualPassword] = useState(false)
+
+  async function onSubmit_User(data) {
+    data.preventDefault();
+    const res = await fetch('/api/admin/access-control/add-user', { method: 'POST', body: JSON.stringify({ email: email, password: password, role: role })});
+    toast({ title: "Successfully added The new user." });
+  }
+
+
+const [role, setRole] = React.useState("editor")
+return (
+  <Dialog>
+    <DialogTrigger asChild>
+      <Button variant="outline">Add New User</Button>
+    </DialogTrigger>
+    <DialogContent className="sm:max-w-[425px]">
+      <DialogHeader>
+        <DialogTitle>Add User</DialogTitle>
+        <DialogDescription>
+          Add a new user and provide their info.
+        </DialogDescription>
+      </DialogHeader>
+      <form>
+        <div className="grid gap-4 py-4">
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="email" className="text-right">
+              Email
+            </Label>
+            <Input id="email" type="text" required onChange={(e) => { if (validateEmail(e)) { setEmail(e.target.value); setIsValidEmail(true); } else setIsValidEmail(false); }} className="col-span-3" />
+          </div>
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="password" className="text-right">
+              Password
+            </Label>
+            <Input id="password" type="password" required onChange={(e) => { if (e.target.value.length > 0) { setIsReadyPassword(true); setPassword(e.target.value) } }} className="col-span-3" />
+          </div>
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="password_confirm" className="text-right">
+              Confirm Password
+            </Label>
+            <Input id="password_confirm" type="password" required onChange={(e) => { if (e.target.value.length > 0) { if (e.target.value == password) setIsEqualPassword(true) } }} className="col-span-3" />
+          </div>
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="password_confirm" className="text-right">
+              Role
+            </Label>
+            <DropdownMenu className="col-span-3" >
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline">{role.charAt(0).toUpperCase() + role.slice(1)}</Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="w-56">
+                <DropdownMenuLabel>Roles</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuRadioGroup value={role} onValueChange={setRole}>
+                  <DropdownMenuRadioItem value="admin">Admin</DropdownMenuRadioItem>
+                  <DropdownMenuRadioItem value="editor">Editor</DropdownMenuRadioItem>
+                  <DropdownMenuRadioItem value="viewer">Viewer</DropdownMenuRadioItem>
+                </DropdownMenuRadioGroup>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+        </div>
+        <DialogFooter>
+          {isValidEmail & isReadyPassword & isEqualPassword ? (<Button type="submit" onClick={onSubmit_User}> Save changes </Button>) : (<Button disabled={true}> Save changes </Button>)
+          }
+        </DialogFooter>
+
+      </form>
+    </DialogContent>
+
+  </Dialog>
+)
+}
 
 export type Payment = {
   id: string
-  role: "admin" | "viewer" | "editor"
   email: string
+  role: "admin" | "viewer" | "editor"
+  organization: string
 }
 
-
-const DropDownSelector = () => {
+const DropDownSelector = ({ user_email }) => {
   return (
-    <Select>
-    <SelectTrigger className="w-[180px]">
-      <SelectValue placeholder="Select Role" />
-    </SelectTrigger>
-    <SelectContent>
-      <SelectGroup>
-        <SelectLabel>Roles</SelectLabel>
-        <SelectItem value="admin">Admin</SelectItem>
-        <SelectItem value="editor">Editor</SelectItem>
-        <SelectItem value="viewer">Viewer</SelectItem>
-      </SelectGroup>
-    </SelectContent>
-  </Select>
+    <>
+      <Select onValueChange={(event) => { fetch('/api/admin/access-control/user-role-list', { method: 'POST', body: JSON.stringify({ email: user_email, role: event }) }) }}  >
+        <SelectTrigger className="w-[180px]">
+          <SelectValue placeholder="Change Role" />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectGroup>
+            <SelectLabel >Roles</SelectLabel>
+            <SelectItem value="admin">Admin</SelectItem>
+            <SelectItem value="editor">Editor</SelectItem>
+            <SelectItem value="viewer">Viewer</SelectItem>
+          </SelectGroup>
+        </SelectContent>
+      </Select>
+    </>
   )
 }
 
@@ -131,6 +216,17 @@ export const columns: ColumnDef<Payment>[] = [
   {
     accessorKey: "email",
     header: "Email",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          className="p-0"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+          Email
+          <CaretSortIcon className="ml-0 h-4 w-4" />
+        </Button>
+      )
+    },
     cell: ({ row }) => <div className="lowercase">{row.getValue("email")}</div>,
   },
   {
@@ -152,15 +248,41 @@ export const columns: ColumnDef<Payment>[] = [
     ),
   },
   {
+    accessorKey: "org",
+    header: "Organization",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          className="p-0"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+          Organization
+          <CaretSortIcon className="ml-0 h-4 w-4" />
+        </Button>
+      )
+    },
+    cell: ({ row }) => (
+      <div className="capitalize">{row.getValue("org")}</div>
+    ),
+  },
+  {
     id: "actions",
+    header: "Change Role",
     enableHiding: false,
     cell: ({ row }) => {
-      return (row.original.role != 'admin' ? <DropDownSelector /> : undefined)
+      return (
+        <>
+          <div>
+            {!row.original.isUser ? <DropDownSelector user_email={row.original.email} /> : undefined}
+          </div>
+        </>)
     },
   },
 ]
 
-export function DataTableDemo() {
+export function DataTableDemo({ userRoleTable }) {
+  
+  const data: Payment[] = userRoleTable
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
