@@ -192,26 +192,20 @@ const DropDownSelector = ({ user_email }) => {
 
 export const columns: ColumnDef<Payment>[] = [
   {
-    id: "select",
-    header: ({ table }) => (
-      <Checkbox
-        checked={
-          table.getIsAllPageRowsSelected() ||
-          (table.getIsSomePageRowsSelected() && "indeterminate")
-        }
-        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-        aria-label="Select all"
-      />
-    ),
-    cell: ({ row }) => (
-      <Checkbox
-        checked={row.getIsSelected()}
-        onCheckedChange={(value) => row.toggleSelected(!!value)}
-        aria-label="Select row"
-      />
-    ),
-    enableSorting: false,
-    enableHiding: false,
+    accessorKey: "id",
+    header: "Id",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          className="p-0"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+          Id
+          <CaretSortIcon className="ml-0 h-4 w-4" />
+        </Button>
+      )
+    },
+    cell: ({ row }) => <div className="lowercase">{row.getValue("id")}</div>,
   },
   {
     accessorKey: "email",
@@ -373,10 +367,6 @@ export function DataTableDemo({ userRoleTable }) {
         </Table>
       </div>
       <div className="flex items-center justify-end space-x-2 py-4">
-        <div className="flex-1 text-sm text-muted-foreground">
-          {table.getFilteredSelectedRowModel().rows.length} of{" "}
-          {table.getFilteredRowModel().rows.length} row(s) selected.
-        </div>
         <div className="space-x-2">
           <Button
             variant="outline"
