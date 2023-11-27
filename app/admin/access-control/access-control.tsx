@@ -274,9 +274,8 @@ export const columns: ColumnDef<Payment>[] = [
   },
 ]
 
-export function DataTableDemo({ userRoleTable }) {
-  
-  const data: Payment[] = userRoleTable
+export function DataTableDemo({user_email}) {
+  const fetcher = (url) => fetch(url, {method: 'GET',cache: "no-store"}).then((res) => res.json() );
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
@@ -284,6 +283,13 @@ export function DataTableDemo({ userRoleTable }) {
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({})
   const [rowSelection, setRowSelection] = React.useState({})
+  
+
+   const  { data, error, isLoading, mutate }  = useSWR(
+    '/api/admin/access-control/get-users-table',
+    fetcher,
+    { refreshInterval: 1000 }
+  );
 
   const table = useReactTable({
     data,
@@ -303,6 +309,13 @@ export function DataTableDemo({ userRoleTable }) {
       rowSelection,
     },
   })
+
+  if (isLoading) return <p>Loading...</p>
+  if (!data) return <p>No data</p>
+
+  for (const user of data)
+    if( user.email == user_email)
+      user.isUser= true
 
   return (
     <div className="w-full">

@@ -11,8 +11,7 @@ import { getUserIdByEmail, getUserRoleTable } from '@/app/admin/actions'
 
 export const runtime = 'edge'
 
-export async function GET(req: Request) {
+export async function GET() {
   const role_data = await getUserRoleTable()
-  console.log(role_data)
   return NextResponse.json(role_data)
 }

@@ -115,7 +115,7 @@ export function KnowledgeBase(vector_data_log: JSON) {
                 <CardHeader>
                   <CardTitle>Upload Markdown File</CardTitle>
                   <CardDescription>
-                    Upload your Markdown file. It will be added your AI&apos;s knowledge-base.
+                    Upload your Markdown file. It will be added your AI&apos;s knowledgebase.
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-2">
@@ -131,7 +131,7 @@ export function KnowledgeBase(vector_data_log: JSON) {
                 <CardHeader>
                   <CardTitle>Enter Text</CardTitle>
                   <CardDescription>
-                    Enter your text below. It will be added your AI&apos;s knowledge-base.
+                    Enter your text below. It will be added your AI&apos;s knowledgebase.
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-2">

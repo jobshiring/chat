@@ -9,15 +9,13 @@ export default async function AdminPage() {
   return (
     <div className="space-y-6 w-full">
       <div>
-        <h3 className="text-lg font-medium">Knowledge-base</h3>
+        <h3 className="text-lg font-medium">Knowledgebase Upload</h3>
         <p className="text-sm text-muted-foreground">
-          Add data to your knowledge-base.
+          Add data to your knowledgebase.
         </p>
       </div>
       <> </>
       <KnowledgeBase />
-      <Separator />
-      <KnowledgeBaseTable />
     </div>
   )
 }
