@@ -21,7 +21,8 @@ export async function POST(req: Request) {
       auth: {
         autoRefreshToken: false,
         persistSession: false
-      }
+      },
+      db: { schema: process.env.BIZGPT_ORGANIZATION } 
     }
   )
 
