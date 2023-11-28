@@ -1,6 +1,11 @@
 // @ts-nocheck
 import { KnowledgeBaseTable } from "@/app/admin/knowledgebase-details/knowledgebase-table"
 
+export const runtime = 'nodejs'
+export const preferredRegion = 'home'
+export const dynamic = 'force-dynamic';
+export const fetchCache = 'force-no-store';
+
 export default async function KnowledgeBaseOverView() {
   return (
     <div className="space-y-6 w-full">

@@ -39,21 +39,6 @@ export function SidebarNav({ className, ...props }: SidebarNavProps) {
       )}
       {...props}
     >
-      {/* {items.map((item) => ( 
-        <Link
-          key={item.href}
-          href={item.href}
-          className={cn(
-            buttonVariants({ variant: "ghost" }),
-            pathname === item.href
-              ? "bg-muted hover:bg-muted"
-              : "hover:bg-transparent hover:underline",
-            "justify-start"
-          )}
-        >
-          {item.title}
-        </Link>
-      ))} */}
       <h1> <strong> Knowledgebase </strong> </h1>
         <Link key="/admin" 
           href="/admin"
@@ -69,6 +54,7 @@ export function SidebarNav({ className, ...props }: SidebarNavProps) {
         </Link>
         <Link key="/admin/knowledgebase-details" 
           href="/admin/knowledgebase-details"
+          prefetch={false}
           className={cn(
             buttonVariants({ variant: "ghost" }),
             pathname === "/admin/knowledgebase-details"

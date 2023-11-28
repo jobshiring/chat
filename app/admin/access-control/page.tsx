@@ -5,8 +5,12 @@ import { getUserRoleTable } from "@/app/admin/actions"
 import { auth } from '@/auth'
 import { cookies } from 'next/headers'
 
+export const runtime = 'nodejs'
+export const preferredRegion = 'home'
+export const dynamic = 'force-dynamic';
+export const fetchCache = 'force-no-store';
+
 export default async function SettingsAccountPage() {
-  // const userRoleTable = await getUserRoleTable()
   const cookieStore = cookies()
   const session = await auth({ cookieStore })
 

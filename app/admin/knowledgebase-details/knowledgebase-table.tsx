@@ -17,7 +17,7 @@ function KnowledgeBaseTable() {
   const { data, error, isLoading, mutate } = useSWR(
     '/api/admin/knowledgebase/get-vector-log-data',
     fetcher,
-    { refreshInterval: 0 }
+    { refreshInterval: 10000 }
   );
   if (isLoading) return <p>Loading...</p>
   if (!data) return <p>No data!</p>
