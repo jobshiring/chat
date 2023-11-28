@@ -51,7 +51,7 @@ export async function getUserRoleTable(): Promise<any> {
     }
   })
 
-  const role_data = await supabase.from('user_bizgpt_role').select('id, user, role, orgs (name)')
+  const role_data = await supabase.from('user_bizgpt_role').select('id, user, role, orgs (name)').order('id', { ascending: true })
 
   const user_role = []
   for (const user of role_data.data){

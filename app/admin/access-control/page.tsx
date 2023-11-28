@@ -1,5 +1,6 @@
 import { Separator } from "@/components/ui/separator"
-import { DataTableDemo, DialogDemo } from "@/app/admin/access-control/access-control"
+import { UserRoles } from "@/app/admin/access-control/access-control"
+import { AddUser } from "@/app/admin/access-control/add-user"
 import { getUserRoleTable } from "@/app/admin/actions"
 import { auth } from '@/auth'
 import { cookies } from 'next/headers'
@@ -9,10 +10,6 @@ export default async function SettingsAccountPage() {
   const cookieStore = cookies()
   const session = await auth({ cookieStore })
 
-
-  // for (const user of userRoleTable)
-  //   if( user.email == session?.user?.email )
-  //     user.isUser= true
   return (
     <div className="space-y-6">
       <div>
@@ -20,9 +17,11 @@ export default async function SettingsAccountPage() {
         <p className="text-sm text-muted-foreground">
           Assign roles to users using the table below.
         </p>
+        <></>
+        <p className="text-sm text-muted-foreground"> * Please wait for a few seconds for the changes you have made to take effect. </p>
       </div>
-      <DialogDemo />
-      <DataTableDemo user_email={session?.user?.email} />
+      <AddUser />
+      <UserRoles user_email={session?.user?.email} />
     </div>
   )
 }
