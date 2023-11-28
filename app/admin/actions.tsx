@@ -36,7 +36,8 @@ export async function getUserIdByEmail(email: string){
     auth: {
       autoRefreshToken: false,
       persistSession: false
-    }
+    },
+    db: { schema: process.env.BIZGPT_ORGANIZATION } 
   })
   const { data: { users }, error } = await supabase.auth.admin.listUsers()
   for (const user of users)
@@ -49,11 +50,12 @@ export async function getUserRoleTable(): Promise<any> {
     auth: {
       autoRefreshToken: false,
       persistSession: false
-    }
+    },
+    db: { schema: process.env.BIZGPT_ORGANIZATION } 
   })
 
   const role_data = await supabase.from('user_bizgpt_role').select('id, user, role, orgs (name)').order('id', { ascending: true })
-
+  console.log(role_data)
   const user_role = []
   for (const user of role_data.data){
     const user_auth = await supabase.auth.admin.getUserById(user.user)
