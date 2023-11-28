@@ -70,7 +70,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { useToast } from "@/components/ui/use-toast"
 import useSWR from "swr";
-
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 
 const validateEmail = (e) => {
   const email = e.target.value;
@@ -87,18 +87,19 @@ export function DialogDemo() {
   const { toast } = useToast()
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [isValidEmail, setIsValidEmail] = useState(false)
+  const [passwordConfirm, setPasswordConfirm] = useState('');
+  const [isValidEmail, setIsValidEmail] = useState(true)
   const [isReadyPassword, setIsReadyPassword] = useState(false)
   const [isEqualPassword, setIsEqualPassword] = useState(false)
 
+  const [role, setRole] = React.useState("editor")
   async function onSubmit_User(data) {
     data.preventDefault();
     const res = await fetch('/api/admin/access-control/add-user', { method: 'POST', body: JSON.stringify({ email: email, password: password, role: role })});
     toast({ title: "Successfully added The new user." });
   }
 
-
-const [role, setRole] = React.useState("editor")
+  console.log(password, passwordConfirm)
 return (
   <Dialog>
     <DialogTrigger asChild>
@@ -118,18 +119,20 @@ return (
               Email
             </Label>
             <Input id="email" type="text" required onChange={(e) => { if (validateEmail(e)) { setEmail(e.target.value); setIsValidEmail(true); } else setIsValidEmail(false); }} className="col-span-3" />
+            {isValidEmail ? undefined  : <p className="col-span-4 text-sm pl-24 text-red-500"> please provide a correct email </p>}
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="password" className="text-right">
               Password
             </Label>
-            <Input id="password" type="password" required onChange={(e) => { if (e.target.value.length > 0) { setIsReadyPassword(true); setPassword(e.target.value) } }} className="col-span-3" />
+            <Input id="password" type="password" required onChange={(e) => { setPassword(e.target.value); }} className="col-span-3" />
+            {(password == passwordConfirm) ? undefined : <p className="col-span-4 text-sm pl-24 text-red-500"> please confirm the password <ArrowDownwardIcon /> </p> }
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="password_confirm" className="text-right">
               Confirm Password
             </Label>
-            <Input id="password_confirm" type="password" required onChange={(e) => { if (e.target.value.length > 0) { if (e.target.value == password) setIsEqualPassword(true) } }} className="col-span-3" />
+            <Input id="password_confirm" type="password" required onChange={(e) => {  setPasswordConfirm(e.target.value); }} className="col-span-3" />
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="password_confirm" className="text-right">
@@ -152,7 +155,7 @@ return (
           </div>
         </div>
         <DialogFooter>
-          {isValidEmail & isReadyPassword & isEqualPassword ? (<Button type="submit" onClick={onSubmit_User}> Save changes </Button>) : (<Button disabled={true}> Save changes </Button>)
+          {isValidEmail & (password.length > 0) & (password == passwordConfirm) ? (<Button type="submit" onClick={onSubmit_User}> Save changes </Button>) : (<Button disabled={true}> Save changes </Button>)
           }
         </DialogFooter>
 
