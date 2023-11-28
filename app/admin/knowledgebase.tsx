@@ -84,7 +84,6 @@ export function KnowledgeBase(vector_data_log: JSON) {
   // On file upload (click the upload button)
   async function onFileUpload() {
     setReady(false);
-    setReady(false);
     // Create an object of formData
     const formData = new FormData();
     formData.append('file_name', FileState.selectedFile.name);
@@ -122,7 +121,7 @@ export function KnowledgeBase(vector_data_log: JSON) {
                   <Input onChange={onFileChange} type="file" placeholder="Upload a Markdown file" accept=".md" />
                 </CardContent>
                 <CardFooter>
-                  <Button onClick={onFileUpload}>Upload</Button>
+                  {ready ? <Button onClick={onFileUpload} disabled={false}>Upload</Button> : <Button onClick={onFileUpload} disabled={true}>Upload</Button>}
                 </CardFooter>
               </Card>
             </TabsContent>
