@@ -23,7 +23,7 @@ export const columns: ColumnDef<Task>[] = [
   {
     accessorKey: "document",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Document" />
+      <DataTableColumnHeader column={column} title="Document Chunk" />
     ),
     cell: ({ row }) => {
       return (
@@ -40,7 +40,7 @@ export const columns: ColumnDef<Task>[] = [
   {
     accessorKey: "metadata",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Metadata" />
+      <DataTableColumnHeader column={column} title="Source" />
     ),
     cell: ({ row }) => {
       return (

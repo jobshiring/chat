@@ -59,7 +59,7 @@ export function KnowledgeBase(vector_data_log: JSON) {
     setReady(false);
 
     let payload = { "text": inputText }
-    const response = await fetch('/api/admin/embedding-text-insert', {
+    const response = await fetch('/api/admin/knowledgebase/embedding-text-insert', {
       method: 'POST',
       headers: {},
       body: JSON.stringify(payload)
@@ -84,13 +84,12 @@ export function KnowledgeBase(vector_data_log: JSON) {
   // On file upload (click the upload button)
   async function onFileUpload() {
     setReady(false);
-    setReady(false);
     // Create an object of formData
     const formData = new FormData();
     formData.append('file_name', FileState.selectedFile.name);
     formData.append('file', FileState.selectedFile);
 
-    const response = await fetch('/api/admin/markdown-file-upload', {
+    const response = await fetch('/api/admin/knowledgebase/markdown-file-upload', {
       method: 'POST',
       body: formData
     }
@@ -122,7 +121,7 @@ export function KnowledgeBase(vector_data_log: JSON) {
                   <Input onChange={onFileChange} type="file" placeholder="Upload a Markdown file" accept=".md" />
                 </CardContent>
                 <CardFooter>
-                  <Button onClick={onFileUpload}>Upload</Button>
+                  {ready ? <Button onClick={onFileUpload} disabled={false}>Upload</Button> : <Button onClick={onFileUpload} disabled={true}>Upload</Button>}
                 </CardFooter>
               </Card>
             </TabsContent>

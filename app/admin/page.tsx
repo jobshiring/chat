@@ -4,6 +4,10 @@ import { getVectorDataLogLocal } from "@/app/admin/actions"
 import { Separator } from "@/components/ui/separator"
 import { KnowledgeBaseTable } from "@/app/admin/knowledgebase-table"
 
+export const runtime = 'nodejs'
+export const preferredRegion = 'home'
+export const dynamic = 'force-dynamic';
+
 export default async function AdminPage() {
   // const vector_data_log = await getVectorDataLogLocal()
   return (
