@@ -10,7 +10,6 @@ export const preferredRegion = 'home'
 export const dynamic = 'force-dynamic';
 
 export default async function IndexPage() {
-  const id = nanoid()
   const cookieStore = cookies()
   const session = await auth({ cookieStore })
 

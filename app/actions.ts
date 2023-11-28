@@ -7,6 +7,23 @@ import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { revalidateTag } from 'next/cache'
 import { type Chat } from '@/lib/types'
+import { auth } from '@/auth'
+
+export async function getUserRole(id: string | undefined): Promise<any> {
+  const cookieStore = cookies()
+  const session = await auth({ cookieStore })
+  const supabase = createServerActionClient<Database>({
+    cookies: () => cookieStore
+  })
+
+  const role_data = await supabase
+    .from('user_bizgpt_role')
+    .select('role')
+    .eq('id', session?.user?.id).maybeSingle()
+
+  return role_data
+}
+
 
 export async function getBookmarkedMessagesSupabase(id: string) {
   const cookieStore = cookies()

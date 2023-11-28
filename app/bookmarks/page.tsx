@@ -29,7 +29,6 @@ async function getBookmarkedMessages(chat: Chat, bookmarks: JSON){
 }
 
 export default async function BookmarksPage() {
-  // const id = nanoid()
   const cookieStore = cookies()
   const session = await auth({ cookieStore })
   let bookmarks = { 'bookmarks' : {}};
