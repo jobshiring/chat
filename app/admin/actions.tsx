@@ -21,7 +21,8 @@ export async function getOrganizationId(){
     auth: {
       autoRefreshToken: false,
       persistSession: false
-    }
+    },
+    db: { schema: process.env.BIZGPT_ORGANIZATION } 
   })
   
   const organizations = await supabase.from('orgs').select('id').eq('name', process.env.BIZGPT_ORGANIZATION)
