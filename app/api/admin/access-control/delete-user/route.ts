@@ -23,10 +23,8 @@ export async function POST(req: Request) {
 
   const json = await req.json()
 
-
   // Delete the user from Supabase
   const user = await getUserIdByEmail(json.email)
-
   const { data, error } = await supabase.auth.admin.deleteUser(
     user
   )

@@ -12,7 +12,6 @@ import { getUserIdByEmail, getUserRoleTable } from '@/app/admin/actions'
 export const runtime = 'nodejs'
 export const fetchCache = 'force-no-store';
 export const dynamic = "force-dynamic";
-export const revalidate = 0 // or low number
 
 export async function GET() {
   const role_data = await getUserRoleTable()
