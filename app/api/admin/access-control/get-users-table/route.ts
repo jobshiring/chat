@@ -9,7 +9,10 @@ import { PostgrestError } from '@supabase/supabase-js'
 import { createClient } from '@supabase/supabase-js'
 import { getUserIdByEmail, getUserRoleTable } from '@/app/admin/actions'
 
-export const runtime = 'edge'
+export const runtime = 'nodejs'
+export const fetchCache = 'force-no-store';
+export const dynamic = "force-dynamic";
+export const revalidate = 0 // or low number
 
 export async function GET() {
   const role_data = await getUserRoleTable()
