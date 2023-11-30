@@ -115,6 +115,9 @@ export function AddUser({ mutate }) {
           <DialogFooter>
             {isValidEmail & (password.length > 0) & (password == passwordConfirm) ? (<Button type="submit" onClick={onSubmit_User}> Save changes </Button>) : (<Button disabled={true}> Save changes </Button>)
             }
+          <Dialog.Close asChild>
+            <button className="Button green">Save changes</button>
+          </Dialog.Close>
           </DialogFooter>
 
         </form>

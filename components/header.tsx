@@ -19,7 +19,7 @@ export async function Header() {
   const cookieStore = cookies()
   const session = await auth({ cookieStore })
   const user_role = await getUserRole(session?.user?.id)
-
+  console.log('HERE IS =======>',user_role)
   return (
     <header className="sticky top-0 z-50 flex h-16 w-full shrink-0 items-center justify-between border-b bg-gradient-to-b from-background/10 via-background/50 to-background/80 px-4 backdrop-blur-xl">
       <div className="flex items-center">
