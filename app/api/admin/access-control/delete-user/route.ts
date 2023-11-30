@@ -28,8 +28,8 @@ export async function POST(req: Request) {
   const { data, error } = await supabase.auth.admin.deleteUser(
     user
   )
-  // Delete the user from user_bizgpt_role table
-  await supabase.from('user_bizgpt_role').delete().eq('user', user)
-
-  return NextResponse.json({ status: 200 })
+  if (!error)
+    return NextResponse.json({ status: 200 })
+  else
+  return NextResponse.json({ status: 500 })
 }

@@ -22,6 +22,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
+import * as DialogPrimitive from '@radix-ui/react-dialog'
 import { Label } from "@/components/ui/label"
 import { useState, useEffect } from 'react'
 import validator from "validator";
@@ -49,13 +50,27 @@ export function AddUser({ mutate }) {
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
   const [isValidEmail, setIsValidEmail] = useState(true)
-
+  const [isReady, setIsReady] = useState(true)
   const [role, setRole] = React.useState("editor")
+
   async function onSubmit_User(data) {
+    setIsReady(false)
     data.preventDefault();
     const res = await fetch('/api/admin/access-control/add-user', { method: 'POST', body: JSON.stringify({ email: email, password: password, role: role }) });
-    toast({ title: "Successfully added The new user. You could now safely close the dialog." });
+
+    if (res.status == 200) {
+      toast({ title: "Successfully added The new user.😊" });
+    }
+    else {
+      toast({ title: "Could not add new user.😓" });
+    }
     mutate()
+    // resetting all the states
+    setEmail('')
+    setPassword('')
+    setPasswordConfirm('')
+    setIsValidEmail(true)
+    setIsReady(true)
   }
 
   return (
@@ -69,6 +84,9 @@ export function AddUser({ mutate }) {
           <DialogDescription>
             Add a new user and provide their info.
           </DialogDescription>
+          <DialogDescription>
+            * In order to help adding multiple users easier, the dialog does not close after saving.
+          </DialogDescription>
         </DialogHeader>
         <form>
           <div className="grid gap-4 py-4">
@@ -76,21 +94,21 @@ export function AddUser({ mutate }) {
               <Label htmlFor="email" className="text-right">
                 Email
               </Label>
-              <Input id="email" type="text" required onChange={(e) => { if (validateEmail(e)) { setEmail(e.target.value); setIsValidEmail(true); } else setIsValidEmail(false); }} className="col-span-3" />
+              <Input id="email" type="text" value={email} required onChange={(e) => { setEmail(e.target.value); if (validateEmail(e)) { setIsValidEmail(true); } else setIsValidEmail(false); }} className="col-span-3" />
               {isValidEmail ? undefined : <p className="col-span-4 text-sm pl-24 text-red-500"> please provide a correct email </p>}
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="password" className="text-right">
                 Password
               </Label>
-              <Input id="password" type="password" required onChange={(e) => { setPassword(e.target.value); }} className="col-span-3" />
+              <Input id="password" type="password" required value={password} onChange={(e) => { setPassword(e.target.value); }} className="col-span-3" />
               {(password == passwordConfirm) ? undefined : <p className="col-span-4 text-sm pl-24 text-red-500"> please confirm the password <ArrowDownwardIcon /> </p>}
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="password_confirm" className="text-right">
                 Confirm Password
               </Label>
-              <Input id="password_confirm" type="password" required onChange={(e) => { setPasswordConfirm(e.target.value); }} className="col-span-3" />
+              <Input id="password_confirm" type="password" value={passwordConfirm} required onChange={(e) => { setPasswordConfirm(e.target.value); }} className="col-span-3" />
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="password_confirm" className="text-right">
@@ -113,16 +131,11 @@ export function AddUser({ mutate }) {
             </div>
           </div>
           <DialogFooter>
-            {isValidEmail & (password.length > 0) & (password == passwordConfirm) ? (<Button type="submit" onClick={onSubmit_User}> Save changes </Button>) : (<Button disabled={true}> Save changes </Button>)
+            {isValidEmail & (password.length > 0) & (password == passwordConfirm) ? (<Button type="submit" disabled={!isReady} onClick={onSubmit_User}> Save changes </Button>) : (<Button disabled={true}> Save changes </Button>)
             }
-          <Dialog.Close asChild>
-            <button className="Button green">Save changes</button>
-          </Dialog.Close>
           </DialogFooter>
-
         </form>
       </DialogContent>
-
     </Dialog>
   )
 }
