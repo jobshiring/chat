@@ -21,6 +21,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
+  DialogClose
 } from "@/components/ui/dialog"
 import * as DialogPrimitive from '@radix-ui/react-dialog'
 import { Label } from "@/components/ui/label"
@@ -53,28 +54,31 @@ export function AddUser({ mutate }) {
   const [isReady, setIsReady] = useState(true)
   const [role, setRole] = React.useState("editor")
 
-  async function onSubmit_User(data) {
+  const [open, setOpen] = React.useState(false);
+
+  function onSubmit_User(data) {
     setIsReady(false)
     data.preventDefault();
-    const res = await fetch('/api/admin/access-control/add-user', { method: 'POST', body: JSON.stringify({ email: email, password: password, role: role }) });
-
-    if (res.status == 200) {
-      toast({ title: "Successfully added The new user.😊" });
-    }
-    else {
-      toast({ title: "Could not add new user.😓" });
-    }
-    mutate()
-    // resetting all the states
-    setEmail('')
-    setPassword('')
-    setPasswordConfirm('')
-    setIsValidEmail(true)
-    setIsReady(true)
+    fetch('/api/admin/access-control/add-user', { method: 'POST', body: JSON.stringify({ email: email, password: password, role: role }) }).then(data => {
+      if ( data.status == 200){
+        toast({ title: "Successfully added The new user.😊" });
+        mutate();
+      // resetting all the states
+      setEmail('')
+      setPassword('')
+      setPasswordConfirm('')
+      setIsValidEmail(true)
+      setIsReady(true)
+      setOpen(false)
+      }
+      else {
+        toast({ title: "Could not add new user.😓" });
+      }
+    })
   }
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button variant="outline">Add New User</Button>
       </DialogTrigger>
@@ -88,7 +92,7 @@ export function AddUser({ mutate }) {
             * In order to help adding multiple users easier, the dialog does not close after saving.
           </DialogDescription>
         </DialogHeader>
-        <form>
+        <form onSubmit={onSubmit_User}>
           <div className="grid gap-4 py-4">
             <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="email" className="text-right">
@@ -131,8 +135,11 @@ export function AddUser({ mutate }) {
             </div>
           </div>
           <DialogFooter>
-            {isValidEmail & (password.length > 0) & (password == passwordConfirm) ? (<Button type="submit" disabled={!isReady} onClick={onSubmit_User}> Save changes </Button>) : (<Button disabled={true}> Save changes </Button>)
-            }
+            <DialogClose asChild>
+              {isValidEmail & (password.length > 0) & (password == passwordConfirm) ? (<Button type="submit" disabled={!isReady}  
+              > Save changes </Button>) : (<Button disabled={true}> Save changes </Button>)
+              }
+            </DialogClose>
           </DialogFooter>
         </form>
       </DialogContent>
