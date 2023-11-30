@@ -10,10 +10,10 @@ export async function SidebarList({ userId, userRole }: SidebarListProps) {
 
   return (
     <div className="flex-1 overflow-auto">
-      <div className="space-y-2">
+      <div className="space-y-2 pt-5">
         <SidebarItemChat key={'1'} > </SidebarItemChat>
         <SidebarItemBookmarks key={'2'} > </SidebarItemBookmarks>
-        {(userRole) ? (<SidebarItemAdmin key={'3'} > </SidebarItemAdmin>) : (undefined)}
+        {(userRole == 'admin') ? (<SidebarItemAdmin key={'3'} > </SidebarItemAdmin>) : (undefined)}
       </div>
     </div>
   )

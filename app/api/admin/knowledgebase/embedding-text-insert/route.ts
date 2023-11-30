@@ -16,8 +16,8 @@ export async function POST(req: Request) {
     },
     body: JSON.stringify(payload)
   })
-  console.log('stats: ',await res.status)
-  // if (process.env.DEBUG_MODE) console.log(await res.json(), status)
+
+  if (process.env.DEBUG_MODE) console.log(await res.json(), status)
 
   return NextResponse.json({ status: await res.status })
 }

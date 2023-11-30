@@ -9,7 +9,6 @@ export const revalidate=0 // or low number
 
 export async function GET() {
   const url = `${process.env.BizGPT_CLIENT_API_BASE_ADDRESS_SCHEME}://${process.env.BizGPT_CLIENT_API_BASE_ADDRESS}:${process.env.BizGPT_CLIENT_API_PORT}/${process.env.BizGT_CLIENT_API_ADMIN_RETRIEVE_VECTOR_LOG}`
-  console.log(url)
   const res = await fetch(url, {
     method: 'GET',
     headers: {
@@ -20,7 +19,6 @@ export async function GET() {
   })
   if (!res.ok) {
     // This will activate the closest `error.js` Error Boundary
-    console.log( res.status)
     throw new Error('Failed to fetch/retrieve vector-log data - The main component')
   }
   const output = await res.json();

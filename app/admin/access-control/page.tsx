@@ -1,7 +1,4 @@
-import { Separator } from "@/components/ui/separator"
 import { UserRoles } from "@/app/admin/access-control/access-control"
-import { AddUser } from "@/app/admin/access-control/add-user"
-import { getUserRoleTable } from "@/app/admin/actions"
 import { auth } from '@/auth'
 import { cookies } from 'next/headers'
 
@@ -24,7 +21,6 @@ export default async function SettingsAccountPage() {
         <></>
         <p className="text-sm text-muted-foreground"> * Please wait for a few seconds for the changes you have made to take effect. </p>
       </div>
-      <AddUser />
       <UserRoles user_email={session?.user?.email} />
     </div>
   )

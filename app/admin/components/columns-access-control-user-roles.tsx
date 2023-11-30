@@ -2,14 +2,9 @@
 "use client"
 
 import { ColumnDef } from "@tanstack/react-table"
-
-import { Badge } from "@/components/ui/badge"
-import { Checkbox } from "@/components/ui/checkbox"
-
-import { labels, priorities, statuses } from "@/app/admin/data/data"
 import { Task } from "../data/schema"
 import { DataTableColumnHeader } from "./data-table-column-header"
-import { DataTableRowActions } from "./data-table-row-actions"
+
 
 import {
   Select,
@@ -20,6 +15,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+
+import PersonRemoveIcon from '@mui/icons-material/PersonRemove';
+import { Button } from "@/components/ui/button"
 
 const DropDownSelector = ({ user_email }) => {
   return (
@@ -41,61 +39,78 @@ const DropDownSelector = ({ user_email }) => {
   )
 }
 
-export const columns: ColumnDef<Task>[] = [
-  {
-    accessorKey: "id",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="id" />
-    ),
-    cell: ({ row }) => <div className="w-[80px]">{row.getValue("id")}</div>,
-    enableSorting: true,
-    enableHiding: false,
-  },
-  {
-    accessorKey: "email",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Email" />
-    ),
-    cell: ({ row }) => {
-      return (
-        <div className="flex space-x-2">
-          <span className="max-w-[500px] font-medium">
-            {row.getValue("email")}
-          </span>
-        </div>
-      )
-    },
-    enableSorting: false,
-    enableHiding: false,
-  },
-  {
-    accessorKey: "role",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Role" />
-    ),
-    cell: ({ row }) => {
-      return (
-        <div className="flex space-x-2">
-          <span className="max-w-[500px] font-medium">
-            {row.getValue("role")}
-          </span>
-        </div>
-      )
-    },
-    enableSorting: false,
-    enableHiding: true,
-  },
-  {
-    id: "actions",
-    header: "Change Role",
-    enableHiding: false,
-    cell: ({ row }) => {
-      return (
-        <>
-          <div>
-            {!row.original.isUser ? <DropDownSelector user_email={row.original.email} /> : undefined}
-          </div>
-        </>)
-    },
-  },
-]
+const DeleteUser = (event) => {
+  fetch('/api/admin/access-control/delete-user', { method: 'POST', body: JSON.stringify({ email: event.currentTarget.value })});
+}
+
+// export const columns: ColumnDef<Task>[] = [
+//   {
+//     accessorKey: "id",
+//     header: ({ column }) => (
+//       <DataTableColumnHeader column={column} title="id" />
+//     ),
+//     cell: ({ row }) => <div className="w-[80px]">{row.getValue("id")}</div>,
+//     enableSorting: true,
+//     enableHiding: false,
+//   },
+//   {
+//     accessorKey: "email",
+//     header: ({ column }) => (
+//       <DataTableColumnHeader column={column} title="Email" />
+//     ),
+//     cell: ({ row }) => {
+//       return (
+//         <div className="flex space-x-2">
+//           <span className="max-w-[500px] font-medium">
+//             {row.getValue("email")}
+//           </span>
+//         </div>
+//       )
+//     },
+//     enableSorting: false,
+//     enableHiding: false,
+//   },
+//   {
+//     accessorKey: "role",
+//     header: ({ column }) => (
+//       <DataTableColumnHeader column={column} title="Role" />
+//     ),
+//     cell: ({ row }) => {
+//       return (
+//         <div className="flex space-x-2">
+//           <span className="max-w-[500px] font-medium">
+//             {row.getValue("role")}
+//           </span>
+//         </div>
+//       )
+//     },
+//     enableSorting: false,
+//     enableHiding: true,
+//   },
+//   {
+//     id: "actions",
+//     header: "Change Role",
+//     enableHiding: false,
+//     cell: ({ row }) => {
+//       return (
+//         <>
+//           <div>
+//             {!row.original.isUser ? <DropDownSelector user_email={row.original.email} /> : undefined}
+//           </div>
+//         </>)
+//     },
+//   },
+//   {
+//     id: "delete",
+//     header: "Delete",
+//     enableHiding: false,
+//     cell: ({ row }) => {
+//       return (
+//         <>
+//           <div>
+//             {!row.original.isUser ? <><Button value={row.original.email} className="bg-red-600" onClick={DeleteUser}><PersonRemoveIcon /> </Button> </> : undefined}
+//           </div>
+//         </>)
+//     },
+//   }
+// ]

@@ -1,6 +1,8 @@
+//@ts-nocheck
 'use server'
 import 'server-only'
 import { createServerActionClient } from '@supabase/auth-helpers-nextjs'
+import { createClient } from '@supabase/supabase-js'
 import { cookies } from 'next/headers'
 import { Database } from '@/lib/db_types'
 import { revalidatePath } from 'next/cache'
@@ -10,25 +12,29 @@ import { type Chat } from '@/lib/types'
 import { auth } from '@/auth'
 
 export async function getUserRole(id: string | undefined): Promise<any> {
-  const cookieStore = cookies()
-  const session = await auth({ cookieStore })
-  const supabase = createServerActionClient<Database>({
-    cookies: () => cookieStore
+  const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY, {
+    auth: {
+      autoRefreshToken: false,
+      persistSession: false
+    },
+    db: { schema: process.env.BIZGPT_ORGANIZATION } 
   })
-
   const role_data = await supabase
     .from('user_bizgpt_role')
     .select('role')
-    .eq('id', session?.user?.id).maybeSingle()
+    .eq('user', id).maybeSingle()
 
-  return role_data
+  return role_data.data?.role
 }
 
 
 export async function getBookmarkedMessagesSupabase(id: string) {
-  const cookieStore = cookies()
-  const supabase = createServerActionClient<Database>({
-    cookies: () => cookieStore
+  const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY, {
+    auth: {
+      autoRefreshToken: false,
+      persistSession: false
+    },
+    db: { schema: process.env.BIZGPT_ORGANIZATION } 
   })
   const { data } = await supabase
     .from('bookmarked_messages')
@@ -47,9 +53,12 @@ export async function submitBookmark(payload: object) {
   revalidateTag('bookmarks-cache')
 }
 export async function getBookmarksSupabase(id: string) {
-  const cookieStore = cookies()
-  const supabase = createServerActionClient<Database>({
-    cookies: () => cookieStore
+  const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY, {
+    auth: {
+      autoRefreshToken: false,
+      persistSession: false
+    },
+    db: { schema: process.env.BIZGPT_ORGANIZATION } 
   })
   const { data } = await supabase
     .from('bookmarks')
@@ -61,9 +70,12 @@ export async function getBookmarksSupabase(id: string) {
 }
 
 export async function getFeedbacksSupabase(id: string) {
-  const cookieStore = cookies()
-  const supabase = createServerActionClient<Database>({
-    cookies: () => cookieStore
+  const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY, {
+    auth: {
+      autoRefreshToken: false,
+      persistSession: false
+    },
+    db: { schema: process.env.BIZGPT_ORGANIZATION } 
   })
   const { data } = await supabase
     .from('feedbacks')
@@ -146,9 +158,12 @@ export async function getChats(userId?: string | null) {
     return []
   }
   try {
-    const cookieStore = cookies()
-    const supabase = createServerActionClient<Database>({
-      cookies: () => cookieStore
+    const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY, {
+      auth: {
+        autoRefreshToken: false,
+        persistSession: false
+      },
+      db: { schema: process.env.BIZGPT_ORGANIZATION } 
     })
     const { data } = await supabase
       .from('chats')
@@ -164,9 +179,12 @@ export async function getChats(userId?: string | null) {
 }
 
 export async function getChatSupabase(id: string) {
-  const cookieStore = cookies()
-  const supabase = createServerActionClient<Database>({
-    cookies: () => cookieStore
+  const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY, {
+    auth: {
+      autoRefreshToken: false,
+      persistSession: false
+    },
+    db: { schema: process.env.BIZGPT_ORGANIZATION } 
   })
   const { data } = await supabase
     .from('chats')
@@ -180,9 +198,12 @@ export async function getChatSupabase(id: string) {
 
 export async function removeChat({ id, path }: { id: string; path: string }) {
   try {
-    const cookieStore = cookies()
-    const supabase = createServerActionClient<Database>({
-      cookies: () => cookieStore
+    const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY, {
+      auth: {
+        autoRefreshToken: false,
+        persistSession: false
+      },
+      db: { schema: process.env.BIZGPT_ORGANIZATION } 
     })
     await supabase.from('chats').delete().eq('id', id).throwOnError()
 
@@ -197,9 +218,12 @@ export async function removeChat({ id, path }: { id: string; path: string }) {
 
 export async function clearChats() {
   try {
-    const cookieStore = cookies()
-    const supabase = createServerActionClient<Database>({
-      cookies: () => cookieStore
+    const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY, {
+      auth: {
+        autoRefreshToken: false,
+        persistSession: false
+      },
+      db: { schema: process.env.BIZGPT_ORGANIZATION } 
     })
     await supabase.from('chats').delete().throwOnError()
     revalidatePath('/')
@@ -213,9 +237,12 @@ export async function clearChats() {
 }
 
 export async function getSharedChat(id: string) {
-  const cookieStore = cookies()
-  const supabase = createServerActionClient<Database>({
-    cookies: () => cookieStore
+  const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY, {
+    auth: {
+      autoRefreshToken: false,
+      persistSession: false
+    },
+    db: { schema: process.env.BIZGPT_ORGANIZATION } 
   })
   const { data } = await supabase
     .from('chats')
@@ -233,9 +260,12 @@ export async function shareChat(chat: Chat) {
     sharePath: `/share/${chat.id}`
   }
 
-  const cookieStore = cookies()
-  const supabase = createServerActionClient<Database>({
-    cookies: () => cookieStore
+  const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY, {
+    auth: {
+      autoRefreshToken: false,
+      persistSession: false
+    },
+    db: { schema: process.env.BIZGPT_ORGANIZATION } 
   })
   await supabase
     .from('chats')
