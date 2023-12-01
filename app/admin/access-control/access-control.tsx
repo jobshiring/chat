@@ -38,7 +38,7 @@ import {
 } from '@/components/ui/alert-dialog'
 import { Truculenta } from 'next/font/google'
 
-const DropDownSelector = ({ user_email }) => {
+const DropDownSelector = ({ user_email, mutate, toast }) => {
   return (
     <>
       <Select
@@ -46,7 +46,9 @@ const DropDownSelector = ({ user_email }) => {
           fetch('/api/admin/access-control/update-user-role', {
             method: 'POST',
             body: JSON.stringify({ email: user_email, role: event })
-          })
+          }).then(data => {
+              toast({ title: `Successfully changed The user's role: ${user_email}.` });
+              mutate();})
         }}
       >
         <SelectTrigger className="w-[180px]">
@@ -159,7 +161,7 @@ export function UserRoles({ user_email }) {
           <>
             <div>
               {!row.original.isUser ? (
-                <DropDownSelector user_email={row.original.email} />
+                <DropDownSelector user_email={row.original.email} mutate={mutate} toast={toast} />
               ) : undefined}
             </div>
           </>

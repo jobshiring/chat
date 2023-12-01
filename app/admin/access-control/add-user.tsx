@@ -88,9 +88,6 @@ export function AddUser({ mutate }) {
           <DialogDescription>
             Add a new user and provide their info.
           </DialogDescription>
-          <DialogDescription>
-            * In order to help adding multiple users easier, the dialog does not close after saving.
-          </DialogDescription>
         </DialogHeader>
         <form onSubmit={onSubmit_User}>
           <div className="grid gap-4 py-4">
