@@ -1,4 +1,4 @@
-// @ts-nocheck 
+// @ts-nocheck
 
 import 'server-only'
 import { OpenAIStream, StreamingTextResponse } from 'ai'
@@ -9,9 +9,8 @@ import { Database } from '@/lib/db_types'
 import { auth } from '@/auth'
 import { nanoid } from '@/lib/utils'
 
-export const maxDuration = 120;
+export const maxDuration = 120
 export const runtime = 'nodejs'
-
 
 export async function POST(req: Request) {
   const cookieStore = cookies()
@@ -32,14 +31,21 @@ export async function POST(req: Request) {
     configuration.apiKey = previewToken
   }
 
-  const mode = process.env.PERSISTENCE_MODE;
+  const mode = process.env.PERSISTENCE_MODE
   const userName = (await auth({ cookieStore }))?.user.email
   const url = `${process.env.BizGPT_CLIENT_API_BASE_ADDRESS_SCHEME}://${process.env.BizGPT_CLIENT_API_BASE_ADDRESS}:${process.env.BizGPT_CLIENT_API_PORT}/${process.env.BizGT_CLIENT_API_MESSAGES_SUBMIT_PATH}`
-  const index = Math.round(json.messages.length/ 2)
-  const payload = { "username": userName, "streamlit_element_key_id": String(index), "question_text": json.messages.at(-1).content };
+  const index = Math.round(json.messages.length / 2)
+  const payload = {
+    username: userName,
+    streamlit_element_key_id: String(index),
+    question_text: json.messages.at(-1).content
+  }
   const res = await fetch(url, {
     method: 'POST',
-    headers: { 'Content-Type': "application/json", 'Authorization': `Bearer ${process.env.BizGPT_CLIENT_API_TOKEN_FRONTEND}` },
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${process.env.BizGPT_CLIENT_API_TOKEN_FRONTEND}`
+    },
     body: JSON.stringify(payload)
   })
 
