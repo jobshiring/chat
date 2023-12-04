@@ -9,7 +9,7 @@ import { Database } from '@/lib/db_types'
 import { auth } from '@/auth'
 import { nanoid } from '@/lib/utils'
 
-export const runtime = 'edge'
+export const runtime = 'nodejs'
 
 
 export async function POST(req: Request) {
