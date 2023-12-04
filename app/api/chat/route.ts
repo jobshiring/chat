@@ -9,6 +9,7 @@ import { Database } from '@/lib/db_types'
 import { auth } from '@/auth'
 import { nanoid } from '@/lib/utils'
 
+export const maxDuration = 120;
 export const runtime = 'nodejs'
 
 
