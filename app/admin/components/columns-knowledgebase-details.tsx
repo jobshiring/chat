@@ -21,7 +21,7 @@ export const columns: ColumnDef<Task>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "document",
+    accessorKey: "content",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Document Chunk" />
     ),
@@ -29,7 +29,7 @@ export const columns: ColumnDef<Task>[] = [
       return (
         <div className="flex space-x-2">
           <span className="max-w-[500px] font-medium">
-            {row.getValue("document")}
+            {row.getValue("content")}
           </span>
         </div>
       )
