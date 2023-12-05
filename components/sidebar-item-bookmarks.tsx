@@ -12,6 +12,9 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
+
+const TextDirection = process.env.TEXT_DIRECTION
+
 interface SidebarItemBookmarksProps {
   children: React.ReactNode
 }
@@ -36,7 +39,8 @@ export function SidebarItemBookmarks({ children }: SidebarItemBookmarksProps) {
             </Link>
           </TooltipTrigger>
           <TooltipContent>
-            <p>Bookmarks</p>
+            {TextDirection == "RTL" ? <p> نشانک‌ها </p> : <p>Bookmarks</p> }
+            
           </TooltipContent>
         </Tooltip>
       </TooltipProvider>

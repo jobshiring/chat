@@ -15,6 +15,8 @@ import { IconArrowElbow, IconPlus } from '@/components/ui/icons'
 
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
+const TextDirection = process.env.TEXT_DIRECTION
+
 export interface PromptProps
   extends Pick<UseChatHelpers, 'input' | 'setInput'> {
   onSubmit: (value: string) => Promise<void>
@@ -48,7 +50,7 @@ export function PromptForm({
       }}
       ref={formRef}
     >
-      <div className="relative flex max-h-60 w-full grow flex-col overflow-hidden bg-background px-8 sm:rounded-md sm:border sm:px-12">
+      <div className="relative flex max-h-60 w-full grow flex-col overflow-hidden bg-background px-16 sm:rounded-md sm:border sm:px-12">
         {/* <Tooltip>
           <TooltipTrigger asChild>
             <Link
@@ -71,9 +73,10 @@ export function PromptForm({
           rows={1}
           value={input}
           onChange={e => setInput(e.target.value)}
-          placeholder="Ask Something..."
+          dir={TextDirection}
+          placeholder={TextDirection == "RTL" ? "یک سوال بپرسید..." : "Ask Something..."}
           spellCheck={false}
-          className="min-h-[60px] w-full resize-none bg-transparent py-[1.3rem] focus-within:outline-none sm:text-sm"
+          className={TextDirection == "RTL" ? "min-h-[60px] w-full resize-none bg-transparent py-[1.3rem] pr-[20px] focus-within:outline-none sm:text-sm" : "min-h-[60px] w-full resize-none bg-transparent py-[1.3rem] focus-within:outline-none sm:text-sm"}
         />
         <div className="absolute right-0 top-4 sm:right-4">
           <Tooltip>
@@ -87,7 +90,7 @@ export function PromptForm({
                 <span className="sr-only">Send message</span>
               </Button>
             </TooltipTrigger>
-            <TooltipContent>Send message</TooltipContent>
+            {TextDirection == "RTL" ? <TooltipContent>ارسال</TooltipContent> : <TooltipContent>Send message</TooltipContent> }
           </Tooltip>
         </div>
       </div>

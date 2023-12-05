@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   description: "BizGPT Administration",
 }
 
-
+const TextDirection = process.env.TEXT_DIRECTION
 
 
 interface SettingsLayoutProps {
@@ -22,9 +22,12 @@ export default function SettingsLayout({ children }: SettingsLayoutProps) {
     <>
       <div className="space-y-6 p-10 pb-16 md:block">
         <div className="space-y-0.5">
-          <h2 className="text-2xl font-bold tracking-tight">Administration</h2>
-          <p className="text-muted-foreground">
-            Manage your BizGPT instance.
+          <h2 className="text-2xl font-bold tracking-tight" dir={TextDirection}>
+          {TextDirection == 'RTL' ? "بخش مدیریت" : "Administration"}
+            </h2>
+          <p className="text-muted-foreground" dir={TextDirection}>
+          {TextDirection == 'RTL' ? "به وسیله این پنل سیستم BizGPT خود را مدیریت کنید." : "Manage your BizGPT instance."}
+            
           </p>
         </div>
         <Separator className="my-6" />

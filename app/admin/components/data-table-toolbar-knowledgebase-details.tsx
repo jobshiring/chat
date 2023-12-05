@@ -10,6 +10,8 @@ import { DataTableViewOptions } from "@/app/admin/components/data-table-view-opt
 import { priorities, statuses } from "@/app/admin/data/data"
 import { DataTableFacetedFilter } from "./data-table-faceted-filter"
 
+const TextDirection = process.env.TEXT_DIRECTION
+
 interface DataTableToolbarProps<TData> {
   table: Table<TData>
 }
@@ -21,12 +23,12 @@ export function DataTableToolbar<TData>({
 
   return (
     <div className="flex items-center justify-between">
-      <div className="flex flex-1 items-center space-x-2">
+      <div className="flex flex-1 items-center space-x-2" dir={TextDirection}>
         <Input
-          placeholder="Filter documents..."
-          value={(table.getColumn("document")?.getFilterValue() as string) ?? ""}
+          placeholder={TextDirection == "RTL" ? "جستجو در میان داده‌ها..." : "Filter documents..."}
+          value={(table.getColumn("content")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
-            table.getColumn("document")?.setFilterValue(event.target.value)
+            table.getColumn("content")?.setFilterValue(event.target.value)
           }
           className="h-8 w-[150px] lg:w-[250px]"
         />
