@@ -13,7 +13,7 @@ let exampleMessages: Object[] = []
 if (TextDirection == 'RTL') {
   exampleMessages = [
     {
-      heading: 'در خصوص کسب‌وکار خود توضیح دهید',
+      heading: 'در خصوص کسب‌ و کار خود توضیح دهید',
       message: `کار من در حوزه ... است.`
     },
     {
