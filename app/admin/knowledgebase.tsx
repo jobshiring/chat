@@ -114,7 +114,7 @@ export function KnowledgeBase(vector_data_log: JSON) {
                 <CardHeader>
                   <CardTitle> {TextDirection == 'RTL' ? "بارگذاری فایل Markdown" : "Upload Markdown File"}</CardTitle>
                   <CardDescription>
-                  {TextDirection == 'RTL' ? "از طریق این پنل می‌توانید فایل Markdown خود را بارگذاری کنید. " : "Upload your Markdown file. It will be added your AI&apos;s knowledgebase."}
+                  {TextDirection == 'RTL' ? "از طریق این پنل می‌توانید فایل Markdown خود را بارگذاری کنید. " : "Upload your Markdown file. It will be added to the knowledgebase."}
                     
                   </CardDescription>
                 </CardHeader>
@@ -131,7 +131,7 @@ export function KnowledgeBase(vector_data_log: JSON) {
                 <CardHeader>
                   <CardTitle>{TextDirection == 'RTL' ? "بارگذاری متن" : "Enter Text"}</CardTitle>
                   <CardDescription>
-                  {TextDirection == 'RTL' ? "از طریق این پنل می‌توانید متن خود را بارگذاری کنید." : "Enter your text below. It will be added your AI&apos;s knowledgebase."}
+                  {TextDirection == 'RTL' ? "از طریق این پنل می‌توانید متن خود را بارگذاری کنید." : "Enter your text below. It will be added to the knowledgebase."}
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-2">
