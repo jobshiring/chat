@@ -22,6 +22,6 @@ export async function POST(req: NextRequest) {
     throw new Error('Failed to POST Markdown-Upload data - The main component')
   }
   // const output = await res.json();
-  if (process.env.DEBUG_MODE) console.log(await res.json(), await res.status)
+  if (process.env.DEBUG_MODE) console.log(await res.json(), res.status)
   return NextResponse.json({  status: await res.status })
 }
