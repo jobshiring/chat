@@ -23,7 +23,7 @@ export function DataTableToolbar<TData>({
 
   return (
     <div className="flex items-center justify-between">
-      <div className="flex flex-1 items-center space-x-2" dir={TextDirection}>
+      <div className={TextDirection == "RTL" ? "flex flex-1 items-center space-x-2 pr-[10px]"  : "flex flex-1 items-center space-x-2"} dir={TextDirection}>
         <Input
           placeholder={TextDirection == "RTL" ? "جستجو در میان داده‌ها..." : "Filter documents..."}
           value={(table.getColumn("content")?.getFilterValue() as string) ?? ""}
