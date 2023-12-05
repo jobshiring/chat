@@ -226,7 +226,7 @@ export function UserRoles({ user_email }) {
 
   return (
     <>
-      <div className="md:flex pl-8" dir={TextDirection}>
+      <div className="hidden pl-8 pr-8 md:flex" dir={TextDirection}>
         <AddUser mutate={mutate} />
       </div>
       <div className="hidden h-full flex-1 flex-col space-y-8 pl-8 pr-8 pb-8 md:flex">

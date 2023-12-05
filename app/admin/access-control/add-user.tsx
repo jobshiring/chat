@@ -97,21 +97,21 @@ export function AddUser({ mutate }) {
               <Label htmlFor="email" className="text-right">
               {TextDirection == 'RTL' ? " ایمیل " : "Email"}
               </Label>
-              <Input id="email" type="text" dir={TextDirection == "RTL" ? "LTR" : "RTL"} value={email} required onChange={(e) => { setEmail(e.target.value); if (validateEmail(e)) { setIsValidEmail(true); } else setIsValidEmail(false); }} className="col-span-3" />
+              <Input id="email" type="text" dir="LTR" value={email} required onChange={(e) => { setEmail(e.target.value); if (validateEmail(e)) { setIsValidEmail(true); } else setIsValidEmail(false); }} className="col-span-3" />
               {isValidEmail ? undefined : <p  className={TextDirection == 'RTL' ? "col-span-4 text-sm pr-24 text-red-500" : "col-span-4 text-sm pl-24 text-red-500" }> {TextDirection == 'RTL' ? "لطفا یک ایمیل با فرمت صحیح ارائه کنید." : "please provide a correct email"}  </p>}
             </div>
             <div className="grid grid-cols-4 items-center gap-4" dir={TextDirection}>
               <Label htmlFor="password" className="text-right">
               {TextDirection == 'RTL' ? "گذرواژه" : "Password"}
               </Label>
-              <Input id="password" dir={TextDirection == "RTL" ? "LTR" : "RTL"} type="password" required value={password} onChange={(e) => { setPassword(e.target.value); }} className="col-span-3" />
+              <Input id="password" dir="LTR" type="password" required value={password} onChange={(e) => { setPassword(e.target.value); }} className="col-span-3" />
               {(password == passwordConfirm) ? undefined : <p className={TextDirection == 'RTL' ? "col-span-4 text-sm pr-24 text-red-500" : "col-span-4 text-sm pl-24 text-red-500" }> {TextDirection == 'RTL' ? " لطفا یک گذرواژه وارد کنید و از هم‌خوانی آن با قسمت تصدیق مطمئن شوید" : "please confirm the password"} <ArrowDownwardIcon /> </p>}
             </div>
             <div className="grid grid-cols-4 items-center gap-4" dir={TextDirection}>
               <Label htmlFor="password_confirm" className="text-right">
               {TextDirection == 'RTL' ? "تصدیق گذرواژه" : "Confirm Password"}
               </Label>
-              <Input id="password_confirm" dir={TextDirection == "RTL" ? "LTR" : "RTL"} type="password" value={passwordConfirm} required onChange={(e) => { setPasswordConfirm(e.target.value); }} className="col-span-3" />
+              <Input id="password_confirm" dir="LTR" type="password" value={passwordConfirm} required onChange={(e) => { setPasswordConfirm(e.target.value); }} className="col-span-3" />
             </div>
             <div className="grid grid-cols-4 items-center gap-4" dir={TextDirection}>
               <Label htmlFor="password_confirm" className="text-right">
