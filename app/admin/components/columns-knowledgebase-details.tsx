@@ -10,11 +10,13 @@ import { Task } from "../data/schema"
 import { DataTableColumnHeader } from "./data-table-column-header"
 import { DataTableRowActions } from "./data-table-row-actions"
 
+const TextDirection = process.env.TEXT_DIRECTION
+
 export const columns: ColumnDef<Task>[] = [
   {
     accessorKey: "id",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="id" />
+      <DataTableColumnHeader column={column} title={TextDirection == "RTL" ? "شناسه" : "id"} />
     ),
     cell: ({ row }) => <div className="w-[80px]">{row.getValue("id")}</div>,
     enableSorting: true,
@@ -23,7 +25,7 @@ export const columns: ColumnDef<Task>[] = [
   {
     accessorKey: "content",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Document Chunk" />
+      <DataTableColumnHeader column={column} title={TextDirection == "RTL" ? "داده" : "Document Chunk"} />
     ),
     cell: ({ row }) => {
       return (
@@ -40,7 +42,7 @@ export const columns: ColumnDef<Task>[] = [
   {
     accessorKey: "metadata",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Source" />
+      <DataTableColumnHeader column={column} title={TextDirection == "RTL" ? "منبع" : "Source"} />
     ),
     cell: ({ row }) => {
       return (
@@ -57,7 +59,7 @@ export const columns: ColumnDef<Task>[] = [
   {
     accessorKey: "datetime_added",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Datetime Added" />
+      <DataTableColumnHeader column={column} title={TextDirection == "RTL" ? "تاریخ و ساعت بارگذاری" : "Datetime Added"} />
     ),
     cell: ({ row }) => {
 

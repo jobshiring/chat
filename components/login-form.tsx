@@ -20,6 +20,7 @@ export function LoginForm({
   action = 'sign-in',
   ...props
 }: LoginFormProps) {
+  const TextDirection = process.env.TEXT_DIRECTION
   const [isLoading, setIsLoading] = React.useState(false)
   const router = useRouter()
   // Create a Supabase client configured to use cookies
@@ -75,10 +76,12 @@ export function LoginForm({
     <div {...props}>
       <form onSubmit={handleOnSubmit}>
         <fieldset className="flex flex-col gap-y-4">
-          <div className="flex flex-col gap-y-1">
-            <Label>Email</Label>
+          <div className="flex flex-col gap-y-1" dir={TextDirection}>
+            {TextDirection === 'RTL' ? <Label>آدرس ایمیل</Label> : <Label>Email</Label> }
+
             <Input
               name="email"
+              dir="LTR"
               type="email"
               value={formState.email}
               onChange={e =>
@@ -89,10 +92,11 @@ export function LoginForm({
               }
             />
           </div>
-          <div className="flex flex-col gap-y-1">
-            <Label>Password</Label>
+          <div className="flex flex-col gap-y-1" dir={TextDirection}>
+          {TextDirection === 'RTL' ? <Label> گذرواژه </Label> : <Label>Password</Label> }
             <Input
               name="password"
+              dir="LTR"
               type="password"
               value={formState.password}
               onChange={e =>
@@ -108,7 +112,7 @@ export function LoginForm({
         <div className="mt-4 flex items-center">
           <Button disabled={isLoading}>
             {isLoading && <IconSpinner className="mr-2 animate-spin" />}
-            {action === 'sign-in' ? 'Sign In' : 'Sign Up'}
+            {action === 'sign-in' && TextDirection === 'RTL' ? 'ورود' : 'Sign In'}
           </Button>
           {/* <p className="ml-4">
             {action === 'sign-in' ? (

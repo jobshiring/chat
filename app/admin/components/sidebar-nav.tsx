@@ -28,18 +28,23 @@ const sidebarNavItems = [
   }
 ]
 
+const TextDirection = process.env.TEXT_DIRECTION
+
 export function SidebarNav({ className, ...props }: SidebarNavProps) {
   const pathname = usePathname()
 
   return (
     <nav
+      dir={TextDirection}
       className={cn(
         "flex space-x-2 lg:flex-col lg:space-x-0 lg:space-y-0",
         className
       )}
       {...props}
     >
-      <h1> <strong> Knowledgebase </strong> </h1>
+      <h1 dir={TextDirection}> <strong> 
+      {TextDirection == 'RTL' ? "مخزن دانش" : "Knowledgebase"}
+         </strong> </h1>
         <Link key="/admin" 
           href="/admin"
           className={cn(
@@ -50,7 +55,8 @@ export function SidebarNav({ className, ...props }: SidebarNavProps) {
             "justify-start"
           )}
         >
-          Upload
+        {TextDirection == 'RTL' ? "بارگذاری " : "Upload"}
+          
         </Link>
         <Link key="/admin/knowledgebase-details" 
           href="/admin/knowledgebase-details"
@@ -63,9 +69,12 @@ export function SidebarNav({ className, ...props }: SidebarNavProps) {
             "justify-start"
           )}
         >
-          Details
+        {TextDirection == 'RTL' ? "جزئیات " : "Details"}
+          
         </Link>
-        <h1> <strong> Access Control </strong></h1>
+        <h1 dir={TextDirection}> <strong> 
+          {TextDirection == 'RTL' ? " دسترسی " : "Access Control "}
+          </strong></h1>
         <Link key="/admin/access-control" 
           href="/admin/access-control"
           className={cn(
@@ -76,7 +85,8 @@ export function SidebarNav({ className, ...props }: SidebarNavProps) {
             "justify-start"
           )}
         >
-          Manage User Roles
+          {TextDirection == 'RTL' ? " مدیریت کاربرها و نقش‌ها " : "Manage User Roles"}
+          
         </Link>
     </nav>
   )

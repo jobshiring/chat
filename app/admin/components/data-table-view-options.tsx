@@ -13,6 +13,8 @@ import {
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu"
 
+const TextDirection = process.env.TEXT_DIRECTION
+
 interface DataTableViewOptionsProps<TData> {
   table: Table<TData>
 }
@@ -29,11 +31,11 @@ export function DataTableViewOptions<TData>({
           className="ml-auto hidden h-8 lg:flex"
         >
           <MixerHorizontalIcon className="mr-2 h-4 w-4" />
-          View
+          {TextDirection == "RTL" ? "تنظیمات" : "View"}
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-[150px]">
-        <DropdownMenuLabel>Toggle columns</DropdownMenuLabel>
+        <DropdownMenuLabel>{TextDirection == "RTL" ? "حذف/نمایش ستون‌ها" : "Toggle columns"}</DropdownMenuLabel>
         <DropdownMenuSeparator />
         {table
           .getAllColumns()

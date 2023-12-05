@@ -13,6 +13,8 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 
+const TextDirection = process.env.TEXT_DIRECTION
+
 interface SidebarItemAdminProps {
   children: React.ReactNode
 }
@@ -38,7 +40,7 @@ export function SidebarItemAdmin({ children }: SidebarItemAdminProps) {
             </Link>
           </TooltipTrigger>
           <TooltipContent>
-            <p>Administration</p>
+          {TextDirection == "RTL" ? <p> مدیریت </p> : <p>Administration</p> }
           </TooltipContent>
         </Tooltip>
       </TooltipProvider>

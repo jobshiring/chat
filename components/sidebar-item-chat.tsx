@@ -13,6 +13,8 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 
+const TextDirection = process.env.TEXT_DIRECTION
+
 interface SidebarItemChatProps {
   children: React.ReactNode
 }
@@ -37,7 +39,8 @@ export function SidebarItemChat({ children }: SidebarItemChatProps) {
             </Link>
           </TooltipTrigger>
           <TooltipContent>
-            <p>Chat</p>
+            {TextDirection == "RTL" ? <p>چت</p> : <p>Chat</p>}
+            
           </TooltipContent>
         </Tooltip>
       </TooltipProvider>

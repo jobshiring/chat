@@ -15,6 +15,8 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 
+const TextDirection = process.env.TEXT_DIRECTION
+
 interface DataTablePaginationProps<TData> {
   table: Table<TData>
 }
@@ -28,7 +30,7 @@ export function DataTablePagination<TData>({
       </div>
       <div className="flex items-center space-x-6 lg:space-x-8">
         <div className="flex items-center space-x-2">
-          <p className="text-sm font-medium">Rows per page</p>
+          <p className="text-sm font-medium"> {TextDirection == 'RTL' ? "تعداد سطر در صفحه" : "Rows per page"}</p>
           <Select
             value={`${table.getState().pagination.pageSize}`}
             onValueChange={(value) => {
@@ -48,7 +50,7 @@ export function DataTablePagination<TData>({
           </Select>
         </div>
         <div className="flex w-[100px] items-center justify-center text-sm font-medium">
-          Page {table.getState().pagination.pageIndex + 1} of{" "}
+        {TextDirection == 'RTL' ? "صفحه" : "Page"} {table.getState().pagination.pageIndex + 1} {TextDirection == 'RTL' ? "از" : "of"} {" "}
           {table.getPageCount()}
         </div>
         <div className="flex items-center space-x-2">

@@ -15,6 +15,8 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { IconExternalLink } from '@/components/ui/icons'
 
+const TextDirection = process.env.TEXT_DIRECTION
+
 export interface UserMenuProps {
   user: Session['user']
 }
@@ -62,10 +64,10 @@ export function UserMenu({ user }: UserMenuProps) {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent sideOffset={8} align="start" className="w-[180px]">
-          <DropdownMenuItem className="flex-col items-start">
-            <div className="text-xs font-medium">
+          <DropdownMenuItem className="flex-col items-start text-right">
+            {/* <div className="text-xs font-medium">
               {user?.user_metadata.name}
-            </div>
+            </div> */}
             <div className="text-xs text-zinc-500">{user?.email}</div>
           </DropdownMenuItem>
           <DropdownMenuSeparator />
@@ -75,13 +77,15 @@ export function UserMenu({ user }: UserMenuProps) {
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex w-full items-center justify-between text-xs"
+              dir={TextDirection}
             >
-              BizGPT Homepage
+              
+              {TextDirection == 'RTL' ? "سایت BizGPT" : "BizGPT Homepage"}
               <IconExternalLink className="ml-auto h-3 w-3" />
             </a>
           </DropdownMenuItem>
-          <DropdownMenuItem onClick={signOut} className="text-xs">
-            Log Out
+          <DropdownMenuItem onClick={signOut} className="text-xs" dir={TextDirection}>
+            {TextDirection == 'RTL' ? "خروج" : "Log Out"}
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>

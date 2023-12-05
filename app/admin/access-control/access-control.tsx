@@ -38,6 +38,8 @@ import {
 } from '@/components/ui/alert-dialog'
 import { Truculenta } from 'next/font/google'
 
+const TextDirection = process.env.TEXT_DIRECTION
+
 const DropDownSelector = ({ user_email, mutate, toast }) => {
   return (
     <>
@@ -47,7 +49,7 @@ const DropDownSelector = ({ user_email, mutate, toast }) => {
             method: 'POST',
             body: JSON.stringify({ email: user_email, role: event })
           }).then(data => {
-              toast({ title: `Successfully changed The user's role: ${user_email}.` });
+              toast({ title:  TextDirection == 'RTL' ? `نقش کاربر با موفقیت تغییر کرد` : `Successfully changed The user's role: ${user_email}.`  });
               mutate();})
         }}
       >
@@ -56,7 +58,7 @@ const DropDownSelector = ({ user_email, mutate, toast }) => {
         </SelectTrigger>
         <SelectContent>
           <SelectGroup>
-            <SelectLabel>Roles</SelectLabel>
+            <SelectLabel>{TextDirection == 'RTL' ? "نقش‌ها" : "Roles"}</SelectLabel>
             <SelectItem value="admin">Admin</SelectItem>
             <SelectItem value="editor">Editor</SelectItem>
             <SelectItem value="viewer">Viewer</SelectItem>
@@ -80,8 +82,8 @@ export function UserRoles({ user_email }) {
     '/api/admin/access-control/get-users-table',
     fetcher
   )
-  if (isLoading) return <p>Loading...</p>
-  if (!data) return <p>No data!</p>
+  if (isLoading) return <p dir={TextDirection}>{TextDirection == 'RTL' ? "در حال بارگذاری..." : "Loading..."}</p>
+  if (!data) return <p dir={TextDirection}>{TextDirection == 'RTL' ? " داده‌ای دریافت نشد/موجود نیست! " : "No data!"}</p>
 
   // ,
   // { refreshInterval: 1000 }
@@ -98,11 +100,11 @@ export function UserRoles({ user_email }) {
         mutate()
         toast({
           title:
-            'Successfully deleted The user. Please wait until the changes are persisted.'
+          TextDirection == 'RTL' ? "کاربر با حذف شد. لطفا چند لحظه صبر کنید تا سیستم بروزرسانی شود." : 'Successfully deleted The user. Please wait until the changes are persisted.'
         })
         setDisabled(false)
       } else {
-        toast({ title: 'Could not delete The user due to an error.' })
+        toast({ title: TextDirection == 'RTL' ? "خطا در تعریف کاربر" :'Could not delete The user due to an error.' })
         setDisabled(false)
       }
     })
@@ -112,7 +114,7 @@ export function UserRoles({ user_email }) {
     {
       accessorKey: 'id',
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="id" />
+        <DataTableColumnHeader column={column} title={TextDirection == 'RTL' ? "شناسه" :"id"} />
       ),
       cell: ({ row }) => <div className="w-[80px]">{row.getValue('id')}</div>,
       enableSorting: true,
@@ -121,7 +123,7 @@ export function UserRoles({ user_email }) {
     {
       accessorKey: 'email',
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Email" />
+        <DataTableColumnHeader column={column} title={TextDirection == 'RTL' ? "ایمیل" :"Email"} />
       ),
       cell: ({ row }) => {
         return (
@@ -138,7 +140,7 @@ export function UserRoles({ user_email }) {
     {
       accessorKey: 'role',
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Role" />
+        <DataTableColumnHeader column={column} title={TextDirection == 'RTL' ? "نقش" :"Role"} />
       ),
       cell: ({ row }) => {
         return (
@@ -154,7 +156,7 @@ export function UserRoles({ user_email }) {
     },
     {
       id: 'actions',
-      header: 'Change Role',
+      header: TextDirection == 'RTL' ? 'تغییر نقش' : 'Change Role',
       enableHiding: false,
       cell: ({ row }) => {
         return (
@@ -170,7 +172,7 @@ export function UserRoles({ user_email }) {
     },
     {
       id: 'delete',
-      header: 'Delete',
+      header: TextDirection == 'RTL' ? 'حذف' : 'Delete',
       enableHiding: false,
       cell: ({ row }) => {
         return (
@@ -190,23 +192,25 @@ export function UserRoles({ user_email }) {
                       </Button>
                     </AlertDialogTrigger>
                     <AlertDialogContent>
-                      <AlertDialogHeader>
+                      <AlertDialogHeader dir={TextDirection}>
                         <AlertDialogTitle>
-                          Are you absolutely sure?
+                          {TextDirection == 'RTL' ? 'آیا از تصمیم خود مطمئن هستید؟ ' : "Are you absolutely sure?"}
                         </AlertDialogTitle>
                         <AlertDialogDescription>
-                          This action cannot be undone and will permanently
-                          delete the following user account:{' '}
+                        {TextDirection == 'RTL' ? 'این عمل موجب حذف کاربر روبرو خواهد شد:' : "This action cannot be undone and will permanently delete the following user account:"}
+                          {' '}
                           <strong>{row.original.email}</strong>
                         </AlertDialogDescription>
                       </AlertDialogHeader>
                       <AlertDialogFooter>
-                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                        <AlertDialogCancel>
+                          {TextDirection == 'RTL' ? 'لغو' : 'Cancel'}
+                          </AlertDialogCancel>
                         <AlertDialogAction
                           value={row.original.email}
                           onClick={DeleteUser}
                         >
-                          Continue
+                          {TextDirection == 'RTL' ? 'ادامه' : 'Continue'}
                         </AlertDialogAction>
                       </AlertDialogFooter>
                     </AlertDialogContent>
@@ -222,7 +226,7 @@ export function UserRoles({ user_email }) {
 
   return (
     <>
-      <div className="md:flex pl-8">
+      <div className="hidden pl-8 pr-8 md:flex" dir={TextDirection}>
         <AddUser mutate={mutate} />
       </div>
       <div className="hidden h-full flex-1 flex-col space-y-8 pl-8 pr-8 pb-8 md:flex">

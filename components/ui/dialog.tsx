@@ -6,6 +6,8 @@ import { X } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 
+const TextDirection = process.env.TEXT_DIRECTION
+
 const Dialog = DialogPrimitive.Root
 
 const DialogTrigger = DialogPrimitive.Trigger
@@ -70,7 +72,8 @@ const DialogHeader = ({
 }: React.HTMLAttributes<HTMLDivElement>) => (
   <div
     className={cn(
-      "flex flex-col space-y-1.5 text-center sm:text-left",
+      TextDirection == 'RTL' ?  "flex flex-col pt-[20px] pr-[20x] space-y-1.5 text-right sm:text-right" : "flex flex-col space-y-1.5 text-center sm:text-left"
+      ,
       className
     )}
     {...props}

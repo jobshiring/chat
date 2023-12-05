@@ -44,7 +44,7 @@ import { useState } from "react";
 import { ToastAction } from "@/components/ui/toast"
 import { useToast } from "@/components/ui/use-toast"
 
-
+const TextDirection = process.env.TEXT_DIRECTION
 
 export function KnowledgeBase(vector_data_log: JSON) {
   const [state, setState] = useState(0);
@@ -66,8 +66,8 @@ export function KnowledgeBase(vector_data_log: JSON) {
     }
     )
     const json = await response.json()
-    if (json.status != 201) toast({ title: "Text insertion failed!" })
-    else toast({ title: "Successfully Inserted The text." })
+    if (json.status != 201) toast({ title: TextDirection == 'RTL' ? "خطا در بارگذاری متن!" : "Text insertion failed!" })
+    else toast({ title: TextDirection == 'RTL' ? "متن با موفقیت بارگذاری شد." : "Successfully Inserted The text." })
     setReady(true);
   };
 
@@ -95,8 +95,8 @@ export function KnowledgeBase(vector_data_log: JSON) {
     }
     )
     const json = await response.json()
-    if (json.status != 200) toast({ title: "Markdown upload failed!" })
-    else toast({ title: "Successfully uploaded the Markdown file." })
+    if (json.status != 200) toast({ title: TextDirection == 'RTL' ? "خطا در بارگذاری فایل " : "Markdown upload failed!" })
+    else toast({ title: TextDirection == 'RTL' ? "فایل با موفقیت بارگذاری شد." : "Successfully uploaded the Markdown file." })
     setReady(true);
   };
 
@@ -106,38 +106,39 @@ export function KnowledgeBase(vector_data_log: JSON) {
         <div className="w-[600px] flex-col">
           <Tabs defaultValue="upload_file" className="w-full">
             <TabsList className="grid w-full grid-cols-2">
-              <TabsTrigger value="upload_file">Upload File</TabsTrigger>
-              <TabsTrigger value="enter_text">Enter Text</TabsTrigger>
+              <TabsTrigger value="upload_file" dir={TextDirection}>{TextDirection == 'RTL' ? "بارگذاری فایل" : "Upload File"}</TabsTrigger>
+              <TabsTrigger value="enter_text" dir={TextDirection}>{TextDirection == 'RTL' ? "بارگذاری متن" : "Enter Text"}</TabsTrigger>
             </TabsList>
-            <TabsContent value="upload_file">
+            <TabsContent value="upload_file" dir={TextDirection}>
               <Card>
                 <CardHeader>
-                  <CardTitle>Upload Markdown File</CardTitle>
+                  <CardTitle> {TextDirection == 'RTL' ? "بارگذاری فایل Markdown" : "Upload Markdown File"}</CardTitle>
                   <CardDescription>
-                    Upload your Markdown file. It will be added your AI&apos;s knowledgebase.
+                  {TextDirection == 'RTL' ? "از طریق این پنل می‌توانید فایل Markdown خود را بارگذاری کنید. " : "Upload your Markdown file. It will be added to the knowledgebase."}
+                    
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-2">
-                  <Input onChange={onFileChange} type="file" placeholder="Upload a Markdown file" accept=".md" />
+                  <Input onChange={onFileChange} type="file" placeholder="Upload a Markdown file" accept=".md"  />
                 </CardContent>
                 <CardFooter>
-                  {ready ? <Button onClick={onFileUpload} disabled={false}>Upload</Button> : <Button onClick={onFileUpload} disabled={true}>Upload</Button>}
+                  {ready ? <Button onClick={onFileUpload} disabled={false}>{TextDirection == 'RTL' ? "بارگذاری" : "Upload"}</Button> : <Button onClick={onFileUpload} disabled={true}>Upload</Button>}
                 </CardFooter>
               </Card>
             </TabsContent>
-            <TabsContent value="enter_text">
+            <TabsContent value="enter_text" dir={TextDirection}>
               <Card>
                 <CardHeader>
-                  <CardTitle>Enter Text</CardTitle>
+                  <CardTitle>{TextDirection == 'RTL' ? "بارگذاری متن" : "Enter Text"}</CardTitle>
                   <CardDescription>
-                    Enter your text below. It will be added your AI&apos;s knowledgebase.
+                  {TextDirection == 'RTL' ? "از طریق این پنل می‌توانید متن خود را بارگذاری کنید." : "Enter your text below. It will be added to the knowledgebase."}
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-2">
                   <Textarea rows={5} cols={50} onChange={handleTextInput} overflow="scroll" />
                 </CardContent>
                 <CardFooter>
-                  {ready ? <Button onClick={onSubmit_text} disabled={false}>Save Text</Button> : <Button onClick={onSubmit_text} disabled={true}>Save Text</Button>}
+                  {ready ? <Button onClick={onSubmit_text} disabled={false}>{TextDirection == 'RTL' ? "بارگذاری متن" : "Save Text"}</Button> : <Button onClick={onSubmit_text} disabled={true}>Save Text</Button>}
                 </CardFooter>
               </Card>
             </TabsContent>
