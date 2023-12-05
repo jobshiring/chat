@@ -6,6 +6,8 @@ import * as AlertDialogPrimitive from '@radix-ui/react-alert-dialog'
 import { cn } from '@/lib/utils'
 import { buttonVariants } from '@/components/ui/button'
 
+const TextDirection = process.env.TEXT_DIRECTION
+
 const AlertDialog = AlertDialogPrimitive.Root
 
 const AlertDialogTrigger = AlertDialogPrimitive.Trigger
@@ -76,7 +78,7 @@ const AlertDialogFooter = ({
 }: React.HTMLAttributes<HTMLDivElement>) => (
   <div
     className={cn(
-      'flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2',
+      TextDirection == 'RTL' ? 'flex flex-col-reverse sm:flex-row sm:justify-start sm:space-x-2' : 'flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2',
       className
     )}
     {...props}
@@ -90,7 +92,7 @@ const AlertDialogTitle = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <AlertDialogPrimitive.Title
     ref={ref}
-    className={cn('text-lg font-semibold', className)}
+    className={cn(TextDirection == 'RTL' ? 'text-lg font-semibold text-right' : 'text-lg font-semibold text-left', className)}
     {...props}
   />
 ))
@@ -102,7 +104,7 @@ const AlertDialogDescription = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <AlertDialogPrimitive.Description
     ref={ref}
-    className={cn('text-sm text-muted-foreground', className)}
+    className={cn( TextDirection == 'RTL' ? 'text-sm text-muted-foreground text-right' : 'text-sm text-muted-foreground' , className)}
     {...props}
   />
 ))

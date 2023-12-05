@@ -20,7 +20,7 @@ function KnowledgeBaseTable() {
     '/api/admin/knowledgebase/get-vector-log-data',
     fetcher
   );
-  if (isLoading) return <p dir={TextDirection}> {TextDirection == 'RTL' ?  "...در حال بارگذاری" : "Loading..."}</p>
+  if (isLoading) return <p dir={TextDirection}> {TextDirection == 'RTL' ?  "در حال بارگذاری..." : "Loading..."}</p>
   if (!data) return <p dir={TextDirection}>{TextDirection == 'RTL' ? " داده‌ای دریافت نشد/موجود نیست! " : "No data!"}</p>
 
 

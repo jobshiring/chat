@@ -49,7 +49,7 @@ const DropDownSelector = ({ user_email, mutate, toast }) => {
             method: 'POST',
             body: JSON.stringify({ email: user_email, role: event })
           }).then(data => {
-              toast({ title: `Successfully changed The user's role: ${user_email}.` });
+              toast({ title:  TextDirection == 'RTL' ? `نقش کاربر با موفقیت تغییر کرد` : `Successfully changed The user's role: ${user_email}.`  });
               mutate();})
         }}
       >
@@ -58,7 +58,7 @@ const DropDownSelector = ({ user_email, mutate, toast }) => {
         </SelectTrigger>
         <SelectContent>
           <SelectGroup>
-            <SelectLabel>Roles</SelectLabel>
+            <SelectLabel>{TextDirection == 'RTL' ? "نقش‌ها" : "Roles"}</SelectLabel>
             <SelectItem value="admin">Admin</SelectItem>
             <SelectItem value="editor">Editor</SelectItem>
             <SelectItem value="viewer">Viewer</SelectItem>
@@ -82,7 +82,7 @@ export function UserRoles({ user_email }) {
     '/api/admin/access-control/get-users-table',
     fetcher
   )
-  if (isLoading) return <p dir={TextDirection}>{TextDirection == 'RTL' ? "در حال بارگذاری" : "Loading..."}</p>
+  if (isLoading) return <p dir={TextDirection}>{TextDirection == 'RTL' ? "در حال بارگذاری..." : "Loading..."}</p>
   if (!data) return <p dir={TextDirection}>{TextDirection == 'RTL' ? " داده‌ای دریافت نشد/موجود نیست! " : "No data!"}</p>
 
   // ,
@@ -100,7 +100,7 @@ export function UserRoles({ user_email }) {
         mutate()
         toast({
           title:
-          TextDirection == 'RTL' ? "کاربر با موفقیت تعریف شد. لطفا چند لحظه صبر کنید تا سیستم بروزرسانی شود." : 'Successfully deleted The user. Please wait until the changes are persisted.'
+          TextDirection == 'RTL' ? "کاربر با حذف شد. لطفا چند لحظه صبر کنید تا سیستم بروزرسانی شود." : 'Successfully deleted The user. Please wait until the changes are persisted.'
         })
         setDisabled(false)
       } else {
@@ -192,7 +192,7 @@ export function UserRoles({ user_email }) {
                       </Button>
                     </AlertDialogTrigger>
                     <AlertDialogContent>
-                      <AlertDialogHeader>
+                      <AlertDialogHeader dir={TextDirection}>
                         <AlertDialogTitle>
                           {TextDirection == 'RTL' ? 'آیا از تصمیم خود مطمئن هستید؟ ' : "Are you absolutely sure?"}
                         </AlertDialogTitle>

@@ -63,7 +63,7 @@ export function AddUser({ mutate }) {
     data.preventDefault();
     fetch('/api/admin/access-control/add-user', { method: 'POST', body: JSON.stringify({ email: email, password: password, role: role }) }).then(data => {
       if ( data.status == 200){
-        toast({ title: "Successfully added The new user.😊" });
+        toast({ title: { title: TextDirection == 'RTL' ? "موفقیت در تعریف کاربر." : "Successfully added The new user.😊" }  });
         mutate();
       // resetting all the states
       setEmail('')
@@ -74,7 +74,7 @@ export function AddUser({ mutate }) {
       setOpen(false)
       }
       else {
-        toast({ title: "Could not add new user.😓" });
+        toast({ title:  TextDirection == 'RTL' ? "خطا در تعریف کاربر." : "Could not add new user.😓"  });
       }
     })
   }
@@ -85,8 +85,8 @@ export function AddUser({ mutate }) {
         <Button variant="outline">{TextDirection == 'RTL' ? "تعریف کاربر جدید" : "Add New User"}</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
-        <DialogHeader>
-          <DialogTitle dir={TextDirection}> {TextDirection == 'RTL' ? "تعریف کاربر" : "Add User"}</DialogTitle>
+        <DialogHeader dir={TextDirection}>
+          <DialogTitle> {TextDirection == 'RTL' ? "تعریف کاربر" : "Add User"}</DialogTitle>
           <DialogDescription>
           {TextDirection == 'RTL' ? " اطلاعات کاربر را وارد کنید. " : "Add a new user and provide their info."}
           </DialogDescription>
@@ -97,21 +97,21 @@ export function AddUser({ mutate }) {
               <Label htmlFor="email" className="text-right">
               {TextDirection == 'RTL' ? " ایمیل " : "Email"}
               </Label>
-              <Input id="email" type="text" value={email} required onChange={(e) => { setEmail(e.target.value); if (validateEmail(e)) { setIsValidEmail(true); } else setIsValidEmail(false); }} className="col-span-3" />
-              {isValidEmail ? undefined : <p className="col-span-4 text-sm pl-24 text-red-500"> please provide a correct email </p>}
+              <Input id="email" type="text" dir={TextDirection == "RTL" ? "LTR" : "RTL"} value={email} required onChange={(e) => { setEmail(e.target.value); if (validateEmail(e)) { setIsValidEmail(true); } else setIsValidEmail(false); }} className="col-span-3" />
+              {isValidEmail ? undefined : <p  className={TextDirection == 'RTL' ? "col-span-4 text-sm pr-24 text-red-500" : "col-span-4 text-sm pl-24 text-red-500" }> {TextDirection == 'RTL' ? "لطفا یک ایمیل با فرمت صحیح ارائه کنید." : "please provide a correct email"}  </p>}
             </div>
             <div className="grid grid-cols-4 items-center gap-4" dir={TextDirection}>
               <Label htmlFor="password" className="text-right">
               {TextDirection == 'RTL' ? "گذرواژه" : "Password"}
               </Label>
-              <Input id="password" type="password" required value={password} onChange={(e) => { setPassword(e.target.value); }} className="col-span-3" />
-              {(password == passwordConfirm) ? undefined : <p className="col-span-4 text-sm pl-24 text-red-500"> please confirm the password <ArrowDownwardIcon /> </p>}
+              <Input id="password" dir={TextDirection == "RTL" ? "LTR" : "RTL"} type="password" required value={password} onChange={(e) => { setPassword(e.target.value); }} className="col-span-3" />
+              {(password == passwordConfirm) ? undefined : <p className={TextDirection == 'RTL' ? "col-span-4 text-sm pr-24 text-red-500" : "col-span-4 text-sm pl-24 text-red-500" }> {TextDirection == 'RTL' ? " لطفا یک گذرواژه وارد کنید و از هم‌خوانی آن با قسمت تصدیق مطمئن شوید" : "please confirm the password"} <ArrowDownwardIcon /> </p>}
             </div>
             <div className="grid grid-cols-4 items-center gap-4" dir={TextDirection}>
               <Label htmlFor="password_confirm" className="text-right">
               {TextDirection == 'RTL' ? "تصدیق گذرواژه" : "Confirm Password"}
               </Label>
-              <Input id="password_confirm" type="password" value={passwordConfirm} required onChange={(e) => { setPasswordConfirm(e.target.value); }} className="col-span-3" />
+              <Input id="password_confirm" dir={TextDirection == "RTL" ? "LTR" : "RTL"} type="password" value={passwordConfirm} required onChange={(e) => { setPasswordConfirm(e.target.value); }} className="col-span-3" />
             </div>
             <div className="grid grid-cols-4 items-center gap-4" dir={TextDirection}>
               <Label htmlFor="password_confirm" className="text-right">
@@ -122,7 +122,7 @@ export function AddUser({ mutate }) {
                   <Button variant="outline">{role.charAt(0).toUpperCase() + role.slice(1)}</Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="w-56">
-                  <DropdownMenuLabel>Roles</DropdownMenuLabel>
+                  <DropdownMenuLabel>{TextDirection == 'RTL' ? "نقش‌ها" : "Roles"}</DropdownMenuLabel>
                   <DropdownMenuSeparator />
                   <DropdownMenuRadioGroup value={role} onValueChange={setRole}>
                     <DropdownMenuRadioItem value="admin">Admin</DropdownMenuRadioItem>
@@ -135,7 +135,8 @@ export function AddUser({ mutate }) {
           </div>
           <DialogFooter>
             <DialogClose asChild>
-              {isValidEmail & (password.length > 0) & (password == passwordConfirm) ? (<Button type="submit" disabled={!isReady}  
+              {TextDirection == 'RTL' ? (isValidEmail & (password.length > 0) & (password == passwordConfirm) ? (<Button type="submit" disabled={!isReady}  
+              > ذخیره </Button>) : <Button disabled={true}> ذخیره </Button>) :  isValidEmail & (password.length > 0) & (password == passwordConfirm) ? (<Button type="submit" disabled={!isReady}  
               > Save changes </Button>) : (<Button disabled={true}> Save changes </Button>)
               }
             </DialogClose>

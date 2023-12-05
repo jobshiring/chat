@@ -22,7 +22,7 @@ export function DataTableToolbar<TData>({
 
   return (
     <div className="flex items-center justify-between">
-      <div className={TextDirection == "RTL" ? "flex flex-1 items-center space-x-2 pr-[10px]"  : "flex flex-1 items-center space-x-2"} dir={TextDirection}>
+      <div className={TextDirection == "RTL" ? "flex flex-1 items-center space-x-2"  : "flex flex-1 items-center space-x-2"} dir={TextDirection}>
         <Input
           placeholder={ TextDirection == 'RTL' ? "جستجو در میان ایمیل‌ها..." : "Filter emails..."}
           value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
@@ -32,7 +32,7 @@ export function DataTableToolbar<TData>({
           className="h-8 w-[150px] lg:w-[250px]"
         />
       </div>
-      <DataTableViewOptions table={table} />
+      {TextDirection == 'RTL' ? undefined : <DataTableViewOptions table={table} />}
     </div>
   )
 }

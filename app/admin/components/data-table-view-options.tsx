@@ -35,7 +35,7 @@ export function DataTableViewOptions<TData>({
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-[150px]">
-        <DropdownMenuLabel>Toggle columns</DropdownMenuLabel>
+        <DropdownMenuLabel>{TextDirection == "RTL" ? "حذف/نمایش ستون‌ها" : "Toggle columns"}</DropdownMenuLabel>
         <DropdownMenuSeparator />
         {table
           .getAllColumns()
