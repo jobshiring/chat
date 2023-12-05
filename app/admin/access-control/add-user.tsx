@@ -63,7 +63,7 @@ export function AddUser({ mutate }) {
     data.preventDefault();
     fetch('/api/admin/access-control/add-user', { method: 'POST', body: JSON.stringify({ email: email, password: password, role: role }) }).then(data => {
       if ( data.status == 200){
-        toast({ title: { title: TextDirection == 'RTL' ? "موفقیت در تعریف کاربر." : "Successfully added The new user.😊" }  });
+        toast({ title:  TextDirection == 'RTL' ? "موفقیت در تعریف کاربر." : "Successfully added The new user.😊"  });
         mutate();
       // resetting all the states
       setEmail('')

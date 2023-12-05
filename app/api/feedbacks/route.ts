@@ -5,7 +5,7 @@ import { Database } from '@/lib/db_types'
 import { auth } from '@/auth'
 import { NextResponse } from "next/server";
 
-export const runtime = 'edge'
+export const runtime = 'nodejs'
 
 export async function POST(req: Request) {
   const json = await req.json()
@@ -37,7 +37,7 @@ export async function POST(req: Request) {
       body: JSON.stringify(payload)
     },
     )
-    if(process.env.DEBUG_MODE) console.log(await res.json())
+    if(process.env.DEBUG_MODE) console.log(await res.json(), res.status)
   }
   // to thelp resolve the error: Cannot read properties of undefined (reading 'headers')
   return NextResponse.json({ message: 'good', success: true });
