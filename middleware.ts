@@ -20,11 +20,17 @@ export async function middleware(req: NextRequest) {
   if (
     !session &&
     !req.url.includes('/sign-in') &&
-    !req.url.includes('/sign-up')
+    !req.url.includes('/sign-up') &&
+    !req.url.includes('/reset-password')
   ) {
     const redirectUrl = req.nextUrl.clone()
     redirectUrl.pathname = '/sign-in'
     redirectUrl.searchParams.set(`redirectedFrom`, req.nextUrl.pathname)
+    return NextResponse.redirect(redirectUrl)
+  }
+  else if (session && req.url.includes('/reset-password') && req.url.includes('/sign-up') && req.url.includes('/sign-in')){
+    const redirectUrl = req.nextUrl.clone()
+    redirectUrl.pathname = '/'
     return NextResponse.redirect(redirectUrl)
   }
 

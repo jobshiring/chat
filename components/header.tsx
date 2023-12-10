@@ -14,6 +14,7 @@ import { SidebarFooter } from '@/components/sidebar-footer'
 import { ThemeToggle } from '@/components/theme-toggle'
 import { UserMenu } from '@/components/user-menu'
 import { cookies } from 'next/headers'
+import { Label } from './ui/label'
 
 export async function Header() {
   const cookieStore = cookies()
@@ -44,9 +45,10 @@ export async function Header() {
           {session?.user ? (
             <UserMenu user={session.user} />
           ) : (
-            <Button variant="link" asChild className="-ml-2">
-              <Link href="/sign-in">Login</Link>
-            </Button>
+            // <Button variant="link" asChild className="-ml-2">
+            //   <Link href="/sign-in">Login</Link>
+            // </Button>
+            <Label>Login</Label>
           )}
         </div>
       </div>
