@@ -131,6 +131,12 @@ export function LoginForm({
               </>
             )}
           </p> */}
+          <p className="ml-4">
+            {TextDirection == 'RTL' ? "فراموشی گذرواژه؟" : "Forgot password?"}{' '}
+            <Link href="/reset-password" className="font-medium">
+              {TextDirection == 'RTL' ? <strong>بازتعریف گذرواژه</strong> : "Reset Password"}
+            </Link>
+          </p>
         </div>
       </form>
     </div>
