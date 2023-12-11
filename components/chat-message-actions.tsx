@@ -185,7 +185,7 @@ export function ChatMessageActionsFeedback({
   const [submitted, setSubmitted] = useState(false);
   const [inputText, setInputText] = useState(null);
   const [faceScore, setFaceScore] = useState(null);
-
+  const TextDirection = process.env.TEXT_DIRECTION
   const feedback_state = feedbacks?.feedbacks[`feedback_${index_fixer(index)}`]?.score
   useEffect(() => {
     if (index % 2 != 0) {
@@ -317,8 +317,8 @@ export function ChatMessageActionsFeedback({
             }}
             onClick={() => submitted ? {} : handleFaceClick("😀")}
           />
-          {submitted === false && faceScore !== null ? <StyledTextField id="outlined-multiline-static" inputProps={{ maxLength: "1000" }} onChange={handleTextInput} multiline rows={4} placeholder={"Please describe..."} aria-label="Demo input" color={TextFieldcolors[faceScore]} /> : null}
-          {submitted === false && faceScore !== null ? <ButtonMaterial sx={{ color: colors[faceScore] }} endIcon={<SendIcon />} variant="text" size="small" onClick={handleSubmission}>Submit</ButtonMaterial> : null}
+          {submitted === false && faceScore !== null ? <StyledTextField id="outlined-multiline-static" inputProps={{ maxLength: "1000" }} onChange={handleTextInput} multiline rows={4} placeholder={TextDirection == 'RTL' ? "لطفا شرح دهید..." : "Please describe..."} aria-label="Demo input" color={TextFieldcolors[faceScore]} /> : null}
+          {submitted === false && faceScore !== null ? <ButtonMaterial sx={{ color: colors[faceScore] }} endIcon={<SendIcon />} variant="text" size="small" onClick={handleSubmission}>{TextDirection == 'RTL' ? "ارسال" : "Submit"}</ButtonMaterial> : null}
         </Stack>
       </Box>
     )
