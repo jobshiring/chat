@@ -5,7 +5,8 @@ import { NextResponse } from 'next/server'
 export const runtime = 'nodejs'
 export const fetchCache = 'force-no-store';
 export const dynamic = "force-dynamic";
-export const revalidate=0 // or low number
+export const revalidate = 0 
+export const maxDuration = 60
 
 export async function GET() {
   const url = `${process.env.BizGPT_CLIENT_API_BASE_ADDRESS_SCHEME}://${process.env.BizGPT_CLIENT_API_BASE_ADDRESS}:${process.env.BizGPT_CLIENT_API_PORT}/${process.env.BizGT_CLIENT_API_ADMIN_RETRIEVE_VECTOR_LOG}`

@@ -122,7 +122,7 @@ export function KnowledgeBase(vector_data_log: JSON) {
                   <Input onChange={onFileChange} type="file" placeholder="Upload a Markdown file" accept=".md"  />
                 </CardContent>
                 <CardFooter>
-                  {ready ? <Button onClick={onFileUpload} disabled={false}>{TextDirection == 'RTL' ? "بارگذاری" : "Upload"}</Button> : <Button onClick={onFileUpload} disabled={true}>Upload</Button>}
+                  {ready ? <Button onClick={onFileUpload} disabled={false}>{TextDirection == 'RTL' ? "بارگذاری" : "Upload"}</Button> : <Button onClick={onFileUpload} disabled={true}>{TextDirection == 'RTL' ? "بارگذاری" : "Upload"}</Button>}
                 </CardFooter>
               </Card>
             </TabsContent>
@@ -138,7 +138,7 @@ export function KnowledgeBase(vector_data_log: JSON) {
                   <Textarea rows={5} cols={50} onChange={handleTextInput} overflow="scroll" />
                 </CardContent>
                 <CardFooter>
-                  {ready ? <Button onClick={onSubmit_text} disabled={false}>{TextDirection == 'RTL' ? "بارگذاری متن" : "Save Text"}</Button> : <Button onClick={onSubmit_text} disabled={true}>Save Text</Button>}
+                  {ready ? <Button onClick={onSubmit_text} disabled={false}>{TextDirection == 'RTL' ? "بارگذاری متن" : "Save Text"}</Button> : <Button onClick={onSubmit_text} disabled={true}>{TextDirection == 'RTL' ? "بارگذاری متن" : "Save Text"}</Button>}
                 </CardFooter>
               </Card>
             </TabsContent>

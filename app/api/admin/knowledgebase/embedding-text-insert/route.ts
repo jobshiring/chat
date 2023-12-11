@@ -1,6 +1,7 @@
 import 'server-only'
 import { NextResponse } from 'next/server'
 
+export const maxDuration = 120
 export const runtime = 'nodejs'
 
 export async function POST(req: Request) {

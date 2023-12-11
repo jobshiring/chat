@@ -9,6 +9,7 @@ import { PostgrestError } from '@supabase/supabase-js'
 import { createClient } from '@supabase/supabase-js'
 import { getUserIdByEmail, getUserRoleTable } from '@/app/admin/actions'
 
+export const maxDuration = 60
 export const runtime = 'nodejs'
 export const fetchCache = 'force-no-store';
 export const dynamic = "force-dynamic";
