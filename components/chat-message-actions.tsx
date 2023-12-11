@@ -317,7 +317,7 @@ export function ChatMessageActionsFeedback({
             }}
             onClick={() => submitted ? {} : handleFaceClick("😀")}
           />
-          {submitted === false && faceScore !== null ? <StyledTextField id="outlined-multiline-static" inputProps={{ maxLength: "1000" }} onChange={handleTextInput} multiline rows={4} placeholder={TextDirection == 'RTL' ? "لطفا شرح دهید..." : "Please describe..."} aria-label="Demo input" color={TextFieldcolors[faceScore]} /> : null}
+          {submitted === false && faceScore !== null ? <StyledTextField id="outlined-multiline-static" inputProps={{ maxLength: "1000" }} onChange={handleTextInput} multiline rows={4} dir={TextDirection} placeholder={TextDirection == 'RTL' ? "لطفا شرح دهید..." : "Please describe..."} aria-label="Demo input" color={TextFieldcolors[faceScore]} /> : null}
           {submitted === false && faceScore !== null ? <ButtonMaterial sx={{ color: colors[faceScore] }} endIcon={<SendIcon />} variant="text" size="small" onClick={handleSubmission}>{TextDirection == 'RTL' ? "ارسال" : "Submit"}</ButtonMaterial> : null}
         </Stack>
       </Box>
