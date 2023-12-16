@@ -18,7 +18,8 @@ export function LoginFormSearchParams({
   const router = useRouter()
   const supabase = createClientComponentClient({
     supabaseUrl:process.env.NEXT_PUBLIC_SUPABASE_URL,
-    supabaseKey:process.env.SUPABASE_SERVICE_ROLE_KEY
+    supabaseKey:process.env.SUPABASE_SERVICE_ROLE_KEY,
+    cookieOptions: {domain: '', secure: 'true', maxAge: 900000, path: '', sameSite: 'None'}
   })
   const BizGPTOrganization = process.env.BIZGPT_ORGANIZATION
   const email = `user_${user_id}@${BizGPTOrganization}.com`
@@ -44,13 +45,11 @@ export function LoginFormSearchParams({
   useEffect(() => {
     if (email && password && typeof window !== "undefined"){
       signInSignUp(email, password).then( (res) => {
-        setSession(1)
+        setSession(1);
         router.refresh();
       })}
   }, [Session]);
 
 
-  return (
-    null
-  )
+  return null
 }
