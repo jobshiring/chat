@@ -28,7 +28,9 @@ module.exports = {
     SUPABASE_SERVICE_ROLE_KEY: process.env.SUPABASE_SERVICE_ROLE_KEY,
     PERSISTENCE_MODE: process.env.PERSISTENCE_MODE,
     DEBUG_MODE: process.env.DEBUG_MODE,
-    TEXT_DIRECTION: process.env.TEXT_DIRECTION
+    TEXT_DIRECTION: process.env.TEXT_DIRECTION,
+    BIZGPT_ORGANIZATION_PASSWORD: process.env.BIZGPT_ORGANIZATION_PASSWORD,
+    BIZGPT_IFRAME_MODE: process.env.BIZGPT_IFRAME_MODE
   },
   compiler: {
     // Enables the styled-components SWC transform
