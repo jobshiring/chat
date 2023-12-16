@@ -6,7 +6,7 @@ import { Separator } from '@/components/ui/separator'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 
-export const runtime = 'nodejs'
+export const runtime = 'edge'
 
 export default async function SignInPage({
   searchParams
