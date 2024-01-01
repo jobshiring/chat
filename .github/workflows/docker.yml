@@ -2,10 +2,10 @@ name: Docker Image CI
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "main" ]
     tags: [ "*" ]
   pull_request:
-    branches: [ "master" ]
+    branches: [ "main" ]
 
 jobs:
 
@@ -24,7 +24,7 @@ jobs:
     - name: Generate Docker tag
       id: docker_tag
       run: |
-        if [[ "${GITHUB_REF}" == "refs/heads/master" ]]; then
+        if [[ "${GITHUB_REF}" == "refs/heads/main" ]]; then
           TAG_NAME="latest"
         else
           TAG_NAME=${GITHUB_REF#refs/tags/}
