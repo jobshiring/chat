@@ -30,10 +30,26 @@ module.exports = {
     DEBUG_MODE: process.env.DEBUG_MODE,
     TEXT_DIRECTION: process.env.TEXT_DIRECTION,
     BIZGPT_ORGANIZATION_PASSWORD: process.env.BIZGPT_ORGANIZATION_PASSWORD,
-    BIZGPT_IFRAME_MODE: process.env.BIZGPT_IFRAME_MODE
+    BIZGPT_IFRAME_MODE: process.env.BIZGPT_IFRAME_MODE,
+    IFRAME_AUTH_API_BASE_URL: process.env.IFRAME_AUTH_API_BASE_URL,
+    IFRAME_AUTH_API_PATH_URL: process.env.IFRAME_AUTH_API_PATH_URL
   },
   compiler: {
     // Enables the styled-components SWC transform
     styledComponents: true
+  },
+  async headers() {
+    return [
+      {
+        // matching all API routes
+        source: "/:path*",
+        headers: [
+          { key: "Access-Control-Allow-Credentials", value: "true" },
+          { key: "Access-Control-Allow-Origin", value: "*" },
+          { key: "Access-Control-Allow-Methods", value: "GET,OPTIONS,PATCH,DELETE,POST,PUT" },
+          { key: "Access-Control-Allow-Headers", value: "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version" }
+        ]
+      }
+    ]
   }
 }

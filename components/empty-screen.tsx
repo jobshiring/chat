@@ -25,7 +25,7 @@ if (TextDirection == 'RTL') {
 else{
   exampleMessages = [
     {
-      heading: 'Explain concepts about your business',
+      heading: 'Describe your business',
       message: `What is "X"?`
     },
     {

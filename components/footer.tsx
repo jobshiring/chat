@@ -15,7 +15,7 @@ export function FooterText({ className, ...props }: React.ComponentProps<'p'>) {
       )}
       {...props}
     >
-      {TextDirection == "RTL" ? "تهیه شده با ❤️ توسط BizGPT" : "Made with ❤️ by BizGPT." }
+      {TextDirection == "RTL" ? "تهیه شده توسط BizGPT" : "Made with ❤️ by BizGPT." }
       
     </p>
   )
