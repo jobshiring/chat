@@ -1,3 +1,5 @@
+[![Docker Image CI](https://github.com/ChatCRM/bizgpt-frontend/actions/workflows/docker.yml/badge.svg)](https://github.com/ChatCRM/bizgpt-frontend/actions/workflows/docker.yml)
+
 <a href="https://chat.vercel.ai/">
   <img alt="Next.js 13 and app template Router-ready AI chatbot." src="https://chat.vercel.ai/opengraph-image.png" />
   <h1 align="center">Next.js AI Chatbot</h1>
