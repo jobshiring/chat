@@ -22,6 +22,9 @@ interface SidebarItemBookmarksProps {
 export function SidebarItemBookmarks({ children }: SidebarItemBookmarksProps) {
   const pathname = usePathname()
   const isPathBookmarks =  (pathname == '/bookmarks') ? true : false
+  // Language and Translation
+  var TranslationData = require(`@/translation/${process.env.BIZGPT_FRONTEND_LANGUAGE}.json`);
+
   return (
     <div className={`relative ${isPathBookmarks ? "bg-gray-200 text-gray-700" : ""}`}>
       <TooltipProvider>
@@ -39,7 +42,8 @@ export function SidebarItemBookmarks({ children }: SidebarItemBookmarksProps) {
             </Link>
           </TooltipTrigger>
           <TooltipContent>
-            {TextDirection == "RTL" ? <p> نشانک‌ها </p> : <p>Bookmarks</p> }
+            <p> { TranslationData["Bookmarks"] } </p>
+            
             
           </TooltipContent>
         </Tooltip>

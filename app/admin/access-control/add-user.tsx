@@ -58,12 +58,15 @@ export function AddUser({ mutate }) {
 
   const [open, setOpen] = React.useState(false);
 
+  // Language and Translation
+  var TranslationData = require(`@/translation/${process.env.BIZGPT_FRONTEND_LANGUAGE}.json`);
+
   function onSubmit_User(data) {
     setIsReady(false)
     data.preventDefault();
     fetch('/api/admin/access-control/add-user', { method: 'POST', body: JSON.stringify({ email: email, password: password, role: role }) }).then(data => {
       if ( data.status == 200){
-        toast({ title:  TextDirection == 'RTL' ? "موفقیت در تعریف کاربر." : "Successfully added The new user.😊"  });
+        toast({ title:  TranslationData["Successfully added The new user."]  });
         mutate();
       // resetting all the states
       setEmail('')
@@ -74,7 +77,7 @@ export function AddUser({ mutate }) {
       setOpen(false)
       }
       else {
-        toast({ title:  TextDirection == 'RTL' ? "خطا در تعریف کاربر." : "Could not add new user.😓"  });
+        toast({ title:  TranslationData["Could not add new user."]  });
       }
     })
   }
@@ -82,47 +85,47 @@ export function AddUser({ mutate }) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline">{TextDirection == 'RTL' ? "تعریف کاربر جدید" : "Add New User"}</Button>
+        <Button variant="outline">{TranslationData["Add New User"]}</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader dir={TextDirection}>
-          <DialogTitle> {TextDirection == 'RTL' ? "تعریف کاربر" : "Add User"}</DialogTitle>
+          <DialogTitle> {TranslationData["Add User"]}</DialogTitle>
           <DialogDescription>
-          {TextDirection == 'RTL' ? " اطلاعات کاربر را وارد کنید. " : "Add a new user and provide their info."}
+          {TranslationData["Add a new user and provide their info"]}
           </DialogDescription>
         </DialogHeader>
         <form onSubmit={onSubmit_User}>
           <div className="grid gap-4 py-4">
             <div className="grid grid-cols-4 items-center gap-4" dir={TextDirection}>
               <Label htmlFor="email" className="text-right">
-              {TextDirection == 'RTL' ? " ایمیل " : "Email"}
+              {TranslationData["Email"]}
               </Label>
               <Input id="email" type="text" dir="LTR" value={email} required onChange={(e) => { setEmail(e.target.value); if (validateEmail(e)) { setIsValidEmail(true); } else setIsValidEmail(false); }} className="col-span-3" />
-              {isValidEmail ? undefined : <p  className={TextDirection == 'RTL' ? "col-span-4 text-sm pr-24 text-red-500" : "col-span-4 text-sm pl-24 text-red-500" }> {TextDirection == 'RTL' ? "لطفا یک ایمیل با فرمت صحیح ارائه کنید." : "please provide a correct email"}  </p>}
+              {isValidEmail ? undefined : <p  className={TextDirection == 'RTL' ? "col-span-4 text-sm pr-24 text-red-500" : "col-span-4 text-sm pl-24 text-red-500" }> {TranslationData["please provide a correct email"]}  </p>}
             </div>
             <div className="grid grid-cols-4 items-center gap-4" dir={TextDirection}>
               <Label htmlFor="password" className="text-right">
-              {TextDirection == 'RTL' ? "گذرواژه" : "Password"}
+              {TranslationData["Password"]}
               </Label>
               <Input id="password" dir="LTR" type="password" required value={password} onChange={(e) => { setPassword(e.target.value); }} className="col-span-3" />
-              {(password == passwordConfirm) ? undefined : <p className={TextDirection == 'RTL' ? "col-span-4 text-sm pr-24 text-red-500" : "col-span-4 text-sm pl-24 text-red-500" }> {TextDirection == 'RTL' ? " لطفا یک گذرواژه وارد کنید و از هم‌خوانی آن با قسمت تصدیق مطمئن شوید" : "please confirm the password"} <ArrowDownwardIcon /> </p>}
+              {(password == passwordConfirm) ? undefined : <p className={TextDirection == 'RTL' ? "col-span-4 text-sm pr-24 text-red-500" : "col-span-4 text-sm pl-24 text-red-500" }> {TranslationData["please confirm the password"]} <ArrowDownwardIcon /> </p>}
             </div>
             <div className="grid grid-cols-4 items-center gap-4" dir={TextDirection}>
               <Label htmlFor="password_confirm" className="text-right">
-              {TextDirection == 'RTL' ? "تصدیق گذرواژه" : "Confirm Password"}
+              {TranslationData["Confirm Password"]}
               </Label>
               <Input id="password_confirm" dir="LTR" type="password" value={passwordConfirm} required onChange={(e) => { setPasswordConfirm(e.target.value); }} className="col-span-3" />
             </div>
             <div className="grid grid-cols-4 items-center gap-4" dir={TextDirection}>
               <Label htmlFor="password_confirm" className="text-right">
-                {TextDirection == 'RTL' ? "نقش کاربر " : "Role"}
+                {TranslationData["Role"]}
               </Label>
               <DropdownMenu className="col-span-3" >
                 <DropdownMenuTrigger asChild>
                   <Button variant="outline">{role.charAt(0).toUpperCase() + role.slice(1)}</Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="w-56">
-                  <DropdownMenuLabel>{TextDirection == 'RTL' ? "نقش‌ها" : "Roles"}</DropdownMenuLabel>
+                  <DropdownMenuLabel>{TranslationData["Roles"]}</DropdownMenuLabel>
                   <DropdownMenuSeparator />
                   <DropdownMenuRadioGroup value={role} onValueChange={setRole}>
                     <DropdownMenuRadioItem value="admin">Admin</DropdownMenuRadioItem>
@@ -136,8 +139,8 @@ export function AddUser({ mutate }) {
           <DialogFooter>
             <DialogClose asChild>
               {TextDirection == 'RTL' ? (isValidEmail & (password.length > 0) & (password == passwordConfirm) ? (<Button type="submit" disabled={!isReady}  
-              > ذخیره </Button>) : <Button disabled={true}> ذخیره </Button>) :  isValidEmail & (password.length > 0) & (password == passwordConfirm) ? (<Button type="submit" disabled={!isReady}  
-              > Save changes </Button>) : (<Button disabled={true}> Save changes </Button>)
+              > {TranslationData["Save"]} </Button>) : <Button disabled={true}> {TranslationData["Save"]} </Button>) :  isValidEmail & (password.length > 0) & (password == passwordConfirm) ? (<Button type="submit" disabled={!isReady}  
+              > {TranslationData["Save"]} </Button>) : (<Button disabled={true}> {TranslationData["Save"]} </Button>)
               }
             </DialogClose>
           </DialogFooter>

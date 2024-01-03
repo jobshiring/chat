@@ -36,16 +36,18 @@ else{
 }
 export function EmptyScreen({ setInput }: Pick<UseChatHelpers, 'setInput'>) {
   
+  // Language and Translation
+  var TranslationData = require(`@/translation/${process.env.BIZGPT_FRONTEND_LANGUAGE}.json`);
 
   return (
     <div className="mx-auto max-w-2xl px-4">
       <div className="rounded-lg border bg-background p-8">
         <h1 className="mb-2 text-lg font-semibold" dir={TextDirection}>
-          {TextDirection === 'RTL' ? "به BizGPT خوش آمدید!" :  "Welcome to BizGPT!" }
+          {TranslationData["Welcome to BizGPT!"] }
         </h1>
         <p className="leading-normal text-muted-foreground" dir={TextDirection}>
           
-          {TextDirection === 'RTL' ? "با پرسیدن یک سوال و یا استفاده از مثال‌های زیر، مکالمه خود با هوش مصنوعی را هم‌اکنون آغاز کنید:" :  "You can start a conversation by asking something or try the following examples:" }
+          {TranslationData["You can start a conversation by asking something or try the following examples:"] }
         </p>
         <div className="mt-4 flex flex-col items-start space-y-2" dir={TextDirection}>
           {exampleMessages.map((message, index) => (

@@ -24,13 +24,18 @@ interface DataTablePaginationProps<TData> {
 export function DataTablePagination<TData>({
   table,
 }: DataTablePaginationProps<TData>) {
+
+  // Language and Translation
+  var TranslationData = require(`@/translation/${process.env.BIZGPT_FRONTEND_LANGUAGE}.json`);
+
+
   return (
     <div className="flex items-center justify-between px-2">
       <div className="flex-1 text-sm text-muted-foreground">
       </div>
       <div className="flex items-center space-x-6 lg:space-x-8">
         <div className="flex items-center space-x-2">
-          <p className="text-sm font-medium"> {TextDirection == 'RTL' ? "تعداد سطر در صفحه" : "Rows per page"}</p>
+          <p className="text-sm font-medium"> {TranslationData["Rows per page"]}</p>
           <Select
             value={`${table.getState().pagination.pageSize}`}
             onValueChange={(value) => {
@@ -50,7 +55,7 @@ export function DataTablePagination<TData>({
           </Select>
         </div>
         <div className="flex w-[100px] items-center justify-center text-sm font-medium">
-        {TextDirection == 'RTL' ? "صفحه" : "Page"} {table.getState().pagination.pageIndex + 1} {TextDirection == 'RTL' ? "از" : "of"} {" "}
+        {TranslationData["Page"]} {table.getState().pagination.pageIndex + 1} {TranslationData["of"]} {" "}
           {table.getPageCount()}
         </div>
         <div className="flex items-center space-x-2">

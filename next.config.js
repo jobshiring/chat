@@ -32,7 +32,8 @@ module.exports = {
     BIZGPT_ORGANIZATION_PASSWORD: process.env.BIZGPT_ORGANIZATION_PASSWORD,
     BIZGPT_IFRAME_MODE: process.env.BIZGPT_IFRAME_MODE,
     IFRAME_AUTH_API_BASE_URL: process.env.IFRAME_AUTH_API_BASE_URL,
-    IFRAME_AUTH_API_PATH_URL: process.env.IFRAME_AUTH_API_PATH_URL
+    IFRAME_AUTH_API_PATH_URL: process.env.IFRAME_AUTH_API_PATH_URL,
+    BIZGPT_FRONTEND_LANGUAGE: process.env.BIZGPT_FRONTEND_LANGUAGE
   },
   compiler: {
     // Enables the styled-components SWC transform

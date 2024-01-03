@@ -21,11 +21,14 @@ export function DataTableToolbar<TData>({
 }: DataTableToolbarProps<TData>) {
   const isFiltered = table.getState().columnFilters.length > 0
 
+  // Language and Translation
+  var TranslationData = require(`@/translation/${process.env.BIZGPT_FRONTEND_LANGUAGE}.json`);
+
   return (
     <div className="flex items-center justify-between">
       <div className={TextDirection == "RTL" ? "flex flex-1 items-center space-x-2"  : "flex flex-1 items-center space-x-2"} dir={TextDirection}>
         <Input
-          placeholder={TextDirection == "RTL" ? "جستجو در میان داده‌ها..." : "Filter documents..."}
+          placeholder={TranslationData["Filter documents..."]}
           value={(table.getColumn("content")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
             table.getColumn("content")?.setFilterValue(event.target.value)

@@ -72,12 +72,15 @@ export function LoginForm({
     router.refresh()
   }
 
+  // Language and Translation
+  var TranslationData = require(`@/translation/${process.env.BIZGPT_FRONTEND_LANGUAGE}.json`);
+
   return (
     <div {...props}>
       <form onSubmit={handleOnSubmit}>
         <fieldset className="flex flex-col gap-y-4">
           <div className="flex flex-col gap-y-1" dir={TextDirection}>
-            {TextDirection === 'RTL' ? <Label>آدرس ایمیل</Label> : <Label>Email</Label> }
+          <Label>{TranslationData["Email"]}</Label>
 
             <Input
               name="email"
@@ -93,7 +96,7 @@ export function LoginForm({
             />
           </div>
           <div className="flex flex-col gap-y-1" dir={TextDirection}>
-          {TextDirection === 'RTL' ? <Label> گذرواژه </Label> : <Label>Password</Label> }
+          <Label>{TranslationData["Password"]}</Label>
             <Input
               name="password"
               dir="LTR"
@@ -112,7 +115,7 @@ export function LoginForm({
         <div className="mt-4 flex items-center">
           <Button disabled={isLoading}>
             {isLoading && <IconSpinner className="mr-2 animate-spin" />}
-            {action === 'sign-in' && TextDirection === 'RTL' ? 'ورود' : 'Sign In'}
+            {action === 'sign-in' && TranslationData["Sign In"]}
           </Button>
           {/* <p className="ml-4">
             {action === 'sign-in' ? (
@@ -132,9 +135,9 @@ export function LoginForm({
             )}
           </p> */}
           <p className="ml-4">
-            {TextDirection == 'RTL' ? "فراموشی گذرواژه؟" : "Forgot password?"}{' '}
+            {TranslationData["Forgot Password?"]}{' '}
             <Link href="/reset-password" className="font-medium">
-              {TextDirection == 'RTL' ? <strong>بازتعریف گذرواژه</strong> : "Reset Password"}
+              <strong> {TranslationData["Reset Password"]} </strong>
             </Link>
           </p>
         </div>

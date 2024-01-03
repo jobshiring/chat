@@ -33,6 +33,9 @@ const TextDirection = process.env.TEXT_DIRECTION
 export function SidebarNav({ className, ...props }: SidebarNavProps) {
   const pathname = usePathname()
 
+  // Language and Translation
+  var TranslationData = require(`@/translation/${process.env.BIZGPT_FRONTEND_LANGUAGE}.json`);
+
   return (
     <nav
       dir={TextDirection}
@@ -43,7 +46,7 @@ export function SidebarNav({ className, ...props }: SidebarNavProps) {
       {...props}
     >
       <h1 dir={TextDirection}> <strong> 
-      {TextDirection == 'RTL' ? "مخزن دانش" : "Knowledgebase"}
+      {TranslationData["Knowledgebase"]}
          </strong> </h1>
         <Link key="/admin" 
           href="/admin"
@@ -55,7 +58,7 @@ export function SidebarNav({ className, ...props }: SidebarNavProps) {
             "justify-start"
           )}
         >
-        {TextDirection == 'RTL' ? "بارگذاری " : "Upload"}
+        {TranslationData["Upload"]}
           
         </Link>
         <Link key="/admin/knowledgebase-details" 
@@ -69,11 +72,11 @@ export function SidebarNav({ className, ...props }: SidebarNavProps) {
             "justify-start"
           )}
         >
-        {TextDirection == 'RTL' ? "جزئیات " : "Details"}
+        {TranslationData["Details"]}
           
         </Link>
         <h1 dir={TextDirection}> <strong> 
-          {TextDirection == 'RTL' ? " دسترسی " : "Access Control "}
+          {TranslationData["Access Control"]}
           </strong></h1>
         <Link key="/admin/access-control" 
           href="/admin/access-control"
@@ -85,7 +88,7 @@ export function SidebarNav({ className, ...props }: SidebarNavProps) {
             "justify-start"
           )}
         >
-          {TextDirection == 'RTL' ? " مدیریت کاربرها و نقش‌ها " : "Manage User Roles"}
+          {TranslationData["Manage User Roles"]}
           
         </Link>
     </nav>

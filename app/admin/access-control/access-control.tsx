@@ -41,6 +41,9 @@ import { Truculenta } from 'next/font/google'
 const TextDirection = process.env.TEXT_DIRECTION
 
 const DropDownSelector = ({ user_email, mutate, toast }) => {
+  // Language and Translation
+  var TranslationData = require(`@/translation/${process.env.BIZGPT_FRONTEND_LANGUAGE}.json`);
+
   return (
     <>
       <Select
@@ -49,16 +52,16 @@ const DropDownSelector = ({ user_email, mutate, toast }) => {
             method: 'POST',
             body: JSON.stringify({ email: user_email, role: event })
           }).then(data => {
-              toast({ title:  TextDirection == 'RTL' ? `نقش کاربر با موفقیت تغییر کرد` : `Successfully changed The user's role: ${user_email}.`  });
+              toast({ title:  `${TranslationData["Successfully changed The user's role:"]} ${user_email}.`  });
               mutate();})
         }}
       >
         <SelectTrigger className="w-[180px]">
-          <SelectValue placeholder="Change Role" />
+          <SelectValue placeholder={TranslationData["Change Role"]} />
         </SelectTrigger>
         <SelectContent>
           <SelectGroup>
-            <SelectLabel>{TextDirection == 'RTL' ? "نقش‌ها" : "Roles"}</SelectLabel>
+            <SelectLabel>{TranslationData["Roles"]}</SelectLabel>
             <SelectItem value="admin">Admin</SelectItem>
             <SelectItem value="editor">Editor</SelectItem>
             <SelectItem value="viewer">Viewer</SelectItem>
@@ -74,6 +77,10 @@ const DropDownSelector = ({ user_email, mutate, toast }) => {
 }
 
 export function UserRoles({ user_email }) {
+
+  // Language and Translation
+  var TranslationData = require(`@/translation/${process.env.BIZGPT_FRONTEND_LANGUAGE}.json`);
+
   const [disabled, setDisabled] = useState(false)
   const { toast } = useToast()
   const fetcher = url =>
@@ -82,8 +89,8 @@ export function UserRoles({ user_email }) {
     '/api/admin/access-control/get-users-table',
     fetcher
   )
-  if (isLoading) return <p dir={TextDirection}>{TextDirection == 'RTL' ? "در حال بارگذاری..." : "Loading..."}</p>
-  if (!data) return <p dir={TextDirection}>{TextDirection == 'RTL' ? " داده‌ای دریافت نشد/موجود نیست! " : "No data!"}</p>
+  if (isLoading) return <p dir={TextDirection}>{TranslationData["Loading..."]}</p>
+  if (!data) return <p dir={TextDirection}>{TranslationData["No data!"]}</p>
 
   // ,
   // { refreshInterval: 1000 }
@@ -100,11 +107,11 @@ export function UserRoles({ user_email }) {
         mutate()
         toast({
           title:
-          TextDirection == 'RTL' ? "کاربر با حذف شد. لطفا چند لحظه صبر کنید تا سیستم بروزرسانی شود." : 'Successfully deleted The user. Please wait until the changes are persisted.'
+          TranslationData["Successfully deleted The user. Please wait until the changes are persisted."]
         })
         setDisabled(false)
       } else {
-        toast({ title: TextDirection == 'RTL' ? "خطا در تعریف کاربر" :'Could not delete The user due to an error.' })
+        toast({ title: TranslationData["Could not delete The user due to an error."] })
         setDisabled(false)
       }
     })
@@ -114,7 +121,7 @@ export function UserRoles({ user_email }) {
     {
       accessorKey: 'id',
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title={TextDirection == 'RTL' ? "شناسه" :"id"} />
+        <DataTableColumnHeader column={column} title={TranslationData["id"]} />
       ),
       cell: ({ row }) => <div className="w-[80px]">{row.getValue('id')}</div>,
       enableSorting: true,
@@ -123,7 +130,7 @@ export function UserRoles({ user_email }) {
     {
       accessorKey: 'email',
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title={TextDirection == 'RTL' ? "ایمیل" :"Email"} />
+        <DataTableColumnHeader column={column} title={TranslationData["Email"]} />
       ),
       cell: ({ row }) => {
         return (
@@ -140,7 +147,7 @@ export function UserRoles({ user_email }) {
     {
       accessorKey: 'role',
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title={TextDirection == 'RTL' ? "نقش" :"Role"} />
+        <DataTableColumnHeader column={column} title={TranslationData["Role"]} />
       ),
       cell: ({ row }) => {
         return (
@@ -156,7 +163,7 @@ export function UserRoles({ user_email }) {
     },
     {
       id: 'actions',
-      header: TextDirection == 'RTL' ? 'تغییر نقش' : 'Change Role',
+      header: TranslationData['Change Role'],
       enableHiding: false,
       cell: ({ row }) => {
         return (
@@ -172,7 +179,7 @@ export function UserRoles({ user_email }) {
     },
     {
       id: 'delete',
-      header: TextDirection == 'RTL' ? 'حذف' : 'Delete',
+      header: TranslationData['Delete'],
       enableHiding: false,
       cell: ({ row }) => {
         return (
@@ -194,23 +201,23 @@ export function UserRoles({ user_email }) {
                     <AlertDialogContent>
                       <AlertDialogHeader dir={TextDirection}>
                         <AlertDialogTitle>
-                          {TextDirection == 'RTL' ? 'آیا از تصمیم خود مطمئن هستید؟ ' : "Are you absolutely sure?"}
+                          {TranslationData["Are you absolutely sure?"]}
                         </AlertDialogTitle>
                         <AlertDialogDescription>
-                        {TextDirection == 'RTL' ? 'این عمل موجب حذف کاربر روبرو خواهد شد:' : "This action cannot be undone and will permanently delete the following user account:"}
+                        {TranslationData["This action cannot be undone and will permanently delete the following user account:"]}
                           {' '}
                           <strong>{row.original.email}</strong>
                         </AlertDialogDescription>
                       </AlertDialogHeader>
                       <AlertDialogFooter>
                         <AlertDialogCancel>
-                          {TextDirection == 'RTL' ? 'لغو' : 'Cancel'}
+                          {TranslationData['Cancel']}
                           </AlertDialogCancel>
                         <AlertDialogAction
                           value={row.original.email}
                           onClick={DeleteUser}
                         >
-                          {TextDirection == 'RTL' ? 'ادامه' : 'Continue'}
+                          {TranslationData['Continue']}
                         </AlertDialogAction>
                       </AlertDialogFooter>
                     </AlertDialogContent>

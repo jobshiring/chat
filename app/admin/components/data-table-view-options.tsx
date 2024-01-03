@@ -22,6 +22,10 @@ interface DataTableViewOptionsProps<TData> {
 export function DataTableViewOptions<TData>({
   table,
 }: DataTableViewOptionsProps<TData>) {
+
+  // Language and Translation
+  var TranslationData = require(`@/translation/${process.env.BIZGPT_FRONTEND_LANGUAGE}.json`);
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -31,11 +35,11 @@ export function DataTableViewOptions<TData>({
           className="ml-auto hidden h-8 lg:flex"
         >
           <MixerHorizontalIcon className="mr-2 h-4 w-4" />
-          {TextDirection == "RTL" ? "تنظیمات" : "View"}
+          {TranslationData["View"]}
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-[150px]">
-        <DropdownMenuLabel>{TextDirection == "RTL" ? "حذف/نمایش ستون‌ها" : "Toggle columns"}</DropdownMenuLabel>
+        <DropdownMenuLabel>{TranslationData["Toggle columns"]}</DropdownMenuLabel>
         <DropdownMenuSeparator />
         {table
           .getAllColumns()
