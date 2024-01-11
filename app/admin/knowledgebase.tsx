@@ -54,6 +54,9 @@ export function KnowledgeBase(vector_data_log: JSON) {
   const handleTextInput = (text) => {
     setInputText(text.currentTarget.value);
   };
+  
+    // Language and Translation
+    var TranslationData = require(`@/translation/${process.env.BIZGPT_FRONTEND_LANGUAGE}.json`);
 
   async function onSubmit_text() {
     setReady(false);
@@ -66,8 +69,8 @@ export function KnowledgeBase(vector_data_log: JSON) {
     }
     )
     const json = await response.json()
-    if (json.status != 201) toast({ title: TextDirection == 'RTL' ? "خطا در بارگذاری متن!" : "Text insertion failed!" })
-    else toast({ title: TextDirection == 'RTL' ? "متن با موفقیت بارگذاری شد." : "Successfully Inserted The text." })
+    if (json.status != 201) toast({ title: TranslationData["Text insertion failed!"] })
+    else toast({ title: TranslationData["Successfully Inserted The text."] })
     setReady(true);
   };
 
@@ -95,8 +98,8 @@ export function KnowledgeBase(vector_data_log: JSON) {
     }
     )
     const json = await response.json()
-    if (json.status != 200) toast({ title: TextDirection == 'RTL' ? "خطا در بارگذاری فایل " : "Markdown upload failed!" })
-    else toast({ title: TextDirection == 'RTL' ? "فایل با موفقیت بارگذاری شد." : "Successfully uploaded the Markdown file." })
+    if (json.status != 200) toast({ title: TranslationData["Markdown upload failed!"] })
+    else toast({ title: TranslationData["Successfully uploaded the Markdown file."] })
     setReady(true);
   };
 
@@ -106,15 +109,15 @@ export function KnowledgeBase(vector_data_log: JSON) {
         <div className="w-[600px] flex-col">
           <Tabs defaultValue="upload_file" className="w-full">
             <TabsList className="grid w-full grid-cols-2">
-              <TabsTrigger value="upload_file" dir={TextDirection}>{TextDirection == 'RTL' ? "بارگذاری فایل" : "Upload File"}</TabsTrigger>
-              <TabsTrigger value="enter_text" dir={TextDirection}>{TextDirection == 'RTL' ? "بارگذاری متن" : "Enter Text"}</TabsTrigger>
+              <TabsTrigger value="upload_file" dir={TextDirection}>{TranslationData["Upload File"]}</TabsTrigger>
+              <TabsTrigger value="enter_text" dir={TextDirection}>{TranslationData["Enter Text"]}</TabsTrigger>
             </TabsList>
             <TabsContent value="upload_file" dir={TextDirection}>
               <Card>
                 <CardHeader>
-                  <CardTitle> {TextDirection == 'RTL' ? "بارگذاری فایل Markdown" : "Upload Markdown File"}</CardTitle>
+                  <CardTitle> {TranslationData["Upload Markdown File"]}</CardTitle>
                   <CardDescription>
-                  {TextDirection == 'RTL' ? "از طریق این پنل می‌توانید فایل Markdown خود را بارگذاری کنید. " : "Upload your Markdown file. It will be added to the knowledgebase."}
+                  {TranslationData["Upload your Markdown file. It will be added to the knowledgebase."]}
                     
                   </CardDescription>
                 </CardHeader>
@@ -122,23 +125,23 @@ export function KnowledgeBase(vector_data_log: JSON) {
                   <Input onChange={onFileChange} type="file" placeholder="Upload a Markdown file" accept=".md"  />
                 </CardContent>
                 <CardFooter>
-                  {ready ? <Button onClick={onFileUpload} disabled={false}>{TextDirection == 'RTL' ? "بارگذاری" : "Upload"}</Button> : <Button onClick={onFileUpload} disabled={true}>{TextDirection == 'RTL' ? "بارگذاری" : "Upload"}</Button>}
+                  {ready ? <Button onClick={onFileUpload} disabled={false}>{TranslationData["Upload"]}</Button> : <Button onClick={onFileUpload} disabled={true}>{TranslationData["Upload"]}</Button>}
                 </CardFooter>
               </Card>
             </TabsContent>
             <TabsContent value="enter_text" dir={TextDirection}>
               <Card>
                 <CardHeader>
-                  <CardTitle>{TextDirection == 'RTL' ? "بارگذاری متن" : "Enter Text"}</CardTitle>
+                  <CardTitle>{TranslationData["Enter Text"]}</CardTitle>
                   <CardDescription>
-                  {TextDirection == 'RTL' ? "از طریق این پنل می‌توانید متن خود را بارگذاری کنید." : "Enter your text below. It will be added to the knowledgebase."}
+                  {TranslationData["Enter your text below. It will be added to the knowledgebase."]}
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-2">
                   <Textarea rows={5} cols={50} onChange={handleTextInput} overflow="scroll" />
                 </CardContent>
                 <CardFooter>
-                  {ready ? <Button onClick={onSubmit_text} disabled={false}>{TextDirection == 'RTL' ? "بارگذاری متن" : "Save Text"}</Button> : <Button onClick={onSubmit_text} disabled={true}>{TextDirection == 'RTL' ? "بارگذاری متن" : "Save Text"}</Button>}
+                  {ready ? <Button onClick={onSubmit_text} disabled={false}>{TranslationData["Save Text"]}</Button> : <Button onClick={onSubmit_text} disabled={true}>{TranslationData["Save Text"]}</Button>}
                 </CardFooter>
               </Card>
             </TabsContent>

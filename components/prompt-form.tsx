@@ -38,6 +38,9 @@ export function PromptForm({
     }
   }, [])
 
+  // Language and Translation
+  var TranslationData = require(`@/translation/${process.env.BIZGPT_FRONTEND_LANGUAGE}.json`);
+
   return (
     <form
       onSubmit={async e => {
@@ -74,7 +77,7 @@ export function PromptForm({
           value={input}
           onChange={e => setInput(e.target.value)}
           dir={TextDirection}
-          placeholder={TextDirection == "RTL" ? "یک سوال بپرسید..." : "Ask Something..."}
+          placeholder={TranslationData["Ask Something..."]}
           spellCheck={false}
           className={TextDirection == "RTL" ? "min-h-[60px] w-full resize-none bg-transparent py-[1.3rem] pr-[20px] focus-within:outline-none sm:text-sm" : "min-h-[60px] w-full resize-none bg-transparent py-[1.3rem] focus-within:outline-none sm:text-sm"}
         />
@@ -90,7 +93,7 @@ export function PromptForm({
                 <span className="sr-only">Send message</span>
               </Button>
             </TooltipTrigger>
-            {TextDirection == "RTL" ? <TooltipContent>ارسال</TooltipContent> : <TooltipContent>Send message</TooltipContent> }
+            <TooltipContent>{TranslationData["Send message"]}</TooltipContent>
           </Tooltip>
         </div>
       </div>

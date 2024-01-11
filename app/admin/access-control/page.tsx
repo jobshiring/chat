@@ -13,18 +13,21 @@ export default async function SettingsAccountPage() {
   const cookieStore = cookies()
   const session = await auth({ cookieStore })
 
+  // Language and Translation
+  var TranslationData = require(`@/translation/${process.env.BIZGPT_FRONTEND_LANGUAGE}.json`);
+
   return (
     <div className="space-y-6">
       <div>
         <h3 className="text-lg font-medium" dir={TextDirection}>
-          {TextDirection == 'RTL' ? " مدیریت کاربرها و نقش‌ها " : "Manage User Roles"}
+          {TranslationData["Manage User Roles"]}
           </h3>
         <p className="text-sm text-muted-foreground" dir={TextDirection}>
-        {TextDirection == 'RTL' ? " از طریق این پنل می‌توانید کاربرها و نقش‌ها را مدیریت کنید." : "Assign roles to users using the table below."}  
+        {TranslationData["Assign roles to users using the table below"]}  
         </p>
         <></>
         <p className="text-sm text-muted-foreground" dir={TextDirection}> 
-        {TextDirection == 'RTL' ? " * لطفا پس از اعمال تغییرات چند لحظه صبر کنید تا سیستم بروزرسانی گردد. " : "* Please wait for a few seconds for the changes you have made to take effect."}
+        {TranslationData["* Please wait for a few seconds for the changes you have made to take effect."]}
         
          </p>
       </div>

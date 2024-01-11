@@ -18,15 +18,17 @@ interface SettingsLayoutProps {
 }
 
 export default function SettingsLayout({ children }: SettingsLayoutProps) {
+  // Language and Translation
+  var TranslationData = require(`@/translation/${process.env.BIZGPT_FRONTEND_LANGUAGE}.json`);
   return (
     <>
       <div className="space-y-6 p-10 pb-16 md:block">
         <div className="space-y-0.5">
           <h2 className="text-2xl font-bold tracking-tight" dir={TextDirection}>
-          {TextDirection == 'RTL' ? "بخش مدیریت" : "Administration"}
+          {TranslationData["Administration"]}
             </h2>
           <p className="text-muted-foreground" dir={TextDirection}>
-          {TextDirection == 'RTL' ? "به وسیله این پنل سیستم BizGPT خود را مدیریت کنید." : "Manage your BizGPT instance."}
+          {TranslationData["Manage your BizGPT instance"]}
             
           </p>
         </div>

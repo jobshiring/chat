@@ -6,6 +6,8 @@ import { ExternalLink } from '@/components/external-link'
 const TextDirection = process.env.TEXT_DIRECTION
 
 export function FooterText({ className, ...props }: React.ComponentProps<'p'>) {
+  // Language and Translation
+  var TranslationData = require(`@/translation/${process.env.BIZGPT_FRONTEND_LANGUAGE}.json`);
   return (
     <p
       dir={TextDirection}
@@ -15,7 +17,7 @@ export function FooterText({ className, ...props }: React.ComponentProps<'p'>) {
       )}
       {...props}
     >
-      {TextDirection == "RTL" ? "تهیه شده با ❤️ توسط BizGPT" : "Made with ❤️ by BizGPT." }
+      {TranslationData["Made with ❤️ by BizGPT"]}
       
     </p>
   )

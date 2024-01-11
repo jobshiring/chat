@@ -59,7 +59,7 @@ export function ResetPasswordForm({
       redirectTo: `${location.origin}/reset-password?callback=true&email=${email}`,
     })
     if (!error)
-      toast.success(TextDirection === 'RTL' ? 'لطفا ایمیل خود را چک کنید' : 'Check your inbox!')
+      toast.success(TranslationData["Check your inbox!"])
     return error
   }
 
@@ -67,7 +67,7 @@ export function ResetPasswordForm({
     const { email, password } = formState
     const { data, error } = await supabase.auth.updateUser({ password: password })
     if (!error){
-      toast.success(TextDirection === 'RTL' ? 'گذرواژه با موفقیت تغییر کرد. با استفاده از دکمه بازگشت به صفحه قبل بازگردید.' : 'Password reset successfully. You could go back using the button.')
+      toast.success(TranslationData["Password reset successfully. You could go back using the button."])
     }
     return error
   }
@@ -89,12 +89,15 @@ export function ResetPasswordForm({
     // router.replace('/')
   }
 
+  // Language and Translation
+  var TranslationData = require(`@/translation/${process.env.BIZGPT_FRONTEND_LANGUAGE}.json`);
+
   return (
     <div {...props}>
       <form onSubmit={handleOnSubmit}>
         <fieldset className="flex flex-col gap-y-4">
           <div className="flex flex-col gap-y-1" dir={TextDirection}>
-            {TextDirection === 'RTL' ? <Label>آدرس ایمیل</Label> : <Label>Email</Label>}
+            <Label>{TranslationData["Email"]}</Label>
 
             <Input
               name="email"
@@ -112,7 +115,7 @@ export function ResetPasswordForm({
           </div>
           { emailValue ? 
           <div className="flex flex-col gap-y-1" dir={TextDirection}>
-            {TextDirection === 'RTL' ? <Label> گذرواژه جدید </Label> : <Label>Your New Password</Label>}
+            <Label>{TranslationData["New Password"]}</Label>
             <Input
               name="password"
               dir="LTR"
@@ -135,12 +138,12 @@ export function ResetPasswordForm({
           <>
           <Button disabled={isBackDisabled} variant="outline">
             <a href={location.origin} >
-            {TextDirection === 'RTL' ? 'بازگشت' : 'Go Back'}
+            {TranslationData["Go Back"]}
             </a>
           </Button>         
           <Button disabled={isLoading || !isBackDisabled}>
             {isLoading && <IconSpinner className="mr-2 animate-spin" />}
-            {action === 'reset-password-init' && TextDirection === 'RTL' ? 'تغییر گذرواژه ' : 'Reset Password'}
+            {action === 'reset-password-init' && TranslationData["Reset Password"]}
           </Button>
 
 
@@ -149,12 +152,12 @@ export function ResetPasswordForm({
            <>
            <Button disabled={isLoading || !isBackDisabled}>
            {isLoading && <IconSpinner className="mr-2 animate-spin" />}
-           {action === 'reset-password-init' && TextDirection === 'RTL' ? 'تغییر گذرواژه ' : 'Reset Password'}
+           {action === 'reset-password-init' && TranslationData["Reset Password"]}
          </Button>
 
          <Button disabled={isBackDisabled} variant="outline">
            <a href={location.origin} >
-           {TextDirection === 'RTL' ? 'بازگشت' : 'Go Back'}
+           {TranslationData["Go Back"]}
            </a>
          </Button>      
          </>

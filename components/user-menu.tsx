@@ -38,6 +38,9 @@ export function UserMenu({ user }: UserMenuProps) {
     // router.push("/")
   }
 
+  // Language and Translation
+  var TranslationData = require(`@/translation/${process.env.BIZGPT_FRONTEND_LANGUAGE}.json`);
+
   return (
     <div className="flex items-center justify-between">
       <DropdownMenu>
@@ -80,12 +83,12 @@ export function UserMenu({ user }: UserMenuProps) {
               dir={TextDirection}
             >
               
-              {TextDirection == 'RTL' ? "سایت BizGPT" : "BizGPT Homepage"}
+              {TranslationData["BizGPT Homepage"]}
               <IconExternalLink className="ml-auto h-3 w-3" />
             </a>
           </DropdownMenuItem>
           <DropdownMenuItem onClick={signOut} className="text-xs" dir={TextDirection}>
-            {TextDirection == 'RTL' ? "خروج" : "Log Out"}
+            {TranslationData["Logout"]}
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>

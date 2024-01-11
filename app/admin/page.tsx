@@ -12,14 +12,18 @@ const TextDirection = process.env.TEXT_DIRECTION
 
 export default async function AdminPage() {
   // const vector_data_log = await getVectorDataLogLocal()
+
+  // Language and Translation
+  var TranslationData = require(`@/translation/${process.env.BIZGPT_FRONTEND_LANGUAGE}.json`);
+
   return (
     <div className="space-y-6 w-full" dir={TextDirection}>
       <div>
         <h3 className="text-lg font-medium" dir={TextDirection}>
-          {TextDirection == 'RTL' ? "بارگذاری داده به مخزن دانش" : "Knowledgebase Upload"}
+          {TranslationData["Knowledgebase Upload"]}
           </h3>
         <p className="text-sm text-muted-foreground" dir={TextDirection}>
-        {TextDirection == 'RTL' ? "با استفاده از ابزارهای این پنل به مخزن دانش خود داده اضافه کنید." : "Add data to your knowledgebase."}
+        {TranslationData["Add data to your knowledgebase"]}
         </p>
       </div>
       <> </>

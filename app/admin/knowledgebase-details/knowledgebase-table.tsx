@@ -15,13 +15,16 @@ import useSWR from "swr";
 const TextDirection = process.env.TEXT_DIRECTION
 
 function KnowledgeBaseTable() {
+  // Language and Translation
+  var TranslationData = require(`@/translation/${process.env.BIZGPT_FRONTEND_LANGUAGE}.json`);
+  
   const fetcher = (url) => fetch(url, {cache: "no-store"}).then((res) => res.json());
   const { data, error, isLoading, mutate } = useSWR(
     '/api/admin/knowledgebase/get-vector-log-data',
     fetcher
   );
-  if (isLoading) return <p dir={TextDirection}> {TextDirection == 'RTL' ?  "در حال بارگذاری..." : "Loading..."}</p>
-  if (!data) return <p dir={TextDirection}>{TextDirection == 'RTL' ? " داده‌ای دریافت نشد/موجود نیست! " : "No data!"}</p>
+  if (isLoading) return <p dir={TextDirection}> {TranslationData["Loading..."]}</p>
+  if (!data) return <p dir={TextDirection}>{TranslationData["No data!"]}</p>
 
 
 
