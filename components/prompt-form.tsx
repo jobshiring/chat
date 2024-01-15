@@ -15,6 +15,8 @@ import { IconArrowElbow, IconPlus } from '@/components/ui/icons'
 
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
+import GlobalConfig from '@/app/app.config.js'
+
 const TextDirection = process.env.TEXT_DIRECTION
 
 export interface PromptProps
@@ -39,7 +41,8 @@ export function PromptForm({
   }, [])
 
   // Language and Translation
-  var TranslationData = require(`@/translation/${process.env.BIZGPT_FRONTEND_LANGUAGE}.json`);
+  // var TranslationData = require(`@/translation/${process.env.BIZGPT_FRONTEND_LANGUAGE}.json`);
+  var TranslationData = require(`@/translation/${GlobalConfig.LANG}.json`);
 
   return (
     <form
@@ -90,7 +93,7 @@ export function PromptForm({
                 disabled={isLoading || input === ''}
               >
                 <ArrowForwardIosIcon />
-                <span className="sr-only">Send message</span>
+                <span className="sr-only">TranslationData["Send message"]</span>
               </Button>
             </TooltipTrigger>
             <TooltipContent>{TranslationData["Send message"]}</TooltipContent>

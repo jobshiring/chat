@@ -72,5 +72,9 @@
     "Welcome to BizGPT!": "به BizGPT خوش آمدید!",
     "You can start a conversation by asking something or try the following examples:" : "با پرسیدن یک سوال و یا استفاده از مثال‌های زیر، مکالمه خود با هوش مصنوعی را هم‌اکنون آغاز کنید:",
     "Check your inbox!": "لطفا ایمیل خود را چک کنید",
-    "Password reset successfully. You could go back using the button.": "گذرواژه با موفقیت تغییر کرد. با استفاده از دکمه بازگشت به صفحه قبل بازگردید."
+    "Password reset successfully. You could go back using the button.": "گذرواژه با موفقیت تغییر کرد. با استفاده از دکمه بازگشت به صفحه قبل بازگردید.",
+    "Language": "زبان",
+    "Select Language...": "زبان را انتخاب کنید...",
+    "Search Language...": "جستجو کنید...",
+    "No language found.": "زبانی یافت نشد."
   }
