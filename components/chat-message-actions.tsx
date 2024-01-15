@@ -153,9 +153,6 @@ export function ChatMessageActionsBookmark({
     }
   }
 
-  // Language and Translation
-  var TranslationData = require(`@/translation/${process.env.BIZGPT_FRONTEND_LANGUAGE}.json`);
-
 
   if (index % 2 != 0) {
     return (
@@ -190,6 +187,10 @@ export function ChatMessageActionsFeedback({
   const [faceScore, setFaceScore] = useState(null);
   const TextDirection = process.env.TEXT_DIRECTION
   const feedback_state = feedbacks?.feedbacks[`feedback_${index_fixer(index)}`]?.score
+
+  // Language and Translation
+  var TranslationData = require(`@/translation/${process.env.BIZGPT_FRONTEND_LANGUAGE}.json`);
+
   useEffect(() => {
     if (index % 2 != 0) {
       if (feedback_state) {
