@@ -10,6 +10,8 @@ import { DataTableViewOptions } from "@/app/admin/components/data-table-view-opt
 import { priorities, statuses } from "@/app/admin/data/data"
 import { DataTableFacetedFilter } from "./data-table-faceted-filter"
 
+import GlobalConfig from '@/app/app.config.js'
+
 const TextDirection = process.env.TEXT_DIRECTION
 interface DataTableToolbarProps<TData> {
   table: Table<TData>
@@ -21,7 +23,7 @@ export function DataTableToolbar<TData>({
   const isFiltered = table.getState().columnFilters.length > 0
 
   // Language and Translation
-  var TranslationData = require(`@/translation/${process.env.BIZGPT_FRONTEND_LANGUAGE}.json`);
+  var TranslationData = require(`@/translation/${GlobalConfig.LANG}.json`);
 
   return (
     <div className="flex items-center justify-between">

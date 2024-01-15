@@ -4,6 +4,7 @@ import Image from "next/image"
 import { Separator } from "@/components/ui/separator"
 import { SidebarNav } from "@/app/admin/components/sidebar-nav"
 import { Toaster } from "@/components/ui/toaster"
+import { GetTranslation } from "@/components/translation-helper/ClientTranslations"
 
 export const metadata: Metadata = {
   title: "Administration",
@@ -18,18 +19,17 @@ interface SettingsLayoutProps {
 }
 
 export default function SettingsLayout({ children }: SettingsLayoutProps) {
-  // Language and Translation
-  var TranslationData = require(`@/translation/${process.env.BIZGPT_FRONTEND_LANGUAGE}.json`);
   return (
     <>
       <div className="space-y-6 p-10 pb-16 md:block">
         <div className="space-y-0.5">
           <h2 className="text-2xl font-bold tracking-tight" dir={TextDirection}>
-          {TranslationData["Administration"]}
+          {/* {TranslationData["Administration"]} */}
+          <GetTranslation text="Administration" />
             </h2>
           <p className="text-muted-foreground" dir={TextDirection}>
-          {TranslationData["Manage your BizGPT instance"]}
-            
+          {/* {TranslationData["Manage your BizGPT instance"]} */}
+          <GetTranslation text="Manage your BizGPT instance" />
           </p>
         </div>
         <Separator className="my-6" />

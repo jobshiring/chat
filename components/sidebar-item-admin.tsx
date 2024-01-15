@@ -13,6 +13,8 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 
+import GlobalConfig from '@/app/app.config.js'
+
 const TextDirection = process.env.TEXT_DIRECTION
 
 interface SidebarItemAdminProps {
@@ -22,6 +24,7 @@ interface SidebarItemAdminProps {
 export function SidebarItemAdmin({ children }: SidebarItemAdminProps) {
   const pathname = usePathname()
   const isPathAdmin = pathname.includes('/admin') ? true : false
+  var TranslationData = require(`@/translation/${GlobalConfig.LANG}.json`);
   return (
     <div className={`relative ${isPathAdmin ? "bg-gray-200 text-gray-700" : ""}`}>
 
@@ -40,7 +43,7 @@ export function SidebarItemAdmin({ children }: SidebarItemAdminProps) {
             </Link>
           </TooltipTrigger>
           <TooltipContent>
-          {TextDirection == "RTL" ? <p> مدیریت </p> : <p>Administration</p> }
+            <p>{TranslationData["Administration"]}</p>
           </TooltipContent>
         </Tooltip>
       </TooltipProvider>

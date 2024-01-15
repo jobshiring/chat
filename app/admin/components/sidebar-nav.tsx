@@ -7,6 +7,8 @@ import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
 import { buttonVariants } from "@/components/ui/button"
 
+import GlobalConfig from '@/app/app.config.js'
+
 const sidebarNavItems = [
   {
     title: "Knowledgebase",
@@ -34,7 +36,7 @@ export function SidebarNav({ className, ...props }: SidebarNavProps) {
   const pathname = usePathname()
 
   // Language and Translation
-  var TranslationData = require(`@/translation/${process.env.BIZGPT_FRONTEND_LANGUAGE}.json`);
+  var TranslationData = require(`@/translation/${GlobalConfig.LANG}.json`);
 
   return (
     <nav
