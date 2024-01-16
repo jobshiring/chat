@@ -13,6 +13,8 @@ import { useRouter } from 'next/navigation'
 import { useSearchParams } from 'next/navigation'
 import { useEffect } from 'react'
 
+import GlobalConfig from '@/app/app.config.js'
+
 interface LoginFormProps extends React.ComponentPropsWithoutRef<'div'> {
   action: 'reset-password-init' | 'reset-password-callback'
 }
@@ -90,7 +92,7 @@ export function ResetPasswordForm({
   }
 
   // Language and Translation
-  var TranslationData = require(`@/translation/${process.env.BIZGPT_FRONTEND_LANGUAGE}.json`);
+  var TranslationData = require(`@/translation/${GlobalConfig.LANG}.json`);
 
   return (
     <div {...props}>

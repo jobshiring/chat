@@ -77,5 +77,9 @@
   "Select Language...": "Sélectionner la langue...",
   "Search Language...": "Rechercher...",
   "No language found.": "Aucune langue trouvée.",
-  "Chat": "Chat"
+  "Chat": "Chat",
+  "Describe your business": "Décrivez votre entreprise",
+  "What is 'X'?": "Qu'est-ce que c'est que 'X'?",
+  "Introduce yourself": "Présentez-vous.",
+  "Hi\nMy name is 'Mr. X'" : "Salut,\nMon nom est 'M. X'."
 }

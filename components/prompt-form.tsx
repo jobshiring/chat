@@ -93,7 +93,7 @@ export function PromptForm({
                 disabled={isLoading || input === ''}
               >
                 <ArrowForwardIosIcon />
-                <span className="sr-only">TranslationData["Send message"]</span>
+                <span className="sr-only">{TranslationData["Send message"]}</span>
               </Button>
             </TooltipTrigger>
             <TooltipContent>{TranslationData["Send message"]}</TooltipContent>
