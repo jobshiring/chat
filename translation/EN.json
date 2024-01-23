@@ -72,5 +72,14 @@
     "Welcome to BizGPT!": "Welcome to BizGPT!",
     "You can start a conversation by asking something or try the following examples:": "You can start a conversation by asking something or try the following examples:",
     "Check your inbox!": "Check your inbox!",
-    "Password reset successfully. You could go back using the button.": "Password reset successfully. You could go back using the button."
+    "Password reset successfully. You could go back using the button.": "Password reset successfully. You could go back using the button.",
+    "Language": "Language",
+    "Select language...": "Select Language...",
+    "Search Language...": "Search language...",
+    "No language found.": "No language found.",
+    "Chat": "Chat",
+    "Describe your business": "Describe your business",
+    "What is 'X'?": "What is 'X'?",
+    "Introduce yourself": "Introduce yourself",
+    "Hi\nMy name is 'Mr. X'" : "Hi\nMy name is 'Mr. X'"
   }

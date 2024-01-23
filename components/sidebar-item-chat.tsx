@@ -12,6 +12,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
+import GlobalConfig from '@/app/app.config.js'
 
 const TextDirection = process.env.TEXT_DIRECTION
 
@@ -22,6 +23,7 @@ interface SidebarItemChatProps {
 export function SidebarItemChat({ children }: SidebarItemChatProps) {
   const pathname = usePathname()
   const isPathHome = (pathname == '/') ? true : false
+  var TranslationData = require(`@/translation/${GlobalConfig.LANG}.json`);
   return (
     <div className={`relative ${isPathHome ? "bg-gray-200 text-gray-700" : ""}`}>
       <TooltipProvider>
@@ -35,12 +37,11 @@ export function SidebarItemChat({ children }: SidebarItemChatProps) {
                 'group w-full'
               )}
             >
-              <ChatRoundedIcon fontSize="small"/>
+              <ChatRoundedIcon fontSize="small" />
             </Link>
           </TooltipTrigger>
           <TooltipContent>
-            {TextDirection == "RTL" ? <p>چت</p> : <p>Chat</p>}
-            
+            <p>{TranslationData["Chat"]}</p>
           </TooltipContent>
         </Tooltip>
       </TooltipProvider>

@@ -38,11 +38,13 @@ import {
 } from '@/components/ui/alert-dialog'
 import { Truculenta } from 'next/font/google'
 
+import GlobalConfig from '@/app/app.config.js'
+
 const TextDirection = process.env.TEXT_DIRECTION
 
 const DropDownSelector = ({ user_email, mutate, toast }) => {
   // Language and Translation
-  var TranslationData = require(`@/translation/${process.env.BIZGPT_FRONTEND_LANGUAGE}.json`);
+  var TranslationData = require(`@/translation/${GlobalConfig.LANG}.json`);
 
   return (
     <>
@@ -79,7 +81,7 @@ const DropDownSelector = ({ user_email, mutate, toast }) => {
 export function UserRoles({ user_email }) {
 
   // Language and Translation
-  var TranslationData = require(`@/translation/${process.env.BIZGPT_FRONTEND_LANGUAGE}.json`);
+  var TranslationData = require(`@/translation/${GlobalConfig.LANG}.json`);
 
   const [disabled, setDisabled] = useState(false)
   const { toast } = useToast()

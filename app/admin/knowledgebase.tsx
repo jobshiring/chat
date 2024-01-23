@@ -44,6 +44,8 @@ import { useState } from "react";
 import { ToastAction } from "@/components/ui/toast"
 import { useToast } from "@/components/ui/use-toast"
 
+import GlobalConfig from '@/app/app.config.js'
+
 const TextDirection = process.env.TEXT_DIRECTION
 
 export function KnowledgeBase(vector_data_log: JSON) {
@@ -56,7 +58,7 @@ export function KnowledgeBase(vector_data_log: JSON) {
   };
   
     // Language and Translation
-    var TranslationData = require(`@/translation/${process.env.BIZGPT_FRONTEND_LANGUAGE}.json`);
+    var TranslationData = require(`@/translation/${GlobalConfig.LANG}.json`);
 
   async function onSubmit_text() {
     setReady(false);

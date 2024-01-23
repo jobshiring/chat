@@ -15,6 +15,8 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 
+import GlobalConfig from '@/app/app.config.js'
+
 const TextDirection = process.env.TEXT_DIRECTION
 
 interface DataTablePaginationProps<TData> {
@@ -26,7 +28,7 @@ export function DataTablePagination<TData>({
 }: DataTablePaginationProps<TData>) {
 
   // Language and Translation
-  var TranslationData = require(`@/translation/${process.env.BIZGPT_FRONTEND_LANGUAGE}.json`);
+  var TranslationData = require(`@/translation/${GlobalConfig.LANG}.json`);
 
 
   return (

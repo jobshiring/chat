@@ -5,39 +5,26 @@ import { Button } from '@/components/ui/button'
 import { ExternalLink } from '@/components/external-link'
 import { IconArrowRight } from '@/components/ui/icons'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import GlobalConfig from '@/app/app.config.js'
 
 const TextDirection = process.env.TEXT_DIRECTION
 
-let exampleMessages: Object[] = []
 
-if (TextDirection == 'RTL') {
-  exampleMessages = [
-    {
-      heading: 'در خصوص کسب‌ و کار خود توضیح دهید',
-      message: `کار من در حوزه ... است.`
-    },
-    {
-      heading: 'خودتان را معرفی کنید',
-      message: 'سلام\nاسم من آقای ... است.'
-    }
-  ]
-}
-else{
-  exampleMessages = [
-    {
-      heading: 'Describe your business',
-      message: `What is "X"?`
-    },
-    {
-      heading: 'Introduce yourself',
-      message: 'Hi\nMy name is "Mr. X"'
-    }
-  ]
-}
 export function EmptyScreen({ setInput }: Pick<UseChatHelpers, 'setInput'>) {
   
   // Language and Translation
-  var TranslationData = require(`@/translation/${process.env.BIZGPT_FRONTEND_LANGUAGE}.json`);
+  var TranslationData = require(`@/translation/${GlobalConfig.LANG}.json`);
+
+  const exampleMessages = [
+    {
+      heading: TranslationData['Describe your business'],
+      message: TranslationData["What is 'X'?"]
+    },
+    {
+      heading: TranslationData["Introduce yourself"],
+      message: TranslationData["Hi\nMy name is 'Mr. X'"]
+    }
+  ]
 
   return (
     <div className="mx-auto max-w-2xl px-4">

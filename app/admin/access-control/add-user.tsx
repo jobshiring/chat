@@ -35,6 +35,8 @@ import { useToast } from "@/components/ui/use-toast"
 
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 
+import GlobalConfig from '@/app/app.config.js'
+
 const TextDirection = process.env.TEXT_DIRECTION
 
 const validateEmail = (e) => {
@@ -59,7 +61,7 @@ export function AddUser({ mutate }) {
   const [open, setOpen] = React.useState(false);
 
   // Language and Translation
-  var TranslationData = require(`@/translation/${process.env.BIZGPT_FRONTEND_LANGUAGE}.json`);
+  var TranslationData = require(`@/translation/${GlobalConfig.LANG}.json`);
 
   function onSubmit_User(data) {
     setIsReady(false)

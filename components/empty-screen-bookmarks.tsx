@@ -1,10 +1,9 @@
-
-
+import GlobalConfig from '@/app/app.config.js'
 
 export function EmptyScreenBookmarks() {
   const TextDirection = process.env.TEXT_DIRECTION
   // Language and Translation
-  var TranslationData = require(`@/translation/${process.env.BIZGPT_FRONTEND_LANGUAGE}.json`);
+  var TranslationData = require(`@/translation/${GlobalConfig.LANG}.json`);
 
   return (
     <div className="mx-auto max-w-2xl px-4">

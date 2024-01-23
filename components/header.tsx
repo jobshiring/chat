@@ -15,6 +15,7 @@ import { ThemeToggle } from '@/components/theme-toggle'
 import { UserMenu } from '@/components/user-menu'
 import { cookies } from 'next/headers'
 import { Label } from './ui/label'
+import { LangDropDown } from './header-language-dropdown'
 
 export async function Header() {
   const cookieStore = cookies()
@@ -49,6 +50,9 @@ export async function Header() {
             BIZGPT_IFRAME_MODE == 'true' ? undefined :<Label>Login</Label>
           )}
         </div>
+      </div>
+      <div className="flex items-center justify-end space-x-2">
+        <LangDropDown />
       </div>
     </header>
   )
