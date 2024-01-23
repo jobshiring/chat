@@ -1,3 +1,3 @@
 module.exports = {
-    LANG: "EN"
+    LANG: process.env.BIZGPT_FRONTEND_LANGUAGE
   }

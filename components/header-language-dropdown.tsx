@@ -39,7 +39,7 @@ const languages = process.env.TEXT_DIRECTION == 'RTL' ? [
  
 export function LangDropDown() {
     const [open, setOpen] = React.useState(false)
-    const [value, setValue] = React.useState("en")
+    const [value, setValue] = React.useState(GlobalConfig.LANG.toLocaleLowerCase())
     value ? (GlobalConfig.LANG  = value.toUpperCase()) : undefined
     const router = useRouter()
     var TranslationData = require(`@/translation/${GlobalConfig.LANG}.json`);
