@@ -81,5 +81,13 @@
     "Describe your business": "Describe your business",
     "What is 'X'?": "What is 'X'?",
     "Introduce yourself": "Introduce yourself",
-    "Hi\nMy name is 'Mr. X'" : "Hi\nMy name is 'Mr. X'"
+    "Hi\nMy name is 'Mr. X'" : "Hi\nMy name is 'Mr. X'",
+    "Feedbacks": "Feedbacks",
+    "Feedback Details": "Feedback Details",
+    "You could see the details of user feedbacks using the table below": "You could see the details of user feedbacks using the table below",
+    "Question": "Question",
+    "Ai_response": "Ai Response",
+    "Feedback_text": "Feedback Text",
+    "Feedback_rating": "Feedback Rating",
+    "Datetime_added": "Datetime Added"
   }

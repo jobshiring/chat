@@ -81,5 +81,13 @@
   "Describe your business": "Décrivez votre entreprise",
   "What is 'X'?": "Qu'est-ce que c'est que 'X'?",
   "Introduce yourself": "Présentez-vous.",
-  "Hi\nMy name is 'Mr. X'" : "Salut,\nMon nom est 'M. X'."
+  "Hi\nMy name is 'Mr. X'" : "Salut,\nMon nom est 'M. X'.",
+  "Feedbacks": "commentaires",
+  "Feedback Details": "Détails des commentaires",
+  "You could see the details of user feedbacks using the table below": "Vous pourriez consulter les détails des commentaires des utilisateurs en utilisant le tableau ci-dessous",
+  "Question": "Question",
+  "Ai_response": "Réponse",
+  "Feedback_text": "Texte de rétroaction",
+  "Feedback_rating": "Évaluation des commentaires",
+  "Datetime_added": "Date et heure ajoutées"
 }

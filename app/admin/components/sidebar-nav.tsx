@@ -47,6 +47,8 @@ export function SidebarNav({ className, ...props }: SidebarNavProps) {
       )}
       {...props}
     >
+        
+      {/* Knowledgebase */}
       <h1 dir={TextDirection}> <strong> 
       {TranslationData["Knowledgebase"]}
          </strong> </h1>
@@ -75,8 +77,9 @@ export function SidebarNav({ className, ...props }: SidebarNavProps) {
           )}
         >
         {TranslationData["Details"]}
-          
         </Link>
+        
+        {/* Access Control */}
         <h1 dir={TextDirection}> <strong> 
           {TranslationData["Access Control"]}
           </strong></h1>
@@ -91,8 +94,25 @@ export function SidebarNav({ className, ...props }: SidebarNavProps) {
           )}
         >
           {TranslationData["Manage User Roles"]}
-          
         </Link>
+        
+        {/* Feedbacks */}
+        <h1 dir={TextDirection}> <strong> 
+          {TranslationData["Feedbacks"]}
+          </strong></h1>
+        <Link key="/admin/feedbacks" 
+          href="/admin/feedbacks"
+          className={cn(
+            buttonVariants({ variant: "ghost" }),
+            pathname === "/admin/feedbacks"
+              ? "bg-muted hover:bg-muted"
+              : "hover:bg-transparent hover:underline",
+            "justify-start"
+          )}
+        >
+          {TranslationData["Feedback Details"]}
+        </Link>
+
     </nav>
   )
 }
