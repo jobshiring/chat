@@ -26,7 +26,7 @@ export function DataTableToolbar<TData>({
   var TranslationData = require(`@/translation/${GlobalConfig.LANG}.json`);
 
   return (
-    <div className="flex items-center justify-between">
+    <div className="flex items-center justify-between space-x-2">
       <div className={TextDirection == "RTL" ? "flex flex-1 items-center space-x-2"  : "flex flex-1 items-center space-x-2"} dir={TextDirection}>
         <Input
           placeholder={TranslationData["Filter emails..."]}
@@ -34,10 +34,11 @@ export function DataTableToolbar<TData>({
           onChange={(event) =>
             table.getColumn("email")?.setFilterValue(event.target.value)
           }
-          className="h-8 w-[150px] lg:w-[250px]"
+          className="h-10 w-[150px] lg:w-[250px]"
         />
       </div>
-      {TextDirection == 'RTL' ? undefined : <DataTableViewOptions table={table} />}
+
+      <DataTableViewOptions table={table}/>
     </div>
   )
 }

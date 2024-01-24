@@ -130,7 +130,7 @@ export function UserRoles({ user_email }) {
       enableHiding: false
     },
     {
-      accessorKey: 'email',
+      accessorKey: 'Email'.toLocaleLowerCase(),
       header: ({ column }) => (
         <DataTableColumnHeader column={column} title={TranslationData["Email"]} />
       ),
@@ -149,7 +149,7 @@ export function UserRoles({ user_email }) {
     {
       accessorKey: 'role',
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title={TranslationData["Role"]} />
+        <DataTableColumnHeader column={column} title={TranslationData["role"]} />
       ),
       cell: ({ row }) => {
         return (
@@ -160,7 +160,7 @@ export function UserRoles({ user_email }) {
           </div>
         )
       },
-      enableSorting: false,
+      enableSorting: true,
       enableHiding: true
     },
     {

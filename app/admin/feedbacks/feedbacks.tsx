@@ -70,9 +70,9 @@ export function FeedbacksAdmin() {
       enableHiding: false
     },
     {
-      accessorKey: 'email',
+      accessorKey: 'Email'.toLocaleLowerCase(),
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title={TranslationData["Email"]} />
+        <DataTableColumnHeader column={column} title={TranslationData['Email']} />
       ),
       cell: ({ row }) => {
         return (
@@ -89,7 +89,7 @@ export function FeedbacksAdmin() {
     {
       accessorKey: 'question',
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title={TranslationData["Question"]} />
+        <DataTableColumnHeader column={column} title={TranslationData["question"]} />
       ),
       cell: ({ row }) => {
         return (
@@ -106,7 +106,7 @@ export function FeedbacksAdmin() {
     {
       accessorKey: 'ai_response',
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title={TranslationData["Ai_response"]} />
+        <DataTableColumnHeader column={column} title={TranslationData["ai_response"]} />
       ),
       cell: ({ row }) => {
         return (
@@ -123,7 +123,7 @@ export function FeedbacksAdmin() {
     {
       accessorKey: 'feedback_text',
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title={TranslationData["Feedback_text"]} />
+        <DataTableColumnHeader column={column} title={TranslationData["feedback_text"]} />
       ),
       cell: ({ row }) => {
         return (
@@ -140,7 +140,7 @@ export function FeedbacksAdmin() {
     {
       accessorKey: 'feedback_rating',
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title={TranslationData["Feedback_rating"]} />
+        <DataTableColumnHeader column={column} title={TranslationData["feedback_rating"]} />
       ),
       cell: ({ row }) => {
         return (
@@ -152,12 +152,12 @@ export function FeedbacksAdmin() {
         )
       },
       enableSorting: true,
-      enableHiding: true
+      enableHiding: false
     },
     {
       accessorKey: 'datetime_added',
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title={TranslationData["Datetime_added"]} />
+        <DataTableColumnHeader column={column} title={TranslationData["datetime_added"]} />
       ),
       cell: ({ row }) => {
         return (
