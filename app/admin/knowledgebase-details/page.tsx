@@ -8,11 +8,12 @@ export const fetchCache = 'force-no-store';
 import { GetTranslation } from "@/components/translation-helper/ClientTranslations"
 
 const TextDirection = process.env.TEXT_DIRECTION
+import GlobalConfig from '@/app/app.config.js'
 
 export default async function KnowledgeBaseOverView() {
 
   // Language and Translation
-  var TranslationData = require(`@/translation/${process.env.BIZGPT_FRONTEND_LANGUAGE}.json`);
+  var TranslationData = require(`@/translation/${GlobalConfig.LANG}.json`);
 
   return (
     <div className="space-y-6 w-full">

@@ -28,6 +28,7 @@ import SendIcon from '@mui/icons-material/Send';
 
 import { StyledEngineProvider } from '@mui/material/styles';
 import { submitFeedback, submitBookmark } from '@/app/actions'
+import GlobalConfig from '@/app/app.config.js'
 
 const StyledTextField = styled(TextField)(
   ({ color }) => `
@@ -189,7 +190,7 @@ export function ChatMessageActionsFeedback({
   const feedback_state = feedbacks?.feedbacks[`feedback_${index_fixer(index)}`]?.score
 
   // Language and Translation
-  var TranslationData = require(`@/translation/${process.env.BIZGPT_FRONTEND_LANGUAGE}.json`);
+  var TranslationData = require(`@/translation/${GlobalConfig.LANG}.json`);
 
   useEffect(() => {
     if (index % 2 != 0) {
