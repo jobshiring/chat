@@ -255,6 +255,7 @@ export function ChatMessageActionsFeedback({
     payload['state_diff']['score'] = FaceToScoreMapping[faceScore]
     payload['state_diff']['text'] = inputText
     payload['state_diff']['index'] = index_fixer(index)
+    payload['response'] = message.content
     fetch('/api/feedbacks', {
       method: 'POST',
       headers: {},
