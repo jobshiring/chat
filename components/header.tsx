@@ -20,7 +20,9 @@ import { LangDropDown } from './header-language-dropdown'
 export async function Header() {
   const cookieStore = cookies()
   const session = await auth({ cookieStore })
-  const user_role = await getUserRole(session?.user?.id)
+  var user_role;
+  session?.user ? (user_role = await getUserRole(session?.user?.id)) : (user_role = undefined)
+  // const user_role = await getUserRole(session?.user?.id)
   const BIZGPT_IFRAME_MODE = process.env.BIZGPT_IFRAME_MODE
   return (
     <header className="sticky top-0 z-50 flex h-16 w-full shrink-0 items-center justify-between border-b bg-gradient-to-b from-background/10 via-background/50 to-background/80 px-4 backdrop-blur-xl">
@@ -29,7 +31,7 @@ export async function Header() {
           <Sidebar>
             <React.Suspense fallback={<div className="flex-1 overflow-auto" />}>
               {/* @ts-ignore */}
-              <SidebarList userId={session?.user?.id} userRole={user_role} />
+              <SidebarList userId={session?.user?.id} userRole={user_role!} />
             </React.Suspense>
             <SidebarFooter>
               <ThemeToggle />
