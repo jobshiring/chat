@@ -35,19 +35,23 @@ server {
     location /_next/static {
         alias /_next/static/;
     }
-    
-    if ($host !~* ^(${SITE_URL}|www.${SITE_URL})$)
-    {
-        return 444;
-    }
 
     location / {
-        proxy_pass http://bizgpt_front;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header Host $host;
-        proxy_connect_timeout ${NGINX_PROXY_CONNECT_TIMEOUT}s;
-        proxy_read_timeout ${NGINX_PROXY_READ_TIMEOUT}s;
-        proxy_redirect off;
-        proxy_buffering off;
+        return 301 https://${SITE_URL}$request_uri;
     }
+
+#    if ($host !~* ^(${SITE_URL}|www.${SITE_URL})$)
+#    {
+#        return 444;
+#    }
+
+#    location / {
+#        proxy_pass http://bizgpt_front;
+#        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+#        proxy_set_header Host $host;
+#        proxy_connect_timeout ${NGINX_PROXY_CONNECT_TIMEOUT}s;
+#        proxy_read_timeout ${NGINX_PROXY_READ_TIMEOUT}s;
+#        proxy_redirect off;
+#        proxy_buffering off;
+#    }
 }

@@ -39,8 +39,11 @@ services:
       - "traefik.http.routers.nginx-${PROJECT_NAME}.tls.certresolver=myresolver"
     networks:
       - local-traefik-network
+      - network-1
 
 
 networks:
   local-traefik-network:
     external: true
+  network-1:
+    external: false
