@@ -18,10 +18,10 @@ const sidebarNavItems = [
         title: "Knowledgebase",
         href: "/admin",
       },
-      {
-        title: "Knowledgebase Overview",
-        href: "/admin/knowledgebasedetails",
-      }
+      // {
+      //   title: "Knowledgebase Overview",
+      //   href: "/admin/knowledgebasedetails",
+      // }
     ]
   },
   {
@@ -62,10 +62,10 @@ export function SidebarNav({ className, ...props }: SidebarNavProps) {
             "justify-start"
           )}
         >
-        {TranslationData["Upload"]}
+        {TranslationData["Details"]}
           
         </Link>
-        <Link key="/admin/knowledgebase-details" 
+        {/* <Link key="/admin/knowledgebase-details" 
           href="/admin/knowledgebase-details"
           prefetch={false}
           className={cn(
@@ -77,7 +77,7 @@ export function SidebarNav({ className, ...props }: SidebarNavProps) {
           )}
         >
         {TranslationData["Details"]}
-        </Link>
+        </Link> */}
         
         {/* Access Control */}
         <h1 dir={TextDirection}> <strong> 
