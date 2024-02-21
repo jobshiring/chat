@@ -5,7 +5,7 @@ import { ExternalLink } from '@/components/external-link'
 import GlobalConfig from '@/app/app.config.js'
 
 const TextDirection = process.env.TEXT_DIRECTION
-const clientFooterName = process.env.NEXT_PUBLIC_CLIENT_BRANDING_NAME
+const clientFooterName = process.env.NEXT_PUBLIC_CLIENT_BRANDING_NAME ? process.env.NEXT_PUBLIC_CLIENT_BRANDING_NAME : 'BizGPT' 
 
 
 export function FooterText({ className, ...props }: React.ComponentProps<'p'>) {
