@@ -40,6 +40,7 @@ export function UserMenu({ user }: UserMenuProps) {
 
   // Language and Translation
   var TranslationData = require(`@/translation/${process.env.BIZGPT_FRONTEND_LANGUAGE}.json`);
+  const clientFooterName = process.env.NEXT_PUBLIC_CLIENT_BRANDING_NAME
 
   return (
     <div className="flex items-center justify-between">
@@ -76,14 +77,15 @@ export function UserMenu({ user }: UserMenuProps) {
           <DropdownMenuSeparator />
           <DropdownMenuItem asChild>
             <a
-              href="https://bizgpt.info"
+              href={process.env.NEXT_PUBLIC_CLIENT_BRANDING_WEBSITE}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex w-full items-center justify-between text-xs"
               dir={TextDirection}
             >
               
-              {TranslationData["BizGPT Homepage"]}
+              {/* {TranslationData["BizGPT Homepage"]} */}
+              {`${clientFooterName} ${TranslationData["Homepage"]} `}
               <IconExternalLink className="ml-auto h-3 w-3" />
             </a>
           </DropdownMenuItem>

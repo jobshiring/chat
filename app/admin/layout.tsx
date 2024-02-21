@@ -28,8 +28,7 @@ export default function SettingsLayout({ children }: SettingsLayoutProps) {
           <GetTranslation text="Administration" />
             </h2>
           <p className="text-muted-foreground" dir={TextDirection}>
-          {/* {TranslationData["Manage your BizGPT instance"]} */}
-          <GetTranslation text="Manage your BizGPT instance" />
+          <GetTranslation text="Manage your system" />
           </p>
         </div>
         <Separator className="my-6" />
