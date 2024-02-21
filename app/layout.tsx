@@ -9,12 +9,14 @@ import { TailwindIndicator } from '@/components/tailwind-indicator'
 import { Providers } from '@/components/providers'
 import { Header } from '@/components/header'
 
+const defaultTabName = process.env.NEXT_PUBLIC_CLIENT_BRANDING_NAME
+
 export const metadata: Metadata = {
   title: {
-    default: 'BizGPT',
-    template: `%s - BizGPT`
+    default: defaultTabName ? defaultTabName : 'BizGPT',
+    template: `%s - ${defaultTabName ? defaultTabName : 'BizGPT'}`
   },
-  description: 'A chatbot powered by BizGPT',
+  description: `A chatbot powered by ${defaultTabName ? defaultTabName : 'BizGPT'}`,
   themeColor: [
     { media: '(prefers-color-scheme: light)', color: 'white' },
     { media: '(prefers-color-scheme: dark)', color: 'black' }

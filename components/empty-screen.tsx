@@ -8,7 +8,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import GlobalConfig from '@/app/app.config.js'
 
 const TextDirection = process.env.TEXT_DIRECTION
-
+const clientFooterName = process.env.NEXT_PUBLIC_CLIENT_BRANDING_NAME ? process.env.NEXT_PUBLIC_CLIENT_BRANDING_NAME : 'BizGPT' 
 
 export function EmptyScreen({ setInput }: Pick<UseChatHelpers, 'setInput'>) {
   
@@ -30,7 +30,7 @@ export function EmptyScreen({ setInput }: Pick<UseChatHelpers, 'setInput'>) {
     <div className="mx-auto max-w-2xl px-4">
       <div className="rounded-lg border bg-background p-8">
         <h1 className="mb-2 text-lg font-semibold" dir={TextDirection}>
-          {TranslationData["Welcome to BizGPT!"] }
+          { `${TranslationData["Welcome to"]} ${clientFooterName}` }
         </h1>
         <p className="leading-normal text-muted-foreground" dir={TextDirection}>
           
