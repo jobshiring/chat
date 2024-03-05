@@ -13,7 +13,8 @@ export default async function SignInPage({
   searchParams: { [key: string]: string | string[] | undefined }
 }) {
   const cookieStore = cookies()
-  let session = await auth({ cookieStore })
+  // let session = await auth({ cookieStore })
+  let session = await auth({cookieStore})
 
   // legacy code
   // // //  const user_id = searchParams?.user_id
