@@ -142,7 +142,7 @@ export async function getChatLocal(username: string) {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify(payload),
-    next: { revalidate: 5 }
+    next: { cache: 'no-store'  }
   })
   if (!res.ok) {
     // This will activate the closest `error.js` Error Boundary
