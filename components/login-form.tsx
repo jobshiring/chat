@@ -13,6 +13,10 @@ import { toast } from 'react-hot-toast'
 import { useRouter } from 'next/navigation'
 
 import GlobalConfig from '@/app/app.config.js'
+import { createBrowserClient } from '@/utils/supabase/client'
+
+import {signInServer} from '@/utils/login'
+
 
 interface LoginFormProps extends React.ComponentPropsWithoutRef<'div'> {
   action: 'sign-in' | 'sign-up'
@@ -27,7 +31,7 @@ export function LoginForm({
   const [isLoading, setIsLoading] = React.useState(false)
   const router = useRouter()
   // Create a Supabase client configured to use cookies
-  const supabase = createClientComponentClient()
+
 
   const [formState, setFormState] = React.useState<{
     email: string
@@ -38,26 +42,28 @@ export function LoginForm({
   })
 
   const signIn = async () => {
-    const { email, password } = formState
-    const { error } = await supabase.auth.signInWithPassword({
-      email,
-      password
-    })
+    // const { email, password } = formState
+    // const { error } = await supabase.auth.signInWithPassword({
+    //   email,
+    //   password
+    // })
+    // return error
+    const error = await signInServer(formState)
     return error
   }
 
-  const signUp = async () => {
-    const { email, password } = formState
-    const { error, data } = await supabase.auth.signUp({
-      email,
-      password,
-      options: { emailRedirectTo: `${location.origin}/api/auth/callback` }
-    })
+  // const signUp = async () => {
+  //   const { email, password } = formState
+  //   const { error, data } = await supabase.auth.signUp({
+  //     email,
+  //     password,
+  //     options: { emailRedirectTo: `${location.origin}/api/auth/callback` }
+  //   })
 
-    if (!error && !data.session)
-      toast.success('Check your inbox to confirm your email address!')
-    return error
-  }
+  //   if (!error && !data.session)
+  //     toast.success('Check your inbox to confirm your email address!')
+  //   return error
+  // }
 
   const handleOnSubmit: React.FormEventHandler<HTMLFormElement> = async e => {
     e.preventDefault()
