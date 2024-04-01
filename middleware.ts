@@ -103,6 +103,15 @@ export async function middleware(request: NextRequest) {
   )
   // console.log(await supabase.auth.getUser())
   let {data: session} = await supabase.auth.getSession()
+  const SUPABASE_ID = process.env.NEXT_PUBLIC_SUPABASE_URL!.split('//')[1].split('.')[0]
+  const sessionCookies = {
+    name: `sb-${SUPABASE_ID}-auth-token`,
+    value: JSON.stringify(session),
+    path: '/',
+    expires: new Date(new Date().getTime() + 60 * 60 * 1000 * 24 * 365), // 1 year,
+  };
+
+  response.cookies.set(sessionCookies)
   await supabase.auth.getUser()
   const cookieStore = cookies()
 

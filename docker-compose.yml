@@ -15,6 +15,7 @@ services:
       - "traefik.http.routers.front-${PROJECT_NAME}.tls=true"
       - "traefik.http.routers.front-${PROJECT_NAME}.tls.domains[0].main=${SITE_URL}"
       - "traefik.http.routers.front-${PROJECT_NAME}.tls.certresolver=myresolver"
+      - "traefik.docker.network=local-traefik-network"
     networks:
       - local-traefik-network
 
@@ -41,6 +42,7 @@ services:
       - "traefik.http.routers.nginx-${PROJECT_NAME}.tls=true"
       - "traefik.http.routers.nginx-${PROJECT_NAME}.tls.domains[0].main=${SITE_URL}"
       - "traefik.http.routers.nginx-${PROJECT_NAME}.tls.certresolver=myresolver"
+      - "traefik.docker.network=local-traefik-network"
     networks:
       - local-traefik-network
 
