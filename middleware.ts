@@ -109,6 +109,9 @@ export async function middleware(request: NextRequest) {
   // OPTIONAL: this forces users to be logged in to use the chatbot.
   // If you want to allow anonymous users, simply remove the check below.
   const user_id = request.nextUrl.searchParams.get('user_id')
+  if (request.url.includes('/api/healthcheck')){
+    return response
+  }
   if (
     !session.session &&
     !request.url.includes('/sign-in') &&
