@@ -16,7 +16,7 @@ import {
   DialogHeader,
   DialogTitle
 } from '@/components/ui/dialog'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Button } from './ui/button'
 import { Input } from './ui/input'
 import { toast } from 'react-hot-toast'
@@ -36,6 +36,7 @@ export function Chat({ id, initialMessages, username, bookmarks, feedbacks, book
     'ai-token',
     null
   )
+  const [firstLoad, setFirstLoad] = useState(true)
   const [previewTokenDialog, setPreviewTokenDialog] = useState(IS_PREVIEW)
   const [previewTokenInput, setPreviewTokenInput] = useState(previewToken ?? '')
   const { messages, append, reload, stop, isLoading, input, setInput } =
@@ -52,12 +53,29 @@ export function Chat({ id, initialMessages, username, bookmarks, feedbacks, book
         }
       }
     })
+
+  // Scroll down upon initial page load
+  useEffect(() => {
+    if (firstLoad) {
+      window.scrollTo({
+        top: document.body.offsetHeight,
+        behavior: 'smooth'
+      })
+      console.log(firstLoad)
+      setFirstLoad(false)
+    }
+    else {
+      setFirstLoad(false)
+    }
+  }
+    , [firstLoad])
+
   return (
     <>
       <div className={cn('pb-[200px] pt-4 md:pt-10', className)}>
         {messages.length ? (
           <>
-            <ChatList messages={messages} username={username} bookmarks={bookmarks} feedbacks={feedbacks} bookmark_page={bookmark_page}/>
+            <ChatList messages={messages} username={username} bookmarks={bookmarks} feedbacks={feedbacks} bookmark_page={bookmark_page} />
             <ChatScrollAnchor trackVisibility={isLoading} />
           </>
         ) : (
