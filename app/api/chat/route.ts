@@ -6,7 +6,7 @@ import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs'
 import { cookies } from 'next/headers'
 import { Database } from '@/lib/db_types'
 
-import { auth } from '@/auth'
+import { auth, authUser } from '@/auth'
 import { nanoid } from '@/lib/utils'
 
 export const maxDuration = 120
@@ -19,7 +19,7 @@ export async function POST(req: Request) {
   })
   const json = await req.json()
   const { messages, previewToken } = json
-  const userId = (await auth({ cookieStore }))?.user.id
+  const userId = (await authUser())?.user.id
 
   if (!userId) {
     return new Response('Unauthorized', {
@@ -32,7 +32,7 @@ export async function POST(req: Request) {
   }
 
   const mode = process.env.PERSISTENCE_MODE
-  const userName = (await auth({ cookieStore }))?.user.email
+  const userName = (await authUser())?.user.email
   const url = `${process.env.BizGPT_CLIENT_API_BASE_ADDRESS_SCHEME}://${process.env.BizGPT_CLIENT_API_BASE_ADDRESS}:${process.env.BizGPT_CLIENT_API_PORT}/${process.env.BizGT_CLIENT_API_MESSAGES_SUBMIT_PATH}`
   const index = Math.round(json.messages.length / 2)
   const payload = {

@@ -2,7 +2,7 @@ import 'server-only'
 import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs'
 import { cookies } from 'next/headers'
 import { Database } from '@/lib/db_types'
-import { auth } from '@/auth'
+import { auth, authUser } from '@/auth'
 import { NextResponse } from "next/server";
 
 export const runtime = 'nodejs'
@@ -11,8 +11,8 @@ export async function POST(req: Request) {
   const json = await req.json()
   let mode = json.mode
   const cookieStore = cookies()
-  const userId = (await auth({ cookieStore }))?.user.id
-  const userName = (await auth({ cookieStore }))?.user.email
+  const userId = (await authUser())?.user.id
+  const userName = (await authUser())?.user.email
 
   if (mode?.replace('"','') == "supabase") {
     const supabase = createRouteHandlerClient<Database>({

@@ -1,4 +1,4 @@
-import { auth } from '@/auth'
+import { auth, authUser } from '@/auth'
 import { LoginButton } from '@/components/login-button'
 import { ResetPasswordForm } from '@/components/reset-password-form'
 import { Separator } from '@/components/ui/separator'
@@ -7,7 +7,7 @@ import { redirect } from 'next/navigation'
 
 export default async function ResetPassword() {
   const cookieStore = cookies()
-  const session = await auth({ cookieStore })
+  const session = await authUser()
   // redirect to home if user is already logged in
   if (session?.user) {
     redirect('/')

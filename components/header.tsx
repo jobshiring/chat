@@ -1,7 +1,7 @@
 import * as React from 'react'
 import Link from 'next/link'
 
-import { auth } from '@/auth'
+import { auth, authUser } from '@/auth'
 import { getUserRole } from '@/app/actions'
 import { Button, buttonVariants } from '@/components/ui/button'
 import { Sidebar } from '@/components/sidebar'
@@ -19,7 +19,13 @@ import { LangDropDown } from './header-language-dropdown'
 
 export async function Header() {
   const cookieStore = cookies()
-  const session = await auth({ cookieStore })
+  let session;
+  try{ 
+    session = await authUser()
+  }
+  catch{
+    undefined
+  }
   var user_role;
   session?.user ? (user_role = await getUserRole(session?.user?.id)) : (user_role = undefined)
   const BIZGPT_IFRAME_MODE = process.env.BIZGPT_IFRAME_MODE

@@ -1,5 +1,5 @@
 import { FeedbacksAdmin } from "@/app/admin/feedbacks/feedbacks"
-import { auth } from '@/auth'
+import { auth, authUser } from '@/auth'
 import { cookies } from 'next/headers'
 import { GetTranslation } from "@/components/translation-helper/ClientTranslations"
 
@@ -12,7 +12,7 @@ const TextDirection = process.env.TEXT_DIRECTION
 
 export default async function SettingsAccountPage() {
   const cookieStore = cookies()
-  const session = await auth({ cookieStore })
+  const session = await authUser()
 
   // Language and Translation
   var TranslationData = require(`@/translation/${process.env.BIZGPT_FRONTEND_LANGUAGE}.json`);

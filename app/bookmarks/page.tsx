@@ -1,7 +1,7 @@
 // @ts-nocheck 
 import { nanoid } from '@/lib/utils'
 import { Bookmarks } from '@/components/bookmarks'
-import { auth } from '@/auth'
+import { auth, authUser } from '@/auth'
 import { cookies } from 'next/headers'
 import { getChatSupabase, getChatLocal, getBookmarksLocal, getBookmarksSupabase, getFeedbacksLocal, getFeedbacksSupabase } from '@/app/actions'
 import { type Chat } from '@/lib/types'
@@ -30,7 +30,7 @@ async function getBookmarkedMessages(chat: Chat, bookmarks: JSON){
 
 export default async function BookmarksPage() {
   const cookieStore = cookies()
-  const session = await auth({ cookieStore })
+  const session = await authUser()
   let bookmarks = { 'bookmarks' : {}};
   let feedbacks = { 'feedbacks' : {}};
   let chat = { 'messages': {}}

@@ -1,7 +1,7 @@
 // @ts-nocheck 
 import { nanoid } from '@/lib/utils'
 import { Chat } from '@/components/chat'
-import { auth } from '@/auth'
+import { auth, authUser } from '@/auth'
 import { cookies } from 'next/headers'
 import { getChatSupabase, getChatLocal, getBookmarksLocal, getBookmarksSupabase, getFeedbacksLocal, getFeedbacksSupabase } from '@/app/actions'
 
@@ -11,7 +11,7 @@ export const dynamic = 'force-dynamic';
 
 export default async function IndexPage() {
   const cookieStore = cookies()
-  const session = await auth({ cookieStore })
+  const session = await authUser()
 
   let bookmarks = { 'bookmarks' : {}};
   let feedbacks = { 'feedbacks' : {}};
