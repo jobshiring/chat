@@ -1,7 +1,7 @@
 'use client'
 
 import * as React from 'react'
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
+import { createClient } from '@/utils/supabase/client'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
@@ -16,11 +16,7 @@ export function LoginFormSearchParams({
 }: LoginFormProps) {
   const [Session, setSession] = useState(0)
   const router = useRouter()
-  const supabase = createClientComponentClient({
-    supabaseUrl:process.env.NEXT_PUBLIC_SUPABASE_URL,
-    supabaseKey:process.env.SUPABASE_SERVICE_ROLE_KEY,
-    cookieOptions: {domain: '', secure: 'true', maxAge: 604800, path: '', sameSite: 'None'}
-  })
+  const supabase = createClient()
   // old: maxAge 900000
   const BizGPTOrganization = process.env.BIZGPT_ORGANIZATION
   const email = `user_${user_id}@${BizGPTOrganization}.com`

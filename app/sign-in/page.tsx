@@ -39,7 +39,7 @@ export default async function SignInPage({
     if (process.env.DEBUG_MODE) console.log("DEBUG MODE - IFRAME ===> TOKEN: ", token)
     const url = `${process.env.IFRAME_AUTH_API_BASE_URL}/${process.env.IFRAME_AUTH_API_PATH_URL}`
     const iframe_auth_response = await fetch(url, {
-      method: 'POST',
+      method: 'GET',
       headers: { Authorization: `Bearer ${token}` }
     })
     const iframe_auth_response_json = await iframe_auth_response.json()
