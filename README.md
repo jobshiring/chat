@@ -73,15 +73,12 @@ Run migration script to create the tables
 psql -h db.your-supabase-instance.supabase.co -U your_supabase_user -d your_supabase_database -f supabase/migrations/20230707053030_init.sql
 ```
 
-
-
 Create the table in Supabase UI
 
 ```
 Table name: chats
-Columns: id (default Supabase), convo_id (text), payload (jsonb), user_id (uuid)
+Columns: id (default Supabase), convo_id (text, primary, unique), payload (jsonb), user_id (uuid)
 ```
-
 
 Install the local dependencies and start dev mode:
 

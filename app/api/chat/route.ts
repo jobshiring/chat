@@ -76,11 +76,8 @@ export async function POST(req: Request) {
         ]
       }
 
-      const { count } = await supabase.from('chats').select('id', { count: 'exact' });
-      console.log(`Number of rows in 'chats' table: ${count}`);
-      console.log({ convo_id: id, payload })
-      await supabase.from('chats').upsert({ convo_id: id, payload }).throwOnError()
-      console.log("done!")
+      // @ts-expect-error upsert doesn't like convo_id somehow
+      await supabase.from('chats').upsert({ convo_id: id, payload }, { onConflict: 'convo_id' }).throwOnError()
     }
   })
 
